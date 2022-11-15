@@ -8,6 +8,6 @@ Camadas
 - Infra -> container, presenters, drivers, adapters, repositories, libs,
   validations
 - Application -> use cases, models, dtos, services
-- Domain -> interfaces, validations, entities
+- Domain -> interfaces, validations, entities, value objects
 
 - Helpers -> testing, constants (é conhecido por todas as camadas)
