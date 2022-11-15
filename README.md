@@ -5,7 +5,8 @@ TODO
 
 Camadas
 
-- Infra -> container, presenters, drivers, adapters, repositories, libs
+- Infra -> container, presenters, drivers, adapters, repositories, libs,
+  validations
 - Application -> use cases, models, dtos, services
 - Domain -> interfaces, validations, entities
 
