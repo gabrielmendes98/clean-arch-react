@@ -1,15 +1,14 @@
+import { Outlet } from 'react-router-dom';
 import { Footer } from '../../footer';
 import { Header } from '../../header';
 import style from './main.module.scss';
 
-type Props = {
-  children: React.ReactNode;
-};
-
-export const MainLayout = ({ children }: Props) => (
+export const MainLayout = () => (
   <div className={style.container}>
     <Header />
-    <main className={style.main}>{children}</main>
+    <main className={style.main}>
+      <Outlet />
+    </main>
     <Footer />
   </div>
 );
