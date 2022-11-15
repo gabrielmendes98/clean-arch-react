@@ -1,3 +1,3 @@
-import { Welcome } from './presenters/Welcome';
+import { Welcome } from './presenters/welcome';
 
 export const makeHome = () => <Welcome />;

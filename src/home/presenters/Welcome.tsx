@@ -1,4 +1,4 @@
-import style from './Welcome.module.scss';
+import style from './welcome.module.scss';
 
 export const Welcome = () => {
   return (
