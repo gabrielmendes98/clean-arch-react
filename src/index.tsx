@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Router } from './shared/infra/routes/router';
-import './shared/presentation/styles/global.scss';
+import './shared/infra/styles/global.scss';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,

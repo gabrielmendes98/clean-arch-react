@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { PAGES } from 'shared/constants/pages';
-import style from './header.module.scss';
+import { PAGES } from 'shared/helpers/constants/pages';
+import styles from './styles.module.scss';
 
 export const Header = () => (
-  <header className={style.header}>
+  <header className={styles.header}>
     <nav>
       <ul>
         <li>
