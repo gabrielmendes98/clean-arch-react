@@ -2,8 +2,8 @@ import { Entity } from 'shared/domain/entity';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id';
 import { Document } from 'shared/domain/value-objects/document';
 import { Email } from 'shared/domain/value-objects/email';
-import { validator } from 'shared/domain/validator';
 import { ValidationError } from 'shared/domain/errors/validation-error';
+import { validator } from 'shared/domain/validator';
 
 export type EmployeeProps = {
   name: string;
@@ -16,12 +16,41 @@ export type EmployeeProps = {
 export class Employee extends Entity<EmployeeProps> {
   constructor(public readonly props: EmployeeProps) {
     super(props);
-    console.log(props);
-    this.props.id = props.id;
-    this.props.document = props.document;
-    this.props.email = props.email;
-    this.name = props.name;
-    this.salary = props.salary;
+    this.validate(props);
+    Object.assign(this.props, props);
+  }
+
+  private validate(props: EmployeeProps) {
+    Employee.validateName(props.name);
+    Employee.validateSalary(props.salary);
+  }
+
+  static validateSalary(value: EmployeeProps['salary']) {
+    try {
+      validator
+        .number()
+        .positive()
+        .required()
+        .label('Salário')
+        .validateSync(value);
+      return true;
+    } catch (error: any) {
+      throw new ValidationError(error.errors);
+    }
+  }
+
+  static validateName(value: Employee['name']) {
+    try {
+      validator
+        .string()
+        .max(100)
+        .required()
+        .label('Nome')
+        .validateSync(value, { strict: true });
+      return true;
+    } catch (error: any) {
+      throw new ValidationError(error.errors);
+    }
   }
 
   get id() {
@@ -38,31 +67,5 @@ export class Employee extends Entity<EmployeeProps> {
 
   get name() {
     return this.props.name;
-  }
-
-  set name(value: string) {
-    const error = validator.string().max(5).validateSync(value);
-    if (error) {
-      throw new ValidationError();
-    }
-    this.props.name = value;
-  }
-
-  get salary() {
-    return this.props.salary;
-  }
-
-  set salary(value: number) {
-    try {
-      const schema = validator.object().shape({
-        salary: validator.number().positive(),
-      });
-      schema.validateSync({ salary: value });
-
-      this.props.salary = value;
-    } catch (error: any) {
-      console.log(error.errors);
-      // throw new InvalidAttributeError(error.errors[0]);
-    }
   }
 }
