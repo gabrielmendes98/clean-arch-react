@@ -1,3 +1,4 @@
+import { makeEmployeeForm } from 'employee/form';
 import { makeHome } from 'home';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { PAGES } from 'shared/helpers/constants/pages';
@@ -14,7 +15,7 @@ const router = createBrowserRouter([
       },
       {
         path: PAGES.REGISTER_EMPLOYEES,
-        element: makeHome(),
+        element: makeEmployeeForm(),
       },
       {
         path: PAGES.LIST_EMPLOYEES,
