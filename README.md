@@ -5,9 +5,9 @@ TODO
 
 Camadas
 
-- Infra -> container, presenters, drivers, adapters, repositories, libs,
-  validations
-- Application -> use cases, models, dtos, services
+- Presentation -> arquivos react (tsx) - components, templates, pages, page
+  factory
+- Infra -> drivers, adapters, repository implementation, libs, validations
+- Application -> use cases, models, dtos, services, repository interface,
+  interfaces
 - Domain -> interfaces, validations, entities, value objects
-
-- Helpers -> testing, constants (é conhecido por todas as camadas)

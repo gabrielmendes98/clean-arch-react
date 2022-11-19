@@ -1,8 +1,8 @@
-import { makeEmployeeForm } from 'employee/form';
-import { makeHome } from 'home';
+import { makeRegisterEmployeePage } from 'employee/presentation/pages/create/factory';
+import { makeHome } from 'home/presentation/pages/home/factory';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { PAGES } from 'shared/helpers/constants/pages';
-import { MainLayout } from '../presenters/layouts/main';
+import { PAGES } from 'shared/domain/constants/pages';
+import { MainLayout } from 'shared/presentation/components/layouts/main/main.layout';
 
 const router = createBrowserRouter([
   {
@@ -15,7 +15,7 @@ const router = createBrowserRouter([
       },
       {
         path: PAGES.REGISTER_EMPLOYEES,
-        element: makeEmployeeForm(),
+        element: makeRegisterEmployeePage(),
       },
       {
         path: PAGES.LIST_EMPLOYEES,
