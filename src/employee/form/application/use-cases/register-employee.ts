@@ -1,21 +1,33 @@
-import { Employee } from 'employee/form/domain/entities/employee';
+import { UseCase } from 'shared/application/use-case';
+import { UnexpectedError } from 'shared/domain/errors/unexpected-error';
+import {
+  HttpClient,
+  HttpStatusCode,
+} from 'shared/domain/interfaces/http-client';
 
-interface HttpClient {
-  get: (...args: any) => Promise<any>;
-  put: (...args: any) => Promise<any>;
-  post: (...args: any) => Promise<any>;
-  delete: (...args: any) => Promise<any>;
-}
-
-export class RegisterEmployeeUseCase {
-  constructor(private httpClient: HttpClient) {}
+export class RegisterEmployeeUseCase implements UseCase<Input, Output> {
+  constructor(private httpClient: HttpClient<Output>) {}
 
   async execute(input: Input): Promise<Output> {
-    const response = await this.httpClient.post(input);
-    return response;
+    const response = await this.httpClient.request({
+      url: '/employees',
+      method: 'post',
+      body: input,
+    });
+    switch (response.statusCode) {
+      case HttpStatusCode.ok:
+        return true;
+      default:
+        throw new UnexpectedError();
+    }
   }
 }
 
-export type Input = Omit<Employee, 'id'>;
+export type Input = {
+  name: string;
+  email: string;
+  document: string;
+  salary: number;
+};
 
 export type Output = boolean;
