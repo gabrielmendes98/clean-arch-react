@@ -1,12 +1,8 @@
-export type HttpRequest = {
-  url: string;
-  method: HttpMethod;
-  body?: any;
-  headers?: any;
-};
-
 export interface HttpClient<Response = any> {
-  request: (data: HttpRequest) => Promise<HttpResponse<Response>>;
+  get: (url: string) => Promise<HttpResponse<Response>>;
+  post: (url: string, body: any) => Promise<HttpResponse<Response>>;
+  put: (url: string, body: any) => Promise<HttpResponse<Response>>;
+  delete: (url: string) => Promise<HttpResponse<Response>>;
 }
 
 export type HttpMethod = 'post' | 'get' | 'put' | 'delete';

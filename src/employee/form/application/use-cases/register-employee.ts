@@ -1,19 +1,12 @@
 import { UseCase } from 'shared/application/use-case';
 import { UnexpectedError } from 'shared/domain/errors/unexpected-error';
-import {
-  HttpClient,
-  HttpStatusCode,
-} from 'shared/domain/interfaces/http-client';
+import { HttpClient, HttpStatusCode } from 'shared/application/http-client';
 
 export class RegisterEmployeeUseCase implements UseCase<Input, Output> {
   constructor(private httpClient: HttpClient<Output>) {}
 
   async execute(input: Input): Promise<Output> {
-    const response = await this.httpClient.request({
-      url: '/employees',
-      method: 'post',
-      body: input,
-    });
+    const response = await this.httpClient.post('/employees', input);
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         return true;
