@@ -3,7 +3,3 @@ export const PAGES = {
   REGISTER_EMPLOYEES: '/register-employees',
   LIST_EMPLOYEES: '/employees',
 };
-
-export const APIS = {
-  EMPLOYEE: process.env.REACT_APP_EMPLOYEE_API,
-};
