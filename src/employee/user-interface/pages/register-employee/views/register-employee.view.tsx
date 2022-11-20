@@ -1,5 +1,5 @@
 import { RegisterEmployeeUseCase } from 'employee/application/use-cases/register-employee.use-case';
-import { Form } from '../../../components/form/form.component';
+import { Form } from '../../../components/form/employee-form.component';
 
 type Props = {
   registerEmployeeUseCase: RegisterEmployeeUseCase;

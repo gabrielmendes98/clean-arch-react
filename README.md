@@ -5,7 +5,7 @@ TODO
 
 Camadas
 
-- User Interface -> arquivos react (tsx) - components, templates, pages, page
+- User Interface -> arquivos react (tsx) - components, views, pages, page
   factory
 - Infra -> drivers, adapters, repository implementation, libs, validations,
   formatters

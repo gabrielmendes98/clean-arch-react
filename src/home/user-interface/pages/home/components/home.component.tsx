@@ -1,4 +1,4 @@
-import styles from './main.module.scss';
+import styles from './home.module.scss';
 
 export const Home = () => {
   return (

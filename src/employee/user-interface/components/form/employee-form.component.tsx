@@ -1,5 +1,5 @@
 import { Button } from 'shared/user-interface/components/button/button.component';
-import styles from './form.module.scss';
+import styles from './employee-form.module.scss';
 
 type Props = {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
