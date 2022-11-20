@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Router } from './shared/infra/routes/router';
+import { Router } from './shared/user-interface/routes/router';
 import './shared/infra/styles/global.scss';
 
 const root = ReactDOM.createRoot(
