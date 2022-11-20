@@ -4,17 +4,17 @@ import { ValueObject } from './value-object';
 export class Email extends ValueObject<string> {
   constructor(email: string) {
     super(email);
-    this.validate();
+    Email.validate(email);
   }
 
-  private validate() {
-    const isValid = this.isValidEmail(this.value);
+  static validate(email: string) {
+    const isValid = this.isValidEmail(email);
     if (!isValid) {
       throw new InvalidEmailError();
     }
   }
 
-  private isValidEmail(email: string) {
+  private static isValidEmail(email: string) {
     return email
       .toLowerCase()
       .match(

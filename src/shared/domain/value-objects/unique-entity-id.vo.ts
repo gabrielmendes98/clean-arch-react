@@ -5,11 +5,11 @@ import { ValueObject } from './value-object';
 export class UniqueEntityId extends ValueObject<string> {
   constructor(id: string) {
     super(id);
-    this.validate();
+    UniqueEntityId.validate(id);
   }
 
-  private validate() {
-    const isValid = uuidValidate(this.value);
+  static validate(id: string) {
+    const isValid = uuidValidate(id);
     if (!isValid) {
       throw new InvalidUuidError();
     }

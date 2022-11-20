@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { PAGES } from 'shared/domain/constants/pages';
-import styles from './styles.module.scss';
+import styles from './header.module.scss';
 
 export const Header = () => (
   <header className={styles.header}>

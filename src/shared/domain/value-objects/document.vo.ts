@@ -4,17 +4,17 @@ import { ValueObject } from './value-object';
 export class Document extends ValueObject<string> {
   constructor(document: string) {
     super(document);
-    this.validate();
+    Document.validate(document);
   }
 
-  private validate() {
-    const isValid = this.isValidCpf(this.value) || this.isValidCnpj(this.value);
+  static validate(document: string) {
+    const isValid = this.isValidCpf(document) || this.isValidCnpj(document);
     if (!isValid) {
       throw new InvalidDocumentError();
     }
   }
 
-  private isValidCpf(cpf: string) {
+  private static isValidCpf(cpf: string) {
     cpf = cpf.replace(/[^\d]+/g, '');
     if (cpf === '') return false;
     if (
@@ -44,7 +44,7 @@ export class Document extends ValueObject<string> {
     return true;
   }
 
-  private isValidCnpj(cnpj: string) {
+  private static isValidCnpj(cnpj: string) {
     cnpj = cnpj.replace(/[^\d]+/g, '');
 
     if (cnpj === '') return false;

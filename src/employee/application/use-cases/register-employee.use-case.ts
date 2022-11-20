@@ -3,10 +3,16 @@ import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { HttpClient, HttpStatusCode } from 'shared/application/http-client';
 
 export class RegisterEmployeeUseCase implements UseCase<Input, Output> {
-  constructor(private httpClient: HttpClient<Output>) {}
+  constructor(
+    private httpClient: HttpClient<Output>,
+    private baseUrl: string,
+  ) {}
 
   async execute(input: Input): Promise<Output> {
-    const response = await this.httpClient.post('/employees', input);
+    const response = await this.httpClient.post(
+      `${this.baseUrl}/employees`,
+      input,
+    );
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         return true;
