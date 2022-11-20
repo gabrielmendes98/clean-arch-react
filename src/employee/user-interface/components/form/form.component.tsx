@@ -1,4 +1,4 @@
-import { Button } from 'shared/presentation/components/button/button.component';
+import { Button } from 'shared/user-interface/components/button/button.component';
 import styles from './form.module.scss';
 
 type Props = {
