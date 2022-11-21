@@ -1,5 +1,9 @@
 /* eslint-disable no-template-curly-in-string */
 import * as yup from 'yup';
+import {
+  EntityValidationError,
+  ValidationError,
+} from '../errors/validation.error';
 import printValue from './util';
 
 const validationMessages = {
@@ -48,6 +52,43 @@ const validationMessages = {
 };
 
 yup.setLocale(validationMessages);
+
+// TODO fix add method ts error
+yup.addMethod(
+  // @ts-ignore
+  yup.BaseSchema,
+  'validateAttribute',
+  function (value: any, label?: string) {
+    try {
+      if (label) {
+        this.label(label).validateSync(value);
+        return true;
+      }
+      this.validateSync(value, { strict: true });
+      return true;
+    } catch (error) {
+      if (error instanceof validator.ValidationError)
+        throw new ValidationError(error.errors);
+    }
+  },
+);
+
+// TODO fix add method ts error
+// @ts-ignore
+yup.addMethod(yup.BaseSchema, 'validateEntity', function (value: any) {
+  try {
+    this.validateSync(value, { strict: true, abortEarly: false });
+    return true;
+  } catch (e) {
+    if (e instanceof validator.ValidationError) {
+      const errors = e.inner.reduce((prev, next) => {
+        return { ...prev, [String(next.path)]: next.errors };
+      }, {});
+      throw new EntityValidationError(errors);
+    }
+    throw new EntityValidationError({});
+  }
+});
 
 const validator = yup;
 export { validator };

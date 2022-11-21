@@ -10,13 +10,18 @@ export const RegisterEmployeeMainComponent = ({
 }: Props) => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = {
-      name: '',
-      email: '',
-      document: '',
-      salary: 0,
-    };
-    registerEmployeeUseCase.execute(formData);
+
+    try {
+      const formData = {
+        name: '',
+        email: '',
+        document: '',
+        salary: 0,
+      };
+      registerEmployeeUseCase.execute(formData);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return <Form onSubmit={onSubmit} />;

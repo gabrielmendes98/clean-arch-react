@@ -2,7 +2,6 @@ import { Entity } from 'shared/domain/entity/entity';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 import { Document } from 'shared/domain/value-objects/document.vo';
 import { Email } from 'shared/domain/value-objects/email.vo';
-import { ValidationError } from 'shared/domain/errors/validation.error';
 import { validator } from 'shared/domain/validator';
 
 export type EmployeeProps = {
@@ -16,41 +15,25 @@ export type EmployeeProps = {
 export class Employee extends Entity<EmployeeProps> {
   constructor(public readonly props: EmployeeProps) {
     super(props);
-    this.validate(props);
+    Employee.validate(props);
     Object.assign(this.props, props);
   }
 
-  private validate(props: EmployeeProps) {
-    Employee.validateName(props.name);
-    Employee.validateSalary(props.salary);
+  static validate(props: EmployeeProps): boolean {
+    return validator
+      .object({
+        name: Employee.nameValidation(),
+        salary: Employee.salaryValidation(),
+      })
+      .validateEntity(props);
   }
 
-  static validateSalary(value: EmployeeProps['salary']) {
-    try {
-      validator
-        .number()
-        .positive()
-        .required()
-        .label('Salário')
-        .validateSync(value);
-      return true;
-    } catch (error: any) {
-      throw new ValidationError(error.errors);
-    }
+  static salaryValidation() {
+    return validator.number().positive().required().label('Salário');
   }
 
-  static validateName(value: Employee['name']) {
-    try {
-      validator
-        .string()
-        .max(100)
-        .required()
-        .label('Nome')
-        .validateSync(value, { strict: true });
-      return true;
-    } catch (error: any) {
-      throw new ValidationError(error.errors);
-    }
+  static nameValidation() {
+    return validator.string().max(100).required().label('Nome');
   }
 
   get id() {
