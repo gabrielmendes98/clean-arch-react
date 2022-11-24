@@ -13,5 +13,6 @@ export class UniqueEntityId extends ValueObject<string> {
     if (!isValid) {
       throw new InvalidUuidError();
     }
+    return true;
   }
 }

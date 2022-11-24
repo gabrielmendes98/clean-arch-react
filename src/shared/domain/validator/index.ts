@@ -2,9 +2,14 @@
 import * as yup from 'yup';
 import {
   EntityValidationError,
+  Errors,
   ValidationError,
 } from '../errors/validation.error';
 import printValue from './util';
+
+export type Validations = {
+  [key: string]: (value: any) => boolean;
+};
 
 const validationMessages = {
   mixed: {
@@ -61,7 +66,7 @@ yup.addMethod(
   function (value: any, label?: string) {
     try {
       if (label) {
-        this.label(label).validateSync(value);
+        this.label(label).validateSync(value, { strict: true });
         return true;
       }
       this.validateSync(value, { strict: true });
@@ -73,22 +78,54 @@ yup.addMethod(
   },
 );
 
-// TODO fix add method ts error
-// @ts-ignore
-yup.addMethod(yup.BaseSchema, 'validateEntity', function (value: any) {
-  try {
-    this.validateSync(value, { strict: true, abortEarly: false });
-    return true;
-  } catch (e) {
-    if (e instanceof validator.ValidationError) {
-      const errors = e.inner.reduce((prev, next) => {
-        return { ...prev, [String(next.path)]: next.errors };
-      }, {});
-      throw new EntityValidationError(errors);
+// // TODO fix add method ts error
+// yup.addMethod(
+//   // @ts-ignore
+//   yup.BaseSchema,
+//   'validateEntity',
+//   function (validators: Validators) {
+//     const errors: Errors = {};
+
+//     Object.entries(validators).forEach(([key, validateProp]) => {
+//       try {
+//         validateProp();
+//       } catch (e: any) {
+//         errors[key] = e.errors || [e.message];
+//       }
+//     });
+//     const hasErrors = Object.keys(errors).length !== 0;
+
+//     if (!hasErrors) {
+//       return true;
+//     }
+
+//     throw new EntityValidationError(errors);
+//   },
+// );
+
+const entityValidationSchema = (validations: Validations) => ({
+  validate: (objectToValidate: { [key: string]: any }) => {
+    const errors: Errors = {};
+
+    console.log(validations, objectToValidate);
+
+    Object.entries(validations).forEach(([key, validateProp]) => {
+      console.log(objectToValidate[key]);
+      try {
+        validateProp(objectToValidate[key]);
+      } catch (e: any) {
+        errors[key] = e.errors || [e.message];
+      }
+    });
+    const hasErrors = Object.keys(errors).length !== 0;
+
+    if (!hasErrors) {
+      return true;
     }
-    throw new EntityValidationError({});
-  }
+
+    throw new EntityValidationError(errors);
+  },
 });
 
-const validator = yup;
+const validator = { ...yup, entityValidationSchema };
 export { validator };

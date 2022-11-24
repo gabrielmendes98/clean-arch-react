@@ -8,10 +8,12 @@ export class Document extends ValueObject<string> {
   }
 
   static validate(document: string) {
-    const isValid = this.isValidCpf(document) || this.isValidCnpj(document);
+    const isValid =
+      Document.isValidCpf(document) || Document.isValidCnpj(document);
     if (!isValid) {
       throw new InvalidDocumentError();
     }
+    return true;
   }
 
   private static isValidCpf(cpf: string) {

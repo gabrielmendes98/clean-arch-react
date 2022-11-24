@@ -1,4 +1,4 @@
-type Errors = {
+export type Errors = {
   [key: string]: string[];
 };
 

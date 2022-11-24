@@ -8,10 +8,11 @@ export class Email extends ValueObject<string> {
   }
 
   static validate(email: string) {
-    const isValid = this.isValidEmail(email);
+    const isValid = Email.isValidEmail(email);
     if (!isValid) {
       throw new InvalidEmailError();
     }
+    return true;
   }
 
   private static isValidEmail(email: string) {

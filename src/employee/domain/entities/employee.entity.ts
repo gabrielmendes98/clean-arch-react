@@ -15,25 +15,47 @@ export type EmployeeProps = {
 export class Employee extends Entity<EmployeeProps> {
   constructor(public readonly props: EmployeeProps) {
     super(props);
-    Employee.validate(props);
+    Employee.validate({
+      ...props,
+      id: props.id.value,
+      document: props.document.value,
+      email: props.document.value,
+    });
     Object.assign(this.props, props);
   }
 
-  static validate(props: EmployeeProps): boolean {
+  static validate(props: {
+    name: string;
+    salary: number;
+    id: UniqueEntityId['value'];
+    document: Document['value'];
+    email: Email['value'];
+  }): boolean {
     return validator
-      .object({
-        name: Employee.nameValidation(),
-        salary: Employee.salaryValidation(),
+      .entityValidationSchema({
+        name: Employee.validateName,
+        salary: Employee.validateSalary,
+        id: UniqueEntityId.validate,
+        document: Document.validate,
+        email: Email.validate,
       })
-      .validateEntity(props);
+      .validate(props);
   }
 
-  static salaryValidation() {
-    return validator.number().positive().required().label('Salário');
+  static validateSalary(value: number): boolean {
+    return validator
+      .number()
+      .positive()
+      .required()
+      .validateAttribute(value, 'Salário');
   }
 
-  static nameValidation() {
-    return validator.string().max(100).required().label('Nome');
+  static validateName(value: string) {
+    return validator
+      .string()
+      .max(100)
+      .required()
+      .validateAttribute(value, 'Nome');
   }
 
   get id() {
