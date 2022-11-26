@@ -4,17 +4,11 @@ import { HttpClient, HttpStatusCode } from 'shared/application/http-client';
 import { Employee } from 'employee/domain/entities/employee.entity';
 
 export class RegisterEmployeeUseCase implements UseCase<Input, Output> {
-  constructor(
-    private httpClient: HttpClient<Output>,
-    private baseUrl: string,
-  ) {}
+  constructor(private httpClient: HttpClient) {}
 
   async execute(input: Input): Promise<Output> {
     Employee.validate(input);
-    const response = await this.httpClient.post(
-      `${this.baseUrl}/employees`,
-      input,
-    );
+    const response = await this.httpClient.post<boolean>('/employees', input);
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         return true;

@@ -1,12 +1,11 @@
 import { RegisterEmployeeUseCase } from 'employee/application/use-cases/register-employee.use-case';
+import { EmployeesInMemoryHttpClientAdapter } from 'employee/infra/adapters/in-memory.adapter';
 import { personsApiConfig } from 'shared/infra/config/persons-api.config';
-import { makeHttpClient } from 'shared/infra/factories/http-client.factory';
 import { RegisterEmployeeMainComponent } from './views/register-employee.view';
 
 export const makeRegisterEmployeePage = () => {
   const registerEmployeeUseCase = new RegisterEmployeeUseCase(
-    makeHttpClient(),
-    personsApiConfig.baseUrl,
+    new EmployeesInMemoryHttpClientAdapter(personsApiConfig.baseUrl),
   );
 
   return (

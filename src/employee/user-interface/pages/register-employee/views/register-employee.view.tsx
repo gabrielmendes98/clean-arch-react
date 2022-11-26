@@ -19,6 +19,7 @@ export const RegisterEmployeeMainComponent = ({
         salary: 21,
       };
       await registerEmployeeUseCase.execute(formData);
+      console.log('sucesso');
     } catch (e) {
       console.log('caiu aqui');
       console.log(JSON.parse(JSON.stringify(e)));

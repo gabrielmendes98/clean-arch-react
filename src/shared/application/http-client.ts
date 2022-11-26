@@ -1,8 +1,9 @@
-export interface HttpClient<Response = any> {
-  get: (url: string) => Promise<HttpResponse<Response>>;
-  post: (url: string, body: any) => Promise<HttpResponse<Response>>;
-  put: (url: string, body: any) => Promise<HttpResponse<Response>>;
-  delete: (url: string) => Promise<HttpResponse<Response>>;
+export interface HttpClient {
+  baseUrl: string;
+  get<Response>(endpoint: string): Promise<HttpResponse<Response>>;
+  post<Response>(endpoint: string, body: any): Promise<HttpResponse<Response>>;
+  put<Response>(endpoint: string, body: any): Promise<HttpResponse<Response>>;
+  delete<Response>(endpoint: string): Promise<HttpResponse<Response>>;
 }
 
 export type HttpMethod = 'post' | 'get' | 'put' | 'delete';
