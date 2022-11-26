@@ -8,19 +8,20 @@ type Props = {
 export const RegisterEmployeeMainComponent = ({
   registerEmployeeUseCase,
 }: Props) => {
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
       const formData = {
-        name: '',
-        email: '',
-        document: '',
-        salary: 0,
+        name: 'gabriel',
+        email: 'gabriel@gmail.com',
+        document: '08567988608',
+        salary: 21,
       };
-      registerEmployeeUseCase.execute(formData);
+      await registerEmployeeUseCase.execute(formData);
     } catch (e) {
-      console.log(e);
+      console.log('caiu aqui');
+      console.log(JSON.parse(JSON.stringify(e)));
     }
   };
 

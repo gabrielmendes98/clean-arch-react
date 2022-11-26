@@ -27,18 +27,21 @@ export class Employee extends Entity<EmployeeProps> {
   static validate(props: {
     name: string;
     salary: number;
-    id: UniqueEntityId['value'];
+    id?: UniqueEntityId['value'];
     document: Document['value'];
     email: Email['value'];
   }): boolean {
     return validator
-      .entityValidationSchema({
-        name: Employee.validateName,
-        salary: Employee.validateSalary,
-        id: UniqueEntityId.validate,
-        document: Document.validate,
-        email: Email.validate,
-      })
+      .entityValidationSchema(
+        {
+          name: Employee.validateName,
+          salary: Employee.validateSalary,
+          id: UniqueEntityId.validate,
+          document: Document.validate,
+          email: Email.validate,
+        },
+        ['id'],
+      )
       .validate(props);
   }
 

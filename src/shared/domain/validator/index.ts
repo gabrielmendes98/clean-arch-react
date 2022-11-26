@@ -78,41 +78,23 @@ yup.addMethod(
   },
 );
 
-// // TODO fix add method ts error
-// yup.addMethod(
-//   // @ts-ignore
-//   yup.BaseSchema,
-//   'validateEntity',
-//   function (validators: Validators) {
-//     const errors: Errors = {};
-
-//     Object.entries(validators).forEach(([key, validateProp]) => {
-//       try {
-//         validateProp();
-//       } catch (e: any) {
-//         errors[key] = e.errors || [e.message];
-//       }
-//     });
-//     const hasErrors = Object.keys(errors).length !== 0;
-
-//     if (!hasErrors) {
-//       return true;
-//     }
-
-//     throw new EntityValidationError(errors);
-//   },
-// );
-
-const entityValidationSchema = (validations: Validations) => ({
+const entityValidationSchema = (
+  validations: Validations,
+  optionalAttributes: string[],
+) => ({
   validate: (objectToValidate: { [key: string]: any }) => {
     const errors: Errors = {};
 
-    console.log(validations, objectToValidate);
-
     Object.entries(validations).forEach(([key, validateProp]) => {
-      console.log(objectToValidate[key]);
       try {
-        validateProp(objectToValidate[key]);
+        if (
+          !(
+            optionalAttributes.includes(key) &&
+            objectToValidate[key] === undefined
+          )
+        ) {
+          validateProp(objectToValidate[key]);
+        }
       } catch (e: any) {
         errors[key] = e.errors || [e.message];
       }
