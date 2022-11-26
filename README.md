@@ -3,6 +3,43 @@
 - add eslint
 - add eslint import order
 
+## System Requirements Specification
+
+- the system must have screens: home, employee registration, list of employees,
+  employee update, account registration and login
+- home
+  - should show a generic welcome message if the user is not logged in
+  - should show a welcome message with the name of the logged in user
+- employee registration
+  - must contain the fields: name, salary, document (cpf/cnpj) and email
+  - the form must be validated only when it is sent
+  - field error messages should appear below each field
+  - when registering an employee, it should show a success message and reset all
+    the fields
+  - if a connection error occurs, it should show an error message
+- employee update
+  - the fields must initially be filled in with the selected employee's data
+  - must contain the fields: name, salary, document (cpf/cnpj) and email
+  - the form must be validated only when it is sent
+  - field error messages should appear below each field
+  - when editing employee, it should show success message and reset all fields
+  - if a connection error occurs, it should show an error message
+  - must contain a button to return to the list screen
+- list of employees
+  - should show a list of all registered employees, without pagination
+  - the list must contain the following employee data: name, salary, document
+    (cpf/cnpj) and email
+  - each line of the list must have a edit button
+- Create an account
+  - the user must inform email, password and confirm the password
+  - at the end of the registration, the user should be logged in automatically
+    and redirected to home
+  - the form fields must be validated when they lose the focus state
+- Login
+  - the user must inform email and password to perform the login
+  - the form fields must be validated when they lose the focus state
+  - when logging in, the user must be redirected to the home
+
 ## Layers
 
 - User Interface -> react files, components, views, pages, page factory.
@@ -94,3 +131,9 @@ yupjs lib on the domain layer to validate our entities.
 - https://medium.com/dotnet-hub/clean-architecture-with-dotnet-and-dotnet-core-aspnetcore-overview-introduction-getting-started-ec922e53bb97
 - https://www.youtube.com/watch?v=kCSiGeUFi_U&t=1955s&ab_channel=RodrigoBranas
 - https://www.youtube.com/watch?v=iUQVZHzqGuc&t=1681s&ab_channel=Mango
+
+## Future implementations
+
+- employees list cache
+- employees list pagination
+- global store
