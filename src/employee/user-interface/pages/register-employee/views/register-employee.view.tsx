@@ -1,24 +1,28 @@
-import { RegisterEmployeeUseCase } from 'employee/application/use-cases/register-employee.use-case';
+import {
+  Input,
+  RegisterEmployeeUseCase,
+} from 'employee/application/use-cases/register-employee.use-case';
+import { FormData } from 'employee/infra/utils/employee-form.utils';
+import { FormProvider } from 'shared/infra/store/form/form.store';
 import { Form } from '../../../components/form/employee-form.component';
 
 type Props = {
   registerEmployeeUseCase: RegisterEmployeeUseCase;
+  initialValues: FormData;
+  parseFormToInput: (formData: FormData) => Input;
 };
 
 export const RegisterEmployeeMainComponent = ({
   registerEmployeeUseCase,
+  initialValues,
+  parseFormToInput,
 }: Props) => {
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const onSubmit = async (
+    e: React.FormEvent<HTMLFormElement>,
+    values: FormData,
+  ) => {
     try {
-      const formData = {
-        name: 'gabriel',
-        email: 'gabriel@gmail.com',
-        document: '08567988608',
-        salary: 21,
-      };
-      await registerEmployeeUseCase.execute(formData);
+      await registerEmployeeUseCase.execute(parseFormToInput(values));
       console.log('sucesso');
     } catch (e) {
       console.log('caiu aqui');
@@ -26,5 +30,9 @@ export const RegisterEmployeeMainComponent = ({
     }
   };
 
-  return <Form onSubmit={onSubmit} />;
+  return (
+    <FormProvider onSubmit={onSubmit} initialValues={initialValues}>
+      <Form />
+    </FormProvider>
+  );
 };
