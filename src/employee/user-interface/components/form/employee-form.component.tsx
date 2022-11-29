@@ -3,7 +3,7 @@ import { SlowInput } from 'shared/user-interface/components/input/slow-input.com
 import styles from './employee-form.module.scss';
 
 export const Form = () => (
-  <div className={styles.container}>
+  <div className={styles.box}>
     <SlowInput label="Nome:" name="name" />
     <SlowInput label="Salario:" name="salary" />
     <SlowInput label="CPF/CNPJ:" name="document" />

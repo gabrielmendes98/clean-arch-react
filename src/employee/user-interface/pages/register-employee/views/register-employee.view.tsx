@@ -3,6 +3,12 @@ import {
   EmployeeForm,
   EmployeeFormFields,
 } from 'employee/infra/utils/employee-form';
+import {
+  Alert,
+  Props as AlertProps,
+} from 'employee/user-interface/components/alert/alert.component';
+import { Box } from 'employee/user-interface/components/box/box.component';
+import { useState } from 'react';
 import { FormProvider } from 'shared/infra/store/form/form.store';
 import { Form } from '../../../components/form/employee-form.component';
 
@@ -15,6 +21,8 @@ export const RegisterEmployeeMainComponent = ({
   registerEmployeeUseCase,
   formData,
 }: Props) => {
+  const [alert, setAlert] = useState<AlertProps | null>(null);
+
   const onSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
     values: EmployeeFormFields,
@@ -23,16 +31,25 @@ export const RegisterEmployeeMainComponent = ({
       await registerEmployeeUseCase.execute(
         EmployeeForm.parseFormToInput(values),
       );
-      console.log('sucesso');
-    } catch (e) {
-      console.log('erro');
+      setAlert({
+        type: 'success',
+        message: 'Funcionário cadastrado com sucesso!',
+      });
+    } catch (e: any) {
       console.log(JSON.parse(JSON.stringify(e)));
+      setAlert({
+        type: 'error',
+        message: e.message || 'error message',
+      });
     }
   };
 
   return (
-    <FormProvider onSubmit={onSubmit} initialValues={formData.toJSON()}>
-      <Form />
-    </FormProvider>
+    <Box>
+      <FormProvider onSubmit={onSubmit} initialValues={formData.toJSON()}>
+        <Form />
+      </FormProvider>
+      {alert && <Alert type={alert.type} message={alert.message} />}
+    </Box>
   );
 };

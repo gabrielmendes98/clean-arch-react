@@ -1,5 +1,7 @@
 .box {
   display: flex;
   flex-direction: column;
+  max-width: 300px;
+  margin: 50px;
   gap: 5px;
 }
