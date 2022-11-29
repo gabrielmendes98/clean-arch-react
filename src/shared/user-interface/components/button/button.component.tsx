@@ -1,10 +1,12 @@
+import { memo } from 'react';
+
 type Props = {
   children: React.ReactNode;
   className?: string;
   type?: 'button' | 'submit' | 'reset';
 };
 
-export const Button = ({
+const ButtonComponent = ({
   children,
   className = '',
   type = 'button',
@@ -13,3 +15,5 @@ export const Button = ({
     {children}
   </button>
 );
+
+export const Button = memo(ButtonComponent);

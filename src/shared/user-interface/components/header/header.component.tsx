@@ -1,8 +1,9 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { PAGES } from 'shared/domain/constants/pages';
 import styles from './header.module.scss';
 
-export const Header = () => (
+export const HeaderComponent = () => (
   <header className={styles.header}>
     <nav>
       <ul>
@@ -19,3 +20,5 @@ export const Header = () => (
     </nav>
   </header>
 );
+
+export const Header = memo(HeaderComponent);
