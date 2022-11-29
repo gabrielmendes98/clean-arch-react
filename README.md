@@ -92,6 +92,8 @@ external resources such as file systems, web services, third party APIs, and so
 on. The implementation of services should be based on interfaces defined within
 the application layer.
 
+Converts data from data layers to use case or entity layers.
+
 ## User Interface Layer
 
 This layer is also called as Presentation. Presentation Layer contains the UI

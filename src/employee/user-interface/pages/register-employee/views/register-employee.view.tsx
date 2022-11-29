@@ -1,37 +1,37 @@
+import { RegisterEmployeeUseCase } from 'employee/application/use-cases/register-employee.use-case';
 import {
-  Input,
-  RegisterEmployeeUseCase,
-} from 'employee/application/use-cases/register-employee.use-case';
-import { FormData } from 'employee/infra/utils/employee-form.utils';
+  EmployeeForm,
+  EmployeeFormFields,
+} from 'employee/infra/utils/employee-form';
 import { FormProvider } from 'shared/infra/store/form/form.store';
 import { Form } from '../../../components/form/employee-form.component';
 
 type Props = {
   registerEmployeeUseCase: RegisterEmployeeUseCase;
-  initialValues: FormData;
-  parseFormToInput: (formData: FormData) => Input;
+  formData: EmployeeForm;
 };
 
 export const RegisterEmployeeMainComponent = ({
   registerEmployeeUseCase,
-  initialValues,
-  parseFormToInput,
+  formData,
 }: Props) => {
   const onSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
-    values: FormData,
+    values: EmployeeFormFields,
   ) => {
     try {
-      await registerEmployeeUseCase.execute(parseFormToInput(values));
+      await registerEmployeeUseCase.execute(
+        EmployeeForm.parseFormToInput(values),
+      );
       console.log('sucesso');
     } catch (e) {
-      console.log('caiu aqui');
+      console.log('erro');
       console.log(JSON.parse(JSON.stringify(e)));
     }
   };
 
   return (
-    <FormProvider onSubmit={onSubmit} initialValues={initialValues}>
+    <FormProvider onSubmit={onSubmit} initialValues={formData.toJSON()}>
       <Form />
     </FormProvider>
   );
