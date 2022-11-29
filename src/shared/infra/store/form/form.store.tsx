@@ -1,4 +1,10 @@
-import { createContext, useState, FormEvent, PropsWithChildren } from 'react';
+import {
+  createContext,
+  useState,
+  FormEvent,
+  PropsWithChildren,
+  useCallback,
+} from 'react';
 
 export type GenericObject = {
   [key: string]: any;
@@ -7,6 +13,7 @@ export type GenericObject = {
 export type FormProviderData<InitialValues extends GenericObject> = {
   values: InitialValues;
   onChangeField: (name: string, value: any) => void;
+  resetForm: () => void;
 };
 
 export const FormContext =
@@ -14,7 +21,10 @@ export const FormContext =
 
 type Props<InitialValues extends GenericObject> = {
   initialValues: InitialValues;
-  onSubmit: (e: FormEvent<HTMLFormElement>, values: InitialValues) => void;
+  onSubmit: (
+    e: FormEvent<HTMLFormElement>,
+    formBag: FormProviderData<InitialValues>,
+  ) => void;
 };
 
 export const FormProvider = <InitialValues extends GenericObject>({
@@ -24,20 +34,25 @@ export const FormProvider = <InitialValues extends GenericObject>({
 }: PropsWithChildren<Props<InitialValues>>) => {
   const [values, setValues] = useState<InitialValues>(initialValues);
 
-  const onChangeField = (name: string, value: any) => {
+  const onChangeField = useCallback((name: string, value: any) => {
     setValues(init => ({
       ...init,
       [name]: value,
     }));
-  };
+  }, []);
+
+  const resetForm = useCallback(() => {
+    setValues(initialValues);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const _onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit(e, values);
+    onSubmit(e, { values, onChangeField, resetForm });
   };
 
   return (
-    <FormContext.Provider value={{ values, onChangeField }}>
+    <FormContext.Provider value={{ values, onChangeField, resetForm }}>
       <form onSubmit={_onSubmit}>{children}</form>
     </FormContext.Provider>
   );

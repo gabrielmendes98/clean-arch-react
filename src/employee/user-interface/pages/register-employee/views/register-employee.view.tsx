@@ -11,7 +11,10 @@ import { Box } from 'employee/user-interface/components/box/box.component';
 import { useState } from 'react';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { EntityValidationError } from 'shared/domain/errors/validation.error';
-import { FormProvider } from 'shared/infra/store/form/form.store';
+import {
+  FormProvider,
+  FormProviderData,
+} from 'shared/infra/store/form/form.store';
 import { Form } from '../../../components/form/employee-form.component';
 
 type Props = {
@@ -27,7 +30,7 @@ export const RegisterEmployeeMainComponent = ({
 
   const onSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
-    values: EmployeeFormFields,
+    { values, resetForm }: FormProviderData<EmployeeFormFields>,
   ) => {
     try {
       await registerEmployeeUseCase.execute(
@@ -37,6 +40,7 @@ export const RegisterEmployeeMainComponent = ({
         type: 'success',
         message: 'Funcionário cadastrado com sucesso!',
       });
+      resetForm();
     } catch (e) {
       if (e instanceof EntityValidationError) {
         console.log(JSON.parse(JSON.stringify(e)));
