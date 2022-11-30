@@ -1,0 +1,10 @@
+@import 'shared/infra/styles/theme.scss';
+
+.box {
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  color: $error-color;
+}

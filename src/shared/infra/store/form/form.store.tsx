@@ -4,35 +4,56 @@ import {
   FormEvent,
   PropsWithChildren,
   useCallback,
+  Dispatch,
+  SetStateAction,
+  useMemo,
 } from 'react';
 
 export type GenericObject = {
   [key: string]: any;
 };
 
-export type FormProviderData<InitialValues extends GenericObject> = {
-  values: InitialValues;
-  onChangeField: (name: string, value: any) => void;
-  resetForm: () => void;
-};
+export type FormErrors<FormFields> = Partial<{
+  [K in keyof FormFields]: string[];
+}>;
 
 export const FormContext =
   createContext<FormProviderData<GenericObject> | null>(null);
 
-type Props<InitialValues extends GenericObject> = {
-  initialValues: InitialValues;
+export type FormProviderData<FormFields extends GenericObject> = {
+  values: FormFields;
+  onChangeField: (name: string, value: any) => void;
+  resetForm: () => void;
+  errors: {} | FormErrors<FormFields>;
+  setErrors: Dispatch<SetStateAction<{} | FormErrors<FormFields>>>;
+  setFieldErrors: (field: string, errors: string[] | null) => void;
+};
+
+type Props<FormFields extends GenericObject> = {
+  initialValues: FormFields;
   onSubmit: (
     e: FormEvent<HTMLFormElement>,
-    formBag: FormProviderData<InitialValues>,
+    formBag: FormProviderData<FormFields>,
   ) => void;
 };
 
-export const FormProvider = <InitialValues extends GenericObject>({
+export const FormProvider = <FormFields extends GenericObject>({
   initialValues,
   children,
   onSubmit,
-}: PropsWithChildren<Props<InitialValues>>) => {
-  const [values, setValues] = useState<InitialValues>(initialValues);
+}: PropsWithChildren<Props<FormFields>>) => {
+  const [values, setValues] = useState<FormFields>(initialValues);
+  const [errors, setErrors] = useState<FormErrors<FormFields> | {}>({});
+
+  const setFieldErrors = useCallback(
+    (field: string, errors: string[] | null) => {
+      setErrors(init => ({
+        ...init,
+        [field]: errors,
+      }));
+    },
+    [],
+  );
 
   const onChangeField = useCallback((name: string, value: any) => {
     setValues(init => ({
@@ -46,13 +67,25 @@ export const FormProvider = <InitialValues extends GenericObject>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const valuesToProvide = useMemo(
+    () => ({
+      values,
+      onChangeField,
+      resetForm,
+      errors,
+      setErrors,
+      setFieldErrors,
+    }),
+    [errors, onChangeField, resetForm, setFieldErrors, values],
+  );
+
   const _onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit(e, { values, onChangeField, resetForm });
+    onSubmit(e, valuesToProvide);
   };
 
   return (
-    <FormContext.Provider value={{ values, onChangeField, resetForm }}>
+    <FormContext.Provider value={valuesToProvide}>
       <form onSubmit={_onSubmit}>{children}</form>
     </FormContext.Provider>
   );

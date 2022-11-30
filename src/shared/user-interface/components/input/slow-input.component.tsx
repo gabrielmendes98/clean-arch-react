@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useFormContext } from 'shared/infra/store/form/form.hook';
+import styles from './slow-input.module.scss';
 
 type Props = {
   label: string;
@@ -16,17 +17,25 @@ export const SlowInput = ({
   type = 'text',
   onChange,
 }: Props) => {
-  const { values, onChangeField } = useFormContext();
+  const { values, onChangeField, errors, setFieldErrors } = useFormContext();
 
   const _id = useMemo(() => id || name, [id, name]);
 
+  const errorMessage: string = useMemo(() => {
+    if (errors[name]) {
+      return errors[name][0];
+    }
+    return '';
+  }, [errors, name]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChangeField(e.target.name, e.target.value);
+    setFieldErrors(e.target.name, null);
     onChange && onChange(e);
   };
 
   return (
-    <div>
+    <div className={styles.box}>
       <label htmlFor={_id}>{label}</label>
       <input
         type={type}
@@ -35,6 +44,7 @@ export const SlowInput = ({
         value={values[name]}
         onChange={handleChange}
       />
+      <span className={styles.error}>{errorMessage}</span>
     </div>
   );
 };

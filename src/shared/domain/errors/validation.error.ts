@@ -19,7 +19,7 @@ export class ValidationError extends Error {
 //   field2: ['erro 1', 'erro 2'],
 // }
 export class EntityValidationError extends Error {
-  constructor(public errors?: Errors) {
+  constructor(public errors: Errors = {}) {
     super('Erro de validação de entidade');
     this.name = 'EntityValidationError';
   }

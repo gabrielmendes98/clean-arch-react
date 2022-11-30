@@ -30,7 +30,7 @@ export const RegisterEmployeeMainComponent = ({
 
   const onSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
-    { values, resetForm }: FormProviderData<EmployeeFormFields>,
+    { values, resetForm, setErrors }: FormProviderData<EmployeeFormFields>,
   ) => {
     try {
       await registerEmployeeUseCase.execute(
@@ -43,7 +43,7 @@ export const RegisterEmployeeMainComponent = ({
       resetForm();
     } catch (e) {
       if (e instanceof EntityValidationError) {
-        console.log(JSON.parse(JSON.stringify(e)));
+        setErrors(e.errors);
       }
       if (e instanceof UnexpectedError) {
         setAlert({

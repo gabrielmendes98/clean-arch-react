@@ -54,6 +54,16 @@ const validationMessages = {
     lowercase: '${path} deve estar em letras minúsculas',
     uppercase: '${path} deve estar em letras maiúsculas',
   },
+  number: {
+    min: '${path} deve ser maior ou igual a ${min}',
+    max: '${path} deve menor ou igual a ${max}',
+    lessThan: '${path} deve ser menor que ${less}',
+    moreThan: '${path} deve ser maior que ${more}',
+    notEqual: '${path} não deve ser igual a ${notEqual}',
+    positive: '${path} deve ser um número positivo',
+    negative: '${path} deve ser um número negativo',
+    integer: '${path} deve ser um número inteiro',
+  },
 };
 
 yup.setLocale(validationMessages);
