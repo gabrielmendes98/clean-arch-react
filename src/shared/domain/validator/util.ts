@@ -12,10 +12,7 @@ function printNumber(val: any): string {
   return isNegativeZero ? '-0' : `${val}`;
 }
 
-function printSimpleValue(
-  val: any,
-  quoteStrings: boolean = false,
-): string | null {
+function printSimpleValue(val: any, quoteStrings = false): string | null {
   if (val == null || val === true || val === false) return `${val}`;
 
   const typeOf = typeof val;

@@ -1,6 +1,6 @@
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { makeRegisterEmployeePage } from 'employee/user-interface/pages/register-employee/register-employee.factory';
 import { makeHome } from 'static/user-interface/pages/home/home.factory';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { PAGES } from 'shared/domain/constants/pages';
 import { MainLayout } from 'shared/user-interface/components/layouts/main/main.layout';
 

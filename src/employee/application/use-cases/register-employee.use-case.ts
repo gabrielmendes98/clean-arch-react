@@ -1,7 +1,7 @@
+import { Employee } from 'employee/domain/entities/employee.entity';
 import { UseCase } from 'shared/application/use-case';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { HttpClient, HttpStatusCode } from 'shared/application/http-client';
-import { Employee } from 'employee/domain/entities/employee.entity';
 
 export class RegisterEmployeeUseCase implements UseCase<Input, Output> {
   constructor(private httpClient: HttpClient) {}

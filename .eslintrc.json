@@ -1,0 +1,46 @@
+{
+  "extends": [
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "import", "jest", "prettier"],
+  "root": true,
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    }
+  },
+  "rules": {
+    "prettier/prettier": "warn",
+    "import/no-unresolved": "error",
+    "@typescript-eslint/no-explicit-any": "off",
+    "import/order": [
+      "warn",
+      {
+        "groups": [
+          "external",
+          "internal",
+          "builtin",
+          "parent",
+          "sibling",
+          "index",
+          "object"
+        ],
+        "pathGroupsExcludedImportTypes": [],
+        "pathGroups": [
+          {
+            "pattern": "shared/**",
+            "group": "builtin",
+            "position": "after"
+          }
+        ]
+      }
+    ]
+  }
+}

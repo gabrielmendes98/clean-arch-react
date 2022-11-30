@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { RegisterEmployeeUseCase } from 'employee/application/use-cases/register-employee.use-case';
 import {
   EmployeeForm,
@@ -8,7 +9,6 @@ import {
   Props as AlertProps,
 } from 'employee/user-interface/components/alert/alert.component';
 import { Box } from 'employee/user-interface/components/box/box.component';
-import { useState } from 'react';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { EntityValidationError } from 'shared/domain/errors/validation.error';
 import {

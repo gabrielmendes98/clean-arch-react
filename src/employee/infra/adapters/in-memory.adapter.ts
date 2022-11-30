@@ -10,28 +10,22 @@ export class EmployeesInMemoryHttpClientAdapter implements HttpClient {
     this.baseUrl = baseUrl;
   }
 
-  async get<Response>(endpoint: string): Promise<HttpResponse<Response>> {
+  async get<Response>(): Promise<HttpResponse<Response>> {
     throw new MethodNotImplementedError();
   }
 
-  async post<Response>(
-    endpoint: string,
-    body: any,
-  ): Promise<HttpResponse<Response>> {
+  async post<Response>(): Promise<HttpResponse<Response>> {
     return {
       statusCode: HttpStatusCode.ok,
       body: true as Response,
     };
   }
 
-  async put<Response>(
-    endpoint: string,
-    body: any,
-  ): Promise<HttpResponse<Response>> {
+  async put<Response>(): Promise<HttpResponse<Response>> {
     throw new MethodNotImplementedError();
   }
 
-  async delete<Response>(endpoint: string): Promise<HttpResponse<Response>> {
+  async delete<Response>(): Promise<HttpResponse<Response>> {
     throw new MethodNotImplementedError();
   }
 }

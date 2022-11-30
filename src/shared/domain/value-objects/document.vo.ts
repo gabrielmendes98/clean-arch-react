@@ -71,7 +71,7 @@ export class Document extends ValueObject<string> {
     // Valida DVs
     let tamanho = cnpj.length - 2;
     let numeros = cnpj.substring(0, tamanho);
-    let digitos = cnpj.substring(tamanho);
+    const digitos = cnpj.substring(tamanho);
     let soma = 0;
     let pos = tamanho - 7;
     for (let i = tamanho; i >= 1; i--) {
