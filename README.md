@@ -19,6 +19,7 @@
   - when registering an employee, it should show a success message and reset all
     the fields
   - if a connection error occurs, it should show an error message
+  - should clear field error message when change
 - employee update
   - the fields must initially be filled in with the selected employee's data
   - must contain the fields: name, salary, document (cpf/cnpj) and email
@@ -27,6 +28,7 @@
   - when editing employee, it should show success message and reset all fields
   - if a connection error occurs, it should show an error message
   - must contain a button to return to the list screen
+  - should clear field error message when change
 - list of employees
   - should show a list of all registered employees, without pagination
   - the list must contain the following employee data: name, salary, document
