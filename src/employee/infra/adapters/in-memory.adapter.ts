@@ -12,6 +12,7 @@ export class EmployeesInMemoryHttpClientAdapter implements HttpClient {
   }
 
   async get<Response>(): Promise<HttpResponse<Response>> {
+    console.log('searching employees');
     const employees: EmployeeOutputDto[] = [
       {
         email: 'gabriel@gmail.com',
@@ -47,7 +48,13 @@ export class EmployeesInMemoryHttpClientAdapter implements HttpClient {
     throw new MethodNotImplementedError();
   }
 
-  async delete<Response>(): Promise<HttpResponse<Response>> {
-    throw new MethodNotImplementedError();
+  async delete<Response>(endpoint: string): Promise<HttpResponse<Response>> {
+    console.log('deleting employee', endpoint);
+    return {
+      statusCode: HttpStatusCode.ok,
+      body: {
+        success: true,
+      } as Response,
+    };
   }
 }

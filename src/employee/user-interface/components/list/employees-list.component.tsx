@@ -10,9 +10,10 @@ export type Props = {
     document: string;
     email: string;
   }[];
+  deleteEmployee: (id: string) => void;
 };
 
-export const EmployeesList = ({ employees }: Props) => {
+export const EmployeesList = ({ employees, deleteEmployee }: Props) => {
   const { navigate } = useNavigation();
 
   const handleEdit = (id: string) => {
@@ -38,7 +39,9 @@ export const EmployeesList = ({ employees }: Props) => {
             <td>{employee.document}</td>
             <td>{employee.email}</td>
             <td>
-              <Button>Deletar</Button>
+              <Button onClick={() => deleteEmployee(employee.id)}>
+                Deletar
+              </Button>
               <Button onClick={() => handleEdit(employee.id)}>Editar</Button>
             </td>
           </tr>
