@@ -1,3 +1,4 @@
+import { EmployeeOutputDto } from 'employee/application/dto/employee-output.dto';
 import {
   HttpClient,
   HttpResponse,
@@ -11,13 +12,34 @@ export class EmployeesInMemoryHttpClientAdapter implements HttpClient {
   }
 
   async get<Response>(): Promise<HttpResponse<Response>> {
-    throw new MethodNotImplementedError();
+    const employees: EmployeeOutputDto[] = [
+      {
+        email: 'gabriel@gmail.com',
+        id: 'bb30888c-06cf-458b-aced-8a75187c6a67',
+        name: 'Gabriel Santiago',
+        salary: 25000,
+        document: '98536970090',
+      },
+      {
+        email: 'joaodasilva@gmail.com',
+        id: '11cbc2c2-32c2-42c5-ba5e-c21ca92a3047',
+        name: 'João da Silva',
+        salary: 20000,
+        document: '75986850025',
+      },
+    ];
+    return {
+      statusCode: HttpStatusCode.ok,
+      body: employees as Response,
+    };
   }
 
   async post<Response>(): Promise<HttpResponse<Response>> {
     return {
       statusCode: HttpStatusCode.ok,
-      body: true as Response,
+      body: {
+        success: true,
+      } as Response,
     };
   }
 

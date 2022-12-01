@@ -2,6 +2,7 @@
 
 - use formprovider with dependency inversion so we can change form provider at
   any time
+- refactor useNavigation hook to dependency injection
 
 ## System Requirements Specification
 
@@ -31,7 +32,7 @@
   - should show a list of all registered employees, without pagination
   - the list must contain the following employee data: name, salary, document
     (cpf/cnpj) and email
-  - each line of the list must have a edit button
+  - each line of the list must have edit and delete buttons
 - Create an account
   - the user must inform email, password and confirm the password
   - at the end of the registration, the user should be logged in automatically

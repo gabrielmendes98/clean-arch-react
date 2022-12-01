@@ -8,10 +8,10 @@ export class RegisterEmployeeUseCase implements UseCase<Input, Output> {
 
   async execute(input: Input): Promise<Output> {
     Employee.validate(input);
-    const response = await this.httpClient.post<boolean>('/employees', input);
+    const response = await this.httpClient.post<Output>('/employees', input);
     switch (response.statusCode) {
       case HttpStatusCode.ok:
-        return true;
+        return response.body;
       default:
         throw new UnexpectedError();
     }
@@ -25,4 +25,6 @@ export type Input = {
   salary: number;
 };
 
-export type Output = boolean;
+export type Output = {
+  success: boolean;
+};

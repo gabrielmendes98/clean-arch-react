@@ -8,7 +8,7 @@ import {
   Alert,
   Props as AlertProps,
 } from 'employee/user-interface/components/alert/alert.component';
-import { Box } from 'employee/user-interface/components/box/box.component';
+import { FormBox } from 'employee/user-interface/components/form-box/form-box.component';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { EntityValidationError } from 'shared/domain/errors/validation.error';
 import {
@@ -22,7 +22,7 @@ type Props = {
   formData: EmployeeForm;
 };
 
-export const RegisterEmployeeMainComponent = ({
+export const RegisterEmployeeView = ({
   registerEmployeeUseCase,
   formData,
 }: Props) => {
@@ -55,11 +55,11 @@ export const RegisterEmployeeMainComponent = ({
   };
 
   return (
-    <Box>
+    <FormBox>
       <FormProvider onSubmit={onSubmit} initialValues={formData.toJSON()}>
         <Form />
       </FormProvider>
       {alert && <Alert type={alert.type} message={alert.message} />}
-    </Box>
+    </FormBox>
   );
 };
