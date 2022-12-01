@@ -9,16 +9,13 @@ import {
   useMemo,
 } from 'react';
 
-export type GenericObject = Record<string, unknown>;
-
 export type FormErrors<FormFields> = Partial<{
   [K in keyof FormFields]: string[];
 }>;
 
-export const FormContext =
-  createContext<FormProviderData<GenericObject> | null>(null);
+export const FormContext = createContext<FormProviderData<object> | null>(null);
 
-export type FormProviderData<FormFields extends GenericObject> = {
+export type FormProviderData<FormFields = object> = {
   values: FormFields;
   onChangeField: (name: string, value: any) => void;
   resetForm: () => void;
@@ -27,7 +24,7 @@ export type FormProviderData<FormFields extends GenericObject> = {
   setFieldErrors: (field: string, errors: string[] | null) => void;
 };
 
-type Props<FormFields extends GenericObject> = {
+type Props<FormFields = object> = {
   initialValues: FormFields;
   onSubmit: (
     e: FormEvent<HTMLFormElement>,
@@ -35,7 +32,7 @@ type Props<FormFields extends GenericObject> = {
   ) => void;
 };
 
-export const FormProvider = <FormFields extends GenericObject>({
+export const FormProvider = <FormFields extends object>({
   initialValues,
   children,
   onSubmit,
