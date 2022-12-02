@@ -17,23 +17,16 @@ export const ListEmployeesView = ({
   listEmployeesUseCase,
   deleteEmployeeUseCase,
 }: Props) => {
-  const [{ list }, setList] = useState<{ list: EmployeeList }>({
-    list: new EmployeeList(),
-  });
+  const [list, setList] = useState<EmployeeList>(new EmployeeList());
 
   const deleteEmployee = async (employee: EmployeeListItem) => {
-    setList(prev => {
-      prev.list.removeItem(employee);
-      console.log('list', list);
-      return { list };
-    });
+    list.removeItem(employee);
+    setList(new EmployeeList(list.items));
     await deleteEmployeeUseCase.execute({ id: employee.id });
   };
 
   useEffect(() => {
-    listEmployeesUseCase
-      .execute()
-      .then(responseList => setList({ list: responseList }));
+    listEmployeesUseCase.execute().then(setList);
   }, [listEmployeesUseCase]);
 
   return (
