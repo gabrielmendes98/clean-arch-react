@@ -13,7 +13,6 @@ export class EmployeesInMemoryHttpClientAdapter implements HttpClient {
   }
 
   async get<Response>(): Promise<HttpResponse<Response>> {
-    console.log('searching employees');
     const employees: ListEmployeesResponseDto = [
       {
         email: 'gabriel@gmail.com',
@@ -56,5 +55,16 @@ export class EmployeesInMemoryHttpClientAdapter implements HttpClient {
         success: true,
       } as Response,
     };
+
+    // return new Promise(resolve => {
+    //   setTimeout(() => {
+    //     resolve({
+    //       statusCode: HttpStatusCode.badRequest,
+    //       body: {
+    //         success: true,
+    //       } as Response,
+    //     });
+    //   }, 1000);
+    // });
   }
 }

@@ -1,4 +1,4 @@
-import { DeleteEmployeeUseCase } from 'employee/application/use-cases/delete-employee.use-case';
+import { DeleteEmployeeFromListUseCase } from 'employee/application/use-cases/delete-employee-from-list.use-case';
 import { ListEmployeesUseCase } from 'employee/application/use-cases/list-employees.use-case';
 import { makeHttpClient } from 'employee/infra/factories/http-client.factory';
 import { personsApiConfig } from 'shared/infra/config/persons-api.config';
@@ -8,7 +8,7 @@ export const makeListEmployeesPage = () => {
   const listEmployeesUseCase = new ListEmployeesUseCase(
     makeHttpClient(personsApiConfig.baseUrl, personsApiConfig.mock),
   );
-  const deleteEmployeeUseCase = new DeleteEmployeeUseCase(
+  const deleteEmployeeUseCase = new DeleteEmployeeFromListUseCase(
     makeHttpClient(personsApiConfig.baseUrl, personsApiConfig.mock),
   );
 
