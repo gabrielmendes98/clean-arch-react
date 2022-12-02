@@ -141,4 +141,4 @@ yupjs lib on the domain layer to validate our entities.
 
 - employees list cache
 - employees list pagination
-- global store
+- global storage

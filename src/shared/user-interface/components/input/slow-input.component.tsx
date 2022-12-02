@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useFormStore } from 'shared/infra/store/form/form.store';
+import { useFormStorage } from 'shared/infra/storage/form/form.storage';
 import styles from './slow-input.module.scss';
 
 type Props = {
@@ -17,7 +17,7 @@ export const SlowInput = ({
   type = 'text',
   onChange,
 }: Props) => {
-  const { values, onChangeField, errors, setFieldErrors } = useFormStore();
+  const { values, onChangeField, errors, setFieldErrors } = useFormStorage();
 
   const _id = useMemo(() => id || name, [id, name]);
 
