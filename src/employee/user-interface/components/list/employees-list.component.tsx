@@ -1,3 +1,4 @@
+import { EmployeeListItem } from 'employee/domain/entities/employee-list.entity';
 import { PAGES } from 'shared/domain/constants/pages';
 import { Button } from 'shared/user-interface/components/button/button.component';
 import { useNavigation } from 'shared/user-interface/routes/navigation';
@@ -10,7 +11,7 @@ export type Props = {
     document: string;
     email: string;
   }[];
-  deleteEmployee: (id: string) => void;
+  deleteEmployee: (employee: EmployeeListItem) => void;
 };
 
 export const EmployeesList = ({ employees, deleteEmployee }: Props) => {
@@ -39,9 +40,7 @@ export const EmployeesList = ({ employees, deleteEmployee }: Props) => {
             <td>{employee.document}</td>
             <td>{employee.email}</td>
             <td>
-              <Button onClick={() => deleteEmployee(employee.id)}>
-                Deletar
-              </Button>
+              <Button onClick={() => deleteEmployee(employee)}>Deletar</Button>
               <Button onClick={() => handleEdit(employee.id)}>Editar</Button>
             </td>
           </tr>

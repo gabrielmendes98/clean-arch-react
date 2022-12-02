@@ -1,4 +1,4 @@
-import { EmployeeOutputDto } from 'employee/application/dto/employee-output.dto';
+import { ListEmployeesResponseDto } from 'employee/application/dto/list-employees-response.dto';
 import {
   HttpClient,
   HttpResponse,
@@ -13,7 +13,7 @@ export class EmployeesInMemoryHttpClientAdapter implements HttpClient {
 
   async get<Response>(): Promise<HttpResponse<Response>> {
     console.log('searching employees');
-    const employees: EmployeeOutputDto[] = [
+    const employees: ListEmployeesResponseDto = [
       {
         email: 'gabriel@gmail.com',
         id: 'bb30888c-06cf-458b-aced-8a75187c6a67',
