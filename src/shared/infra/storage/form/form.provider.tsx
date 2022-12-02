@@ -59,7 +59,6 @@ export const FormProvider = <FormFields extends object>({
 
   const resetForm = useCallback(() => {
     setValues(initialValues);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const valuesToProvide = useMemo(

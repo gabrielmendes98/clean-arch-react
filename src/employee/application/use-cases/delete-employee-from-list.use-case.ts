@@ -5,12 +5,17 @@ import {
 import { UseCase } from 'shared/application/use-case';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { HttpClient, HttpStatusCode } from 'shared/application/http-client';
+import { EmployeeListStorage } from '../ports/employee-list.storage';
 
 export class DeleteEmployeeFromListUseCase implements UseCase<Input, Output> {
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private employeeListStorage: EmployeeListStorage,
+  ) {}
 
   async execute(input: Input): Promise<Output> {
-    const { list, item, updateList } = input;
+    const { list, updateList } = this.employeeListStorage;
+    const { item } = input;
 
     const removedIndex = list.removeItem(item);
     updateList(new EmployeeList(list.items));
@@ -30,9 +35,7 @@ export class DeleteEmployeeFromListUseCase implements UseCase<Input, Output> {
 }
 
 export type Input = {
-  list: EmployeeList;
   item: EmployeeListItem;
-  updateList: (list: EmployeeList) => void;
 };
 
 export type Output = {

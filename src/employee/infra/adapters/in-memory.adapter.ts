@@ -5,7 +5,6 @@ import {
   HttpStatusCode,
 } from 'shared/application/http-client';
 import { MethodNotImplementedError } from 'shared/domain/errors/method-not-implemented.error';
-import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 
 export class EmployeesInMemoryHttpClientAdapter implements HttpClient {
   constructor(public baseUrl: string) {

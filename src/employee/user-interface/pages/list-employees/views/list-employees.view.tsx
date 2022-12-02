@@ -7,25 +7,28 @@ import {
   EmployeeList,
   EmployeeListItem,
 } from 'employee/domain/entities/employee-list.entity';
+import { EmployeeListStorage } from 'employee/application/ports/employee-list.storage';
 
 type Props = {
   listEmployeesUseCase: ListEmployeesUseCase;
   deleteEmployeeUseCase: DeleteEmployeeFromListUseCase;
+  employeesListStorage: EmployeeListStorage;
 };
 
 export const ListEmployeesView = ({
   listEmployeesUseCase,
   deleteEmployeeUseCase,
+  employeesListStorage,
 }: Props) => {
-  const [list, setList] = useState<EmployeeList>(new EmployeeList());
+  const { list, updateList } = employeesListStorage;
 
   const deleteEmployee = async (item: EmployeeListItem) => {
-    await deleteEmployeeUseCase.execute({ list, item, updateList: setList });
+    await deleteEmployeeUseCase.execute({ item });
   };
 
   useEffect(() => {
-    listEmployeesUseCase.execute().then(setList);
-  }, [listEmployeesUseCase]);
+    listEmployeesUseCase.execute().then(updateList);
+  }, []);
 
   return (
     <ListBox>
