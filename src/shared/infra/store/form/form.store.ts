@@ -1,7 +1,7 @@
 import { useContext, Context } from 'react';
-import { FormContext, FormProviderData } from './form.store';
+import { FormContext, FormProviderData } from './form.provider';
 
-export const useFormContext = <FormFields = object>() => {
+export const useFormStore = <FormFields = object>() => {
   const context = useContext<FormProviderData<FormFields>>(
     FormContext as unknown as Context<FormProviderData<FormFields>>,
   );

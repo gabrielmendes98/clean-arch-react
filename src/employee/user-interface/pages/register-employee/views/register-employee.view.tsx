@@ -14,7 +14,7 @@ import { EntityValidationError } from 'shared/domain/errors/validation.error';
 import {
   FormProvider,
   FormProviderData,
-} from 'shared/infra/store/form/form.store';
+} from 'shared/infra/store/form/form.provider';
 import { Form } from '../../../components/form/employee-form.component';
 
 type Props = {
