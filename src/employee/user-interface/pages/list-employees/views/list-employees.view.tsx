@@ -20,9 +20,13 @@ export const ListEmployeesView = ({
   const [list, setList] = useState<EmployeeList>(new EmployeeList());
 
   const deleteEmployee = async (employee: EmployeeListItem) => {
-    list.removeItem(employee);
+    // retirar essas regras de negócio daqui
+    const index = list.removeItem(employee);
     setList(new EmployeeList(list.items));
-    await deleteEmployeeUseCase.execute({ id: employee.id });
+    await deleteEmployeeUseCase.execute({ id: employee.id }).catch(() => {
+      list.addItem(employee, index);
+      setList(new EmployeeList(list.items));
+    });
   };
 
   useEffect(() => {

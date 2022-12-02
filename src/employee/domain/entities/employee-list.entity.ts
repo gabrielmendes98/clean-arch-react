@@ -1,3 +1,5 @@
+import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
+
 export interface EmployeeListItem {
   name: string;
   salary: number;
@@ -21,6 +23,7 @@ export class EmployeeList {
   }
 
   addItem(item: EmployeeListItem, index = 0) {
+    UniqueEntityId.validate(item.id);
     this.items.splice(index, 0, item);
   }
 
