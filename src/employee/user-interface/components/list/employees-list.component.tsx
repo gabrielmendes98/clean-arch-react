@@ -1,7 +1,7 @@
 import { EmployeeListItem } from 'employee/domain/entities/employee-list.entity';
 import { PAGES } from 'shared/domain/constants/pages';
 import { Button } from 'shared/user-interface/components/button/button.component';
-import { useNavigation } from 'shared/user-interface/routes/navigation';
+import { useRouter } from 'shared/infra/adapters/router.adapter';
 
 export type Props = {
   employees: {
@@ -12,11 +12,14 @@ export type Props = {
     email: string;
   }[];
   deleteEmployee: (employee: EmployeeListItem) => void;
+  navigate: (url: string) => void;
 };
 
-export const EmployeesList = ({ employees, deleteEmployee }: Props) => {
-  const { navigate } = useNavigation();
-
+export const EmployeesList = ({
+  employees,
+  deleteEmployee,
+  navigate,
+}: Props) => {
   const handleEdit = (id: string) => {
     navigate(PAGES.EDIT_EMPLOYEE(id));
   };
