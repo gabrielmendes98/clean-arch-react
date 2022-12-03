@@ -1,7 +1,10 @@
 import axios from 'axios';
-import { HttpClient, HttpResponse } from 'shared/application/http-client';
+import {
+  HttpClientService,
+  HttpResponse,
+} from 'shared/application/http-client.port';
 
-export class AxiosAdapter implements HttpClient {
+export class AxiosAdapter implements HttpClientService {
   constructor(public baseUrl: string) {
     axios.defaults.baseURL = baseUrl;
   }

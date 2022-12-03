@@ -6,7 +6,7 @@ import {
 } from 'employee/user-interface/components/alert/alert.component';
 import { FormBox } from 'employee/user-interface/components/form-box/form-box.component';
 import {
-  EmployeeForm,
+  EmployeeFormService,
   EmployeeFormFields,
 } from 'employee/application/ports/employee-form.port';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
@@ -19,13 +19,14 @@ import { Form } from '../../../components/form/employee-form.component';
 
 type Props = {
   registerEmployeeUseCase: RegisterEmployeeUseCase;
-  form: EmployeeForm;
+  formService: EmployeeFormService;
 };
 
 export const RegisterEmployeeView = ({
   registerEmployeeUseCase,
-  form,
+  formService,
 }: Props) => {
+  const { initialValues, parseValuesToInput } = formService;
   const [alert, setAlert] = useState<AlertProps | null>(null);
 
   const onSubmit = async (
@@ -33,7 +34,7 @@ export const RegisterEmployeeView = ({
     { values, resetForm, setErrors }: FormProviderData<EmployeeFormFields>,
   ) => {
     try {
-      await registerEmployeeUseCase.execute(form.parseValuesToInput(values));
+      await registerEmployeeUseCase.execute(parseValuesToInput(values));
       setAlert({
         type: 'success',
         message: 'Funcionário cadastrado com sucesso!',
@@ -54,7 +55,7 @@ export const RegisterEmployeeView = ({
 
   return (
     <FormBox>
-      <FormProvider onSubmit={onSubmit} initialValues={form.initialValues}>
+      <FormProvider onSubmit={onSubmit} initialValues={initialValues}>
         <Form />
       </FormProvider>
       {alert && <Alert type={alert.type} message={alert.message} />}

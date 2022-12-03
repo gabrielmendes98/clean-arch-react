@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 import {
-  EmployeeForm,
+  EmployeeFormService,
   EmployeeFormFields,
 } from 'employee/application/ports/employee-form.port';
 
-export const useEmployeeForm = (): EmployeeForm => {
+export const useEmployeeForm = (): EmployeeFormService => {
   const initialValues = {
     name: '',
     email: '',

@@ -1,4 +1,4 @@
-export interface HttpClient {
+export interface HttpClientService {
   baseUrl: string;
   get<Response>(endpoint: string): Promise<HttpResponse<Response>>;
   post<Response>(endpoint: string, body: any): Promise<HttpResponse<Response>>;

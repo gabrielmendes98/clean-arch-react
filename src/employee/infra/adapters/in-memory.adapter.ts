@@ -1,12 +1,12 @@
 import { ListEmployeesResponseDto } from 'employee/application/dto/list-employees-response.dto';
 import {
-  HttpClient,
+  HttpClientService as HttpClientService,
   HttpResponse,
   HttpStatusCode,
-} from 'shared/application/http-client';
+} from 'shared/application/http-client.port';
 import { MethodNotImplementedError } from 'shared/domain/errors/method-not-implemented.error';
 
-export class EmployeesInMemoryHttpClient implements HttpClient {
+export class EmployeesInMemoryHttpClient implements HttpClientService {
   constructor(public baseUrl: string) {
     this.baseUrl = baseUrl;
   }

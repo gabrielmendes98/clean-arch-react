@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { EmployeeList } from 'employee/application/ports/employee-list.port';
+import { EmployeeListService } from 'employee/application/ports/employee-list.port';
 import { DeleteEmployeeFromListUseCase } from 'employee/application/use-cases/delete-employee-from-list.use-case';
 import { ListEmployeesUseCase } from 'employee/application/use-cases/list-employees.use-case';
 import { EmployeesList } from 'employee/user-interface/components/list/employees-list.component';
@@ -9,15 +9,15 @@ import { EmployeeListItem } from 'employee/domain/entities/employee-list.entity'
 type Props = {
   listEmployeesUseCase: ListEmployeesUseCase;
   deleteEmployeeUseCase: DeleteEmployeeFromListUseCase;
-  employeeList: EmployeeList;
+  employeeListService: EmployeeListService;
 };
 
 export const ListEmployeesView = ({
   listEmployeesUseCase,
   deleteEmployeeUseCase,
-  employeeList,
+  employeeListService,
 }: Props) => {
-  const { list, updateList } = employeeList;
+  const { list, updateList } = employeeListService;
 
   const deleteEmployee = async (item: EmployeeListItem) => {
     await deleteEmployeeUseCase.execute({ item });

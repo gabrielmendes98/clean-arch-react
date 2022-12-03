@@ -7,7 +7,7 @@ export interface EmployeeFormFields {
   salary: string;
 }
 
-export interface EmployeeForm {
+export interface EmployeeFormService {
   initialValues: EmployeeFormFields;
   parseValuesToInput(formFields: EmployeeFormFields): Input;
 }

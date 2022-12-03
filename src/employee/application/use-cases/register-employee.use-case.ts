@@ -1,10 +1,13 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
 import { UseCase } from 'shared/application/use-case';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
-import { HttpClient, HttpStatusCode } from 'shared/application/http-client';
+import {
+  HttpClientService,
+  HttpStatusCode,
+} from 'shared/application/http-client.port';
 
 export class RegisterEmployeeUseCase implements UseCase<Input, Output> {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClientService) {}
 
   async execute(input: Input): Promise<Output> {
     Employee.validate(input);
