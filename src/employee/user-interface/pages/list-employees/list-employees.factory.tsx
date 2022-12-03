@@ -6,20 +6,20 @@ import { personsApiConfig } from 'shared/infra/config/persons-api.config';
 import { ListEmployeesView } from './views/list-employees.view';
 
 export const MakeListEmployeesPage = () => {
-  const employeesListStorage = useEmployeeList();
+  const employeeList = useEmployeeList();
   const listEmployeesUseCase = new ListEmployeesUseCase(
     makeHttpClient(personsApiConfig.baseUrl, personsApiConfig.mock),
   );
   const deleteEmployeeUseCase = new DeleteEmployeeFromListUseCase(
     makeHttpClient(personsApiConfig.baseUrl, personsApiConfig.mock),
-    employeesListStorage,
+    employeeList,
   );
 
   return (
     <ListEmployeesView
       listEmployeesUseCase={listEmployeesUseCase}
       deleteEmployeeUseCase={deleteEmployeeUseCase}
-      employeesListStorage={employeesListStorage}
+      employeeList={employeeList}
     />
   );
 };

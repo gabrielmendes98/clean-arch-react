@@ -1,0 +1,29 @@
+import { useCallback } from 'react';
+import {
+  EmployeeForm,
+  EmployeeFormFields,
+} from 'employee/application/ports/employee-form.port';
+
+export const useEmployeeForm = (): EmployeeForm => {
+  const initialValues = {
+    name: '',
+    email: '',
+    document: '',
+    salary: '',
+  };
+
+  const parseValuesToInput = useCallback(
+    (formFields: EmployeeFormFields) => ({
+      name: formFields.name,
+      email: formFields.email,
+      document: formFields.document,
+      salary: Number(formFields.salary),
+    }),
+    [],
+  );
+
+  return {
+    initialValues,
+    parseValuesToInput,
+  };
+};

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { EmployeeListStorage } from 'employee/application/ports/employee-list.storage';
-import { EmployeeList } from 'employee/domain/entities/employee-list.entity';
+import { EmployeeList as EmployeeListPort } from 'employee/application/ports/employee-list.port';
+import { EmployeeList as EmployeeListEntity } from 'employee/domain/entities/employee-list.entity';
 
-export const useEmployeeList = (): EmployeeListStorage => {
-  const [list, setList] = useState(new EmployeeList());
+export const useEmployeeList = (): EmployeeListPort => {
+  const [list, setList] = useState(new EmployeeListEntity());
 
   return {
     list,

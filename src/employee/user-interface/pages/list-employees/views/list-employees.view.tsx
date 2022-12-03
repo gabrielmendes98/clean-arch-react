@@ -1,26 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { EmployeeList } from 'employee/application/ports/employee-list.port';
 import { DeleteEmployeeFromListUseCase } from 'employee/application/use-cases/delete-employee-from-list.use-case';
 import { ListEmployeesUseCase } from 'employee/application/use-cases/list-employees.use-case';
 import { EmployeesList } from 'employee/user-interface/components/list/employees-list.component';
 import { ListBox } from 'employee/user-interface/components/list-box/list-box.component';
-import {
-  EmployeeList,
-  EmployeeListItem,
-} from 'employee/domain/entities/employee-list.entity';
-import { EmployeeListStorage } from 'employee/application/ports/employee-list.storage';
+import { EmployeeListItem } from 'employee/domain/entities/employee-list.entity';
 
 type Props = {
   listEmployeesUseCase: ListEmployeesUseCase;
   deleteEmployeeUseCase: DeleteEmployeeFromListUseCase;
-  employeesListStorage: EmployeeListStorage;
+  employeeList: EmployeeList;
 };
 
 export const ListEmployeesView = ({
   listEmployeesUseCase,
   deleteEmployeeUseCase,
-  employeesListStorage,
+  employeeList,
 }: Props) => {
-  const { list, updateList } = employeesListStorage;
+  const { list, updateList } = employeeList;
 
   const deleteEmployee = async (item: EmployeeListItem) => {
     await deleteEmployeeUseCase.execute({ item });

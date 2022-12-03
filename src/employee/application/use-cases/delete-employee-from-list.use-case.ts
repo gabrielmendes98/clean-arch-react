@@ -1,16 +1,16 @@
 import {
-  EmployeeList,
+  EmployeeList as EmployeeListEntity,
   EmployeeListItem,
 } from 'employee/domain/entities/employee-list.entity';
 import { UseCase } from 'shared/application/use-case';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { HttpClient, HttpStatusCode } from 'shared/application/http-client';
-import { EmployeeListStorage } from '../ports/employee-list.storage';
+import { EmployeeList as EmployeeListPort } from '../ports/employee-list.port';
 
 export class DeleteEmployeeFromListUseCase implements UseCase<Input, Output> {
   constructor(
     private httpClient: HttpClient,
-    private employeeListStorage: EmployeeListStorage,
+    private employeeListStorage: EmployeeListPort,
   ) {}
 
   async execute(input: Input): Promise<Output> {
@@ -18,7 +18,7 @@ export class DeleteEmployeeFromListUseCase implements UseCase<Input, Output> {
     const { item } = input;
 
     const removedIndex = list.removeItem(item);
-    updateList(new EmployeeList(list.items));
+    updateList(new EmployeeListEntity(list.items));
 
     const response = await this.httpClient.delete<Output>(
       `/employees/${item.id}`,
@@ -28,7 +28,7 @@ export class DeleteEmployeeFromListUseCase implements UseCase<Input, Output> {
         return response.body;
       default:
         list.addItem(item, removedIndex);
-        updateList(new EmployeeList(list.items));
+        updateList(new EmployeeListEntity(list.items));
         throw new UnexpectedError();
     }
   }

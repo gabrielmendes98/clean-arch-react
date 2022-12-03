@@ -6,7 +6,7 @@ import {
 } from 'shared/application/http-client';
 import { MethodNotImplementedError } from 'shared/domain/errors/method-not-implemented.error';
 
-export class EmployeesInMemoryHttpClientAdapter implements HttpClient {
+export class EmployeesInMemoryHttpClient implements HttpClient {
   constructor(public baseUrl: string) {
     this.baseUrl = baseUrl;
   }

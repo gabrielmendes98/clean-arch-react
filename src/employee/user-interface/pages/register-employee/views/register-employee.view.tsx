@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { RegisterEmployeeUseCase } from 'employee/application/use-cases/register-employee.use-case';
 import {
-  EmployeeForm,
-  EmployeeFormFields,
-} from 'employee/infra/utils/employee-form';
-import {
   Alert,
   Props as AlertProps,
 } from 'employee/user-interface/components/alert/alert.component';
 import { FormBox } from 'employee/user-interface/components/form-box/form-box.component';
+import {
+  EmployeeForm,
+  EmployeeFormFields,
+} from 'employee/application/ports/employee-form.port';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { EntityValidationError } from 'shared/domain/errors/validation.error';
 import {
@@ -19,12 +19,12 @@ import { Form } from '../../../components/form/employee-form.component';
 
 type Props = {
   registerEmployeeUseCase: RegisterEmployeeUseCase;
-  formData: EmployeeForm;
+  form: EmployeeForm;
 };
 
 export const RegisterEmployeeView = ({
   registerEmployeeUseCase,
-  formData,
+  form,
 }: Props) => {
   const [alert, setAlert] = useState<AlertProps | null>(null);
 
@@ -33,9 +33,7 @@ export const RegisterEmployeeView = ({
     { values, resetForm, setErrors }: FormProviderData<EmployeeFormFields>,
   ) => {
     try {
-      await registerEmployeeUseCase.execute(
-        EmployeeForm.parseFormToInput(values),
-      );
+      await registerEmployeeUseCase.execute(form.parseValuesToInput(values));
       setAlert({
         type: 'success',
         message: 'Funcionário cadastrado com sucesso!',
@@ -56,7 +54,7 @@ export const RegisterEmployeeView = ({
 
   return (
     <FormBox>
-      <FormProvider onSubmit={onSubmit} initialValues={formData.toJSON()}>
+      <FormProvider onSubmit={onSubmit} initialValues={form.initialValues}>
         <Form />
       </FormProvider>
       {alert && <Alert type={alert.type} message={alert.message} />}
