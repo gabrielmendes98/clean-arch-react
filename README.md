@@ -26,9 +26,8 @@
   - must contain the fields: name, salary, document (cpf/cnpj) and email
   - the form must be validated only when it is sent
   - field error messages should appear below each field
-  - when updating employee, it should redirect to list page
+  - when updating employee, it should notify user and redirect to list page
   - if a connection error occurs, it should show an error message
-  - must contain a button to return to the list screen
   - should clear field error message when change
 - list of employees
   - should show a list of all registered employees, without pagination

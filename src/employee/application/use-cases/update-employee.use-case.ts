@@ -1,17 +1,22 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
 import { UseCase } from 'shared/application/use-case';
-import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
+import {
+  UnexpectedError,
+  UNEXPECTED_ERROR_MESSAGE,
+} from 'shared/domain/errors/unexpected.error';
 import {
   HttpClientService,
   HttpStatusCode,
 } from 'shared/application/http-client.port';
 import { RouterService } from 'shared/application/router.port';
 import { PAGES } from 'shared/domain/constants/pages';
+import { NotificationService } from '../ports/notification';
 
 export class UpdateEmployeeUseCase implements UseCase<Input, Output> {
   constructor(
     private httpClient: HttpClientService,
     private routerService: RouterService,
+    private notifier: NotificationService,
   ) {}
 
   async execute(input: Input): Promise<Output> {
@@ -20,11 +25,13 @@ export class UpdateEmployeeUseCase implements UseCase<Input, Output> {
       `/employees/${input.id}`,
       input,
     );
+    this.notifier.notify('Funcionário atualizado com sucesso!', 'success');
     this.routerService.navigate(PAGES.LIST_EMPLOYEES);
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         return response.body;
       default:
+        this.notifier.notify(UNEXPECTED_ERROR_MESSAGE, 'error');
         throw new UnexpectedError();
     }
   }
