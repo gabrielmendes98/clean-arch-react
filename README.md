@@ -3,8 +3,6 @@
 - use formprovider with dependency inversion so we can change form provider at
   any time
 - avoid prop drilling like when using useRouter
-- improve useCases and api management
-- implement notification service
 
 ## System Requirements Specification
 
