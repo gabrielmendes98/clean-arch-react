@@ -25,7 +25,7 @@
   - must contain the fields: name, salary, document (cpf/cnpj) and email
   - the form must be validated only when it is sent
   - field error messages should appear below each field
-  - when editing employee, it should redirect to list page
+  - when updating employee, it should redirect to list page
   - if a connection error occurs, it should show an error message
   - must contain a button to return to the list screen
   - should clear field error message when change
@@ -33,7 +33,10 @@
   - should show a list of all registered employees, without pagination
   - the list must contain the following employee data: name, salary, document
     (cpf/cnpj) and email
-  - each line of the list must have edit and delete buttons
+  - each line of the list must have update and delete buttons
+  - when delete, should automatically update list
+  - when an error occurs while deleting, should rollback list state
+  - update button should redirect to employee update screen
 - Create an account
   - the user must inform email, password and confirm the password
   - at the end of the registration, the user should be logged in automatically
@@ -50,7 +53,7 @@
 - Infrastructure -> drivers, adapters, repository implementation, libs,
   validations, formatters.
 - Application -> use cases, models, dtos, services, repository interface,
-  interfaces.
+  interfaces/ports.
 - Domain -> interfaces, validations, entities, value objects.
 
 <img src='./resources/ca-diagram.png' width="350" />
