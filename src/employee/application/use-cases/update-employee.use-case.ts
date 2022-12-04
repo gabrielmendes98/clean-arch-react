@@ -10,7 +10,7 @@ import {
 } from 'shared/application/http-client.port';
 import { RouterService } from 'shared/application/router.port';
 import { PAGES } from 'shared/domain/constants/pages';
-import { NotificationService } from '../ports/notification';
+import { NotificationService } from '../../../shared/application/notification.port';
 
 export class UpdateEmployeeUseCase implements UseCase<Input, Output> {
   constructor(

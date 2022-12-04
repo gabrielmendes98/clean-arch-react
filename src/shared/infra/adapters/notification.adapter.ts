@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 import {
   NotificationService,
   NotificationType,
-} from 'employee/application/ports/notification';
+} from 'shared/application/notification.port';
 
 export const useNotification = (): NotificationService => {
   const notify = (message: string, type: NotificationType) =>

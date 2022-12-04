@@ -8,7 +8,7 @@ import {
   HttpClientService,
   HttpStatusCode,
 } from 'shared/application/http-client.port';
-import { NotificationService } from '../ports/notification';
+import { NotificationService } from '../../../shared/application/notification.port';
 
 export class RegisterEmployeeUseCase implements UseCase<Input, Output> {
   constructor(
