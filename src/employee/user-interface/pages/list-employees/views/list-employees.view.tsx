@@ -3,7 +3,6 @@ import { EmployeeListService } from 'employee/application/ports/employee-list.po
 import { DeleteEmployeeFromListUseCase } from 'employee/application/use-cases/delete-employee-from-list.use-case';
 import { ListEmployeesUseCase } from 'employee/application/use-cases/list-employees.use-case';
 import { EmployeesList } from 'employee/user-interface/components/list/employees-list.component';
-import { ListBox } from 'employee/user-interface/components/list-box/list-box.component';
 import { EmployeeListItem } from 'employee/domain/entities/employee-list.entity';
 import { RouterService } from 'shared/application/router.port';
 
@@ -32,14 +31,12 @@ export const ListEmployeesView = ({
   }, []);
 
   return (
-    <ListBox>
-      {list && (
-        <EmployeesList
-          employees={list.items}
-          deleteEmployee={deleteEmployee}
-          navigate={navigate}
-        />
-      )}
-    </ListBox>
+    list && (
+      <EmployeesList
+        employees={list.items}
+        deleteEmployee={deleteEmployee}
+        navigate={navigate}
+      />
+    )
   );
 };

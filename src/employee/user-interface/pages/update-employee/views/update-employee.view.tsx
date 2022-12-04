@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react';
-import { FormBox } from 'employee/user-interface/components/form-box/form-box.component';
 import {
   EmployeeFormService,
   EmployeeFormFields,
@@ -62,10 +61,8 @@ export const UpdateEmployeeView = ({
   }, []);
 
   return (
-    <FormBox>
-      <FormProvider onSubmit={onSubmit} initialValues={values}>
-        <Form />
-      </FormProvider>
-    </FormBox>
+    <FormProvider onSubmit={onSubmit} initialValues={values}>
+      <Form />
+    </FormProvider>
   );
 };

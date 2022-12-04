@@ -1,5 +1,4 @@
 import { RegisterEmployeeUseCase } from 'employee/application/use-cases/register-employee.use-case';
-import { FormBox } from 'employee/user-interface/components/form-box/form-box.component';
 import {
   EmployeeFormService,
   EmployeeFormFields,
@@ -37,10 +36,8 @@ export const RegisterEmployeeView = ({
   };
 
   return (
-    <FormBox>
-      <FormProvider onSubmit={onSubmit} initialValues={initialValues}>
-        <Form />
-      </FormProvider>
-    </FormBox>
+    <FormProvider onSubmit={onSubmit} initialValues={initialValues}>
+      <Form />
+    </FormProvider>
   );
 };

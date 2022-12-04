@@ -3,6 +3,7 @@ import { MakeRegisterEmployeePage } from 'employee/user-interface/pages/register
 import { MakeHome } from 'static-pages/home/home.factory';
 import { MakeListEmployeesPage } from 'employee/user-interface/pages/list-employees/list-employees.factory';
 import { MakeUpdateEmployeePage } from 'employee/user-interface/pages/update-employee/update-employee.factory';
+import { MakeLoginPage } from 'authentication/user-interface/pages/login/login.factory';
 import { PAGES } from 'shared/domain/constants/pages';
 import { MainLayout } from 'shared/user-interface/components/layouts/main/main.layout';
 
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: PAGES.UPDATE_EMPLOYEE(':id'),
         element: <MakeUpdateEmployeePage />,
+      },
+      {
+        path: PAGES.LOGIN,
+        element: <MakeLoginPage />,
       },
     ],
   },
