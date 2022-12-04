@@ -1,4 +1,6 @@
 import { LoginForm } from 'authentication/user-interface/components/login-form/login-form.component';
+import { Email } from 'shared/domain/value-objects/email.vo';
+import { Password } from 'shared/domain/value-objects/password.vo';
 import { FormProvider } from 'shared/infra/storage/form/form.provider';
 
 export const LoginView = () => {
@@ -13,6 +15,10 @@ export const LoginView = () => {
       initialValues={{
         email: '',
         password: '',
+      }}
+      validations={{
+        email: Email.validate,
+        password: Password.validate,
       }}
       onSubmit={onSubmit}
     >

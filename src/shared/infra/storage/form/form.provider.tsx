@@ -14,6 +14,10 @@ export type FormErrors<FormFields> = Partial<{
   [K in keyof FormFields]: string[];
 }>;
 
+export type FormValidations<FormFields> = Partial<{
+  [K in keyof FormFields]: (value: string) => boolean;
+}>;
+
 export const FormContext = createContext<FormProviderData<object> | null>(null);
 
 export type FormProviderData<FormFields = object> = {
@@ -23,6 +27,8 @@ export type FormProviderData<FormFields = object> = {
   errors: FormErrors<FormFields>;
   setErrors: Dispatch<SetStateAction<FormErrors<FormFields>>>;
   setFieldErrors: (field: string, errors: string[] | null) => void;
+  validations: FormValidations<FormFields>;
+  wasSubmitted: boolean;
 };
 
 type Props<FormFields = object> = {
@@ -31,15 +37,18 @@ type Props<FormFields = object> = {
     e: FormEvent<HTMLFormElement>,
     formBag: FormProviderData<FormFields>,
   ) => void;
+  validations?: FormValidations<FormFields>;
 };
 
 export const FormProvider = <FormFields extends object>({
   initialValues,
   children,
   onSubmit,
+  validations = {},
 }: PropsWithChildren<Props<FormFields>>) => {
   const [values, setValues] = useState<FormFields>(initialValues);
   const [errors, setErrors] = useState<FormErrors<FormFields>>({});
+  const [wasSubmitted, setWasSubmitted] = useState<boolean>(false);
 
   const setFieldErrors = useCallback(
     (field: string, errors: string[] | null) => {
@@ -70,13 +79,25 @@ export const FormProvider = <FormFields extends object>({
       errors,
       setErrors,
       setFieldErrors,
+      validations,
+      wasSubmitted,
     }),
-    [errors, onChangeField, resetForm, setFieldErrors, values],
+    [errors, onChangeField, resetForm, setFieldErrors, values, wasSubmitted],
   );
 
   const _onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit(e, valuesToProvide);
+    setWasSubmitted(true);
+    try {
+      if (true) {
+        const formData = new FormData(e.currentTarget);
+        const fieldValues = Object.fromEntries(formData.entries());
+        Object.keys(fieldValues).every((key: string) =>
+          validations[key](fieldValues[key]),
+        );
+      }
+      onSubmit(e, valuesToProvide);
+    } catch (e) {}
   };
 
   useEffect(() => {
@@ -85,7 +106,9 @@ export const FormProvider = <FormFields extends object>({
 
   return (
     <FormContext.Provider value={valuesToProvide}>
-      <form onSubmit={_onSubmit}>{children}</form>
+      <form noValidate onSubmit={_onSubmit}>
+        {children}
+      </form>
     </FormContext.Provider>
   );
 };
