@@ -5,9 +5,14 @@ import {
   HttpClientService,
   HttpStatusCode,
 } from 'shared/application/http-client.port';
+import { RouterService } from 'shared/application/router.port';
+import { PAGES } from 'shared/domain/constants/pages';
 
 export class UpdateEmployeeUseCase implements UseCase<Input, Output> {
-  constructor(private httpClient: HttpClientService) {}
+  constructor(
+    private httpClient: HttpClientService,
+    private routerService: RouterService,
+  ) {}
 
   async execute(input: Input): Promise<Output> {
     Employee.validate(input);
@@ -15,6 +20,7 @@ export class UpdateEmployeeUseCase implements UseCase<Input, Output> {
       `/employees/${input.id}`,
       input,
     );
+    this.routerService.navigate(PAGES.LIST_EMPLOYEES);
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         return response.body;

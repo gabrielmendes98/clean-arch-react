@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { RegisterEmployeeUseCase } from 'employee/application/use-cases/register-employee.use-case';
 import {
   Alert,
@@ -35,8 +35,9 @@ export const UpdateEmployeeView = ({
   formService,
   routerService,
 }: Props) => {
-  const { parseValuesToInput, parseEntityToValues } = formService;
-  const { navigate, getUrlParams } = routerService;
+  const { initialValues, parseValuesToInput, parseEntityToValues } =
+    formService;
+  const { getUrlParams } = routerService;
   const { id } = getUrlParams();
   const [employee, setEmployee] = useState<Employee>();
   const [alert, setAlert] = useState<AlertProps | null>(null);
@@ -50,7 +51,6 @@ export const UpdateEmployeeView = ({
         id: employee!.id,
         ...parseValuesToInput(values),
       });
-      navigate(PAGES.LIST_EMPLOYEES);
     } catch (e) {
       if (e instanceof EntityValidationError) {
         setErrors(e.errors);
@@ -64,6 +64,11 @@ export const UpdateEmployeeView = ({
     }
   };
 
+  const values = useMemo(
+    () => (employee ? parseEntityToValues(employee) : initialValues),
+    [employee],
+  );
+
   useEffect(() => {
     if (id) {
       getEmployeeUseCase.execute({ id }).then(response => {
@@ -74,15 +79,9 @@ export const UpdateEmployeeView = ({
 
   return (
     <FormBox>
-      {employee && (
-        <FormProvider
-          onSubmit={onSubmit}
-          initialValues={parseEntityToValues(employee)}
-        >
-          <Form />
-        </FormProvider>
-      )}
-
+      <FormProvider onSubmit={onSubmit} initialValues={values}>
+        <Form />
+      </FormProvider>
       {alert && <Alert type={alert.type} message={alert.message} />}
     </FormBox>
   );

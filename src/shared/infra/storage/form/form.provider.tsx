@@ -7,6 +7,7 @@ import {
   Dispatch,
   SetStateAction,
   useMemo,
+  useEffect,
 } from 'react';
 
 export type FormErrors<FormFields> = Partial<{
@@ -77,6 +78,10 @@ export const FormProvider = <FormFields extends object>({
     e.preventDefault();
     onSubmit(e, valuesToProvide);
   };
+
+  useEffect(() => {
+    setValues(initialValues);
+  }, [initialValues]);
 
   return (
     <FormContext.Provider value={valuesToProvide}>

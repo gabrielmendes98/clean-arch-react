@@ -13,6 +13,7 @@ export const MakeUpdateEmployeePage = () => {
   const routerService: RouterService = useRouter();
   const updateEmployeeUseCase = new UpdateEmployeeUseCase(
     makeHttpClient(personsApiConfig.baseUrl, personsApiConfig.mock),
+    routerService,
   );
   const getEmployeeUseCase = new GetEmployeeUseCase(
     makeHttpClient(personsApiConfig.baseUrl, personsApiConfig.mock),
