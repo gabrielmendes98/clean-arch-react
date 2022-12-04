@@ -1,4 +1,3 @@
-import { Entity } from 'shared/domain/entity/entity';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 import { Document } from 'shared/domain/value-objects/document.vo';
 import { Email } from 'shared/domain/value-objects/email.vo';
@@ -12,14 +11,13 @@ export type EmployeeProps = {
   email: Email;
 };
 
-export class Employee extends Entity<EmployeeProps> {
-  constructor(public readonly props: EmployeeProps) {
-    super(props);
+export class Employee {
+  constructor(private readonly props: EmployeeProps) {
     Employee.validate({
       ...props,
       id: props.id.value,
       document: props.document.value,
-      email: props.document.value,
+      email: props.email.value,
     });
     Object.assign(this.props, props);
   }
@@ -75,5 +73,19 @@ export class Employee extends Entity<EmployeeProps> {
 
   get name() {
     return this.props.name;
+  }
+
+  get salary() {
+    return this.props.salary;
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      salary: this.salary,
+      id: this.id,
+      document: this.document,
+      email: this.email,
+    };
   }
 }

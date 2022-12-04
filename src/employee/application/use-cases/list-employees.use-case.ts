@@ -5,15 +5,13 @@ import {
   HttpClientService,
   HttpStatusCode,
 } from 'shared/application/http-client.port';
-import { ListEmployeesResponseDto } from '../dto/list-employees-response.dto';
+import { ListEmployeesDto } from '../dto/list-employees.dto';
 
 export class ListEmployeesUseCase implements UseCase<Input, Output> {
   constructor(private httpClient: HttpClientService) {}
 
   async execute(): Promise<Output> {
-    const response = await this.httpClient.get<ListEmployeesResponseDto>(
-      '/employees',
-    );
+    const response = await this.httpClient.get<ListEmployeesDto>('/employees');
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         return new EmployeeList(response.body);

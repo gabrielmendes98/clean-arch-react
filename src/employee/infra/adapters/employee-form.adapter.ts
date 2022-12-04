@@ -3,6 +3,7 @@ import {
   EmployeeFormService,
   EmployeeFormFields,
 } from 'employee/application/ports/employee-form.port';
+import { Employee } from 'employee/domain/entities/employee.entity';
 
 export const useEmployeeForm = (): EmployeeFormService => {
   const initialValues = {
@@ -22,8 +23,19 @@ export const useEmployeeForm = (): EmployeeFormService => {
     [],
   );
 
+  const parseEntityToValues = useCallback(
+    (employee: Employee) => ({
+      name: employee.name,
+      email: employee.email,
+      document: employee.document,
+      salary: String(employee.salary),
+    }),
+    [],
+  );
+
   return {
     initialValues,
     parseValuesToInput,
+    parseEntityToValues,
   };
 };

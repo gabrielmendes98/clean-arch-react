@@ -21,7 +21,7 @@ export const EmployeesList = ({
   navigate,
 }: Props) => {
   const handleEdit = (id: string) => {
-    navigate(PAGES.EDIT_EMPLOYEE(id));
+    navigate(PAGES.UPDATE_EMPLOYEE(id));
   };
 
   return (
