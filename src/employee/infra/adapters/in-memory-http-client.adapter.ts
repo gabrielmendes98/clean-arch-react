@@ -3,7 +3,6 @@ import {
   HttpResponse,
   HttpStatusCode,
 } from 'shared/application/http-client.port';
-import { MethodNotImplementedError } from 'shared/domain/errors/method-not-implemented.error';
 
 const getRouteType = (route: string): 'getByIdRoute' | 'listRoute' => {
   const routes = {

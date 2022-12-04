@@ -2,7 +2,8 @@
 
 - use formprovider with dependency inversion so we can change form provider at
   any time
-- avoid prop drilling like useRouter
+- avoid prop drilling like when using useRouter
+- improve useCases and api management
 
 ## System Requirements Specification
 
