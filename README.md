@@ -4,6 +4,7 @@
   any time
 - avoid prop drilling like when using useRouter
 - improve useCases and api management
+- implement notification service
 
 ## System Requirements Specification
 
