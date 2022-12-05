@@ -11,6 +11,9 @@ export const HeaderComponent = () => (
           <Link to={PAGES.HOME}>Home</Link>
         </li>
         <li>
+          <Link to={PAGES.LOGIN}>Login</Link>
+        </li>
+        <li>
           <Link to={PAGES.REGISTER_EMPLOYEES}>Cadastrar Funcionario</Link>
         </li>
         <li>
