@@ -9,13 +9,14 @@ import {
   useMemo,
   useEffect,
 } from 'react';
+import { validator } from 'shared/domain/validator';
 
 export type FormErrors<FormFields> = Partial<{
   [K in keyof FormFields]: string[];
 }>;
 
 export type FormValidations<FormFields> = Partial<{
-  [K in keyof FormFields]: (value: string) => boolean;
+  [K in keyof FormFields]: (value: any) => boolean;
 }>;
 
 export const FormContext = createContext<FormProviderData<object> | null>(null);
@@ -92,9 +93,11 @@ export const FormProvider = <FormFields extends object>({
       if (true) {
         const formData = new FormData(e.currentTarget);
         const fieldValues = Object.fromEntries(formData.entries());
-        Object.keys(fieldValues).every((key: string) =>
-          validations[key](fieldValues[key]),
-        );
+        validator
+          .entityValidationSchema(
+            validations as Record<string, (value: string) => boolean>,
+          )
+          .validate(fieldValues);
       }
       onSubmit(e, valuesToProvide);
     } catch (e) {}

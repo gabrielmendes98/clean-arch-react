@@ -91,7 +91,7 @@ yup.addMethod(
 
 const entityValidationSchema = (
   validations: Validations,
-  optionalAttributes: string[],
+  optionalAttributes?: string[],
 ) => ({
   validate: (objectToValidate: { [key: string]: any }) => {
     const errors: Errors = {};
@@ -100,7 +100,7 @@ const entityValidationSchema = (
       try {
         if (
           !(
-            optionalAttributes.includes(key) &&
+            optionalAttributes?.includes(key) &&
             objectToValidate[key] === undefined
           )
         ) {
