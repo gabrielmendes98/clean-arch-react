@@ -90,15 +90,13 @@ export const FormProvider = <FormFields extends object>({
     e.preventDefault();
     setWasSubmitted(true);
     try {
-      if (true) {
-        const formData = new FormData(e.currentTarget);
-        const fieldValues = Object.fromEntries(formData.entries());
-        validator
-          .entityValidationSchema(
-            validations as Record<string, (value: string) => boolean>,
-          )
-          .validate(fieldValues);
-      }
+      const formData = new FormData(e.currentTarget);
+      const fieldValues = Object.fromEntries(formData.entries());
+      validator
+        .entityValidationSchema(
+          validations as Record<string, (value: string) => boolean>,
+        )
+        .validate(fieldValues);
       onSubmit(e, valuesToProvide);
     } catch (e) {}
   };
