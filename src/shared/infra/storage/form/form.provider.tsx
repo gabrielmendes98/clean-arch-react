@@ -90,6 +90,7 @@ export const FormProvider = <FormFields extends object>({
     e.preventDefault();
     setWasSubmitted(true);
     try {
+      const { values, ...otherValuesToProvide } = valuesToProvide;
       const formData = new FormData(e.currentTarget);
       const fieldValues = Object.fromEntries(formData.entries());
       validator
@@ -97,7 +98,10 @@ export const FormProvider = <FormFields extends object>({
           validations as Record<string, (value: string) => boolean>,
         )
         .validate(fieldValues);
-      onSubmit(e, valuesToProvide);
+      onSubmit(e, {
+        values: Object.assign(values, fieldValues),
+        ...otherValuesToProvide,
+      });
     } catch (e) {}
   };
 

@@ -1,25 +1,31 @@
+import {
+  LoginFormFields,
+  LoginFormService,
+} from 'authentication/application/ports/login-form.port';
 import { LoginForm } from 'authentication/user-interface/components/login-form/login-form.component';
-import { Email } from 'shared/domain/value-objects/email.vo';
-import { Password } from 'shared/domain/value-objects/password.vo';
-import { FormProvider } from 'shared/infra/storage/form/form.provider';
+import {
+  FormProvider,
+  FormProviderData,
+} from 'shared/infra/storage/form/form.provider';
 
-export const LoginView = () => {
-  console.log('login view');
+type Props = {
+  formService: LoginFormService;
+};
 
-  const onSubmit = () => {
-    console.log('submitting');
+export const LoginView = ({ formService }: Props) => {
+  const { initialValues, validations } = formService;
+
+  const onSubmit = (
+    e: React.FormEvent<HTMLFormElement>,
+    { values }: FormProviderData<LoginFormFields>,
+  ) => {
+    console.log(values);
   };
 
   return (
     <FormProvider
-      initialValues={{
-        email: '',
-        password: '',
-      }}
-      validations={{
-        email: Email.validate,
-        password: Password.validate,
-      }}
+      initialValues={initialValues}
+      validations={validations}
       onSubmit={onSubmit}
     >
       <LoginForm />
