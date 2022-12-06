@@ -6,7 +6,7 @@ export const useFormStorage = <FormFields = object>() => {
     FormContext as unknown as Context<FormProviderData<FormFields>>,
   );
   if (!context) {
-    throw new Error('useFormContext must be used under FormProvider');
+    throw new Error('useFormStorage must be used under FormProvider');
   }
   return context;
 };
