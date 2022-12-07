@@ -4,12 +4,14 @@ import { UniqueEntityId } from '../value-objects/unique-entity-id.vo';
 export class User {
   private _id: UniqueEntityId;
   private _email: Email;
-  private token: string;
+  private _token: string;
+  private _name: string;
 
-  constructor(id: UniqueEntityId, email: Email, token: string) {
+  constructor(id: UniqueEntityId, email: Email, token: string, name: string) {
     this._id = id;
     this._email = email;
-    this.token = token;
+    this._token = token;
+    this._name = name;
   }
 
   get id() {
@@ -18,5 +20,22 @@ export class User {
 
   get email() {
     return this._email.value;
+  }
+
+  get token() {
+    return this._token;
+  }
+
+  get name() {
+    return this._name;
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      id: this.id,
+      email: this.email,
+      token: this.token,
+    };
   }
 }

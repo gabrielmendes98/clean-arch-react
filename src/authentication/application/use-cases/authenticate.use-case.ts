@@ -32,11 +32,13 @@ export class AuthenticateUseCase implements UseCase<Input, Output> {
       id: responseId,
       email: responseEmail,
       token: responseToken,
+      name: responseName,
     } = response.body;
     const user = new User(
       new UniqueEntityId(responseId),
       new Email(responseEmail),
       responseToken,
+      responseName,
     );
     this.storage.updateUser(user);
     this.routerService.navigate(PAGES.HOME);

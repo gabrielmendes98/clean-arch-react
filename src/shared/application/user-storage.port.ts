@@ -5,3 +5,10 @@ export interface UserStorageService {
   updateUser(user: User | null): void;
   removeUser(): void;
 }
+
+export interface PersistedUser {
+  name: string;
+  id: string;
+  email: string;
+  token: string;
+}
