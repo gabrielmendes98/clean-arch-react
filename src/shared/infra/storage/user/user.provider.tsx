@@ -1,24 +1,28 @@
-import { useState, PropsWithChildren, createContext, Dispatch } from 'react';
-import { Email } from 'shared/domain/value-objects/email.vo';
+import { useState, PropsWithChildren, createContext, useCallback } from 'react';
+import { UserStorageService } from 'shared/application/user-storage.port';
+import { User } from 'shared/domain/entities/user.entity';
+import { makeStoragePersistor } from 'shared/infra/factories/storage-persistor.factory';
 
-export type User = {
-  email: Email;
-  name: string;
-};
-
-export type UserProviderData = {
-  user: User | null;
-  setUser: Dispatch<React.SetStateAction<User | null>>;
-};
-
-export const UserContext = createContext<UserProviderData | null>(null);
+export const UserContext = createContext<UserStorageService | null>(null);
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
+  const persistor = makeStoragePersistor<User>();
   const [user, setUser] = useState<User | null>(null);
+
+  const updateUser = useCallback((user: User) => {
+    setUser(user);
+    persistor.set('user', user);
+  }, []);
+
+  const removeUser = () => {
+    setUser(null);
+    persistor.delete('user');
+  };
 
   const value = {
     user,
-    setUser,
+    updateUser,
+    removeUser,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

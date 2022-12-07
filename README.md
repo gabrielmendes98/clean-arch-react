@@ -3,6 +3,10 @@
 - use formprovider with dependency inversion so we can change form provider at
   any time
 - avoid prop drilling like when using useRouter
+- refactor storage folder
+- use more factories
+- refactor makeHttpClient(personsApiConfig.baseUrl, personsApiConfig.mock)
+- refactor api error handling
 
 ## System Requirements Specification
 

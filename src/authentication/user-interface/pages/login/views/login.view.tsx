@@ -2,6 +2,7 @@ import {
   LoginFormFields,
   LoginFormService,
 } from 'authentication/application/ports/login-form.port';
+import { AuthenticateUseCase } from 'authentication/application/use-cases/authenticate.use-case';
 import { LoginForm } from 'authentication/user-interface/components/login-form/login-form.component';
 import {
   FormProvider,
@@ -10,16 +11,17 @@ import {
 
 type Props = {
   formService: LoginFormService;
+  authenticateUseCase: AuthenticateUseCase;
 };
 
-export const LoginView = ({ formService }: Props) => {
+export const LoginView = ({ formService, authenticateUseCase }: Props) => {
   const { initialValues, validations } = formService;
 
-  const onSubmit = (
+  const onSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
     { values }: FormProviderData<LoginFormFields>,
   ) => {
-    console.log(values);
+    await authenticateUseCase.execute(values);
   };
 
   return (
