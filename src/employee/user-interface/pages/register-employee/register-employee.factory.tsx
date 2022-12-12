@@ -4,14 +4,13 @@ import { useEmployeeForm } from 'employee/infra/adapters/employee-form.adapter';
 import { EmployeeFormService } from 'employee/application/ports/employee-form.port';
 import { useNotification } from 'shared/infra/adapters/notification.adapter';
 import { NotificationService } from 'shared/application/notification.port';
-import { personsApiConfig } from 'shared/infra/adapters/persons-api.adapter';
 import { RegisterEmployeeView } from './views/register-employee.view';
 
 export const MakeRegisterEmployeePage = () => {
   const formService: EmployeeFormService = useEmployeeForm();
   const notifier: NotificationService = useNotification();
   const registerEmployeeUseCase = new RegisterEmployeeUseCase(
-    makeHttpClient(personsApiConfig.baseUrl, personsApiConfig.mock),
+    makeHttpClient(),
     notifier,
   );
 

@@ -4,10 +4,8 @@ import {
   EmployeeFormFields,
 } from 'employee/application/ports/employee-form.port';
 import { EntityValidationError } from 'shared/domain/errors/validation.error';
-import {
-  FormProvider,
-  FormProviderData,
-} from 'shared/infra/providers/form.provider';
+import { FormProvider } from 'shared/infra/providers/form.provider';
+import { FormStorageService } from 'shared/application/form-storage.port';
 import { Form } from '../../../components/form/employee-form.component';
 
 type Props = {
@@ -23,7 +21,7 @@ export const RegisterEmployeeView = ({
 
   const onSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
-    { values, resetForm, setErrors }: FormProviderData<EmployeeFormFields>,
+    { values, resetForm, setErrors }: FormStorageService<EmployeeFormFields>,
   ) => {
     try {
       await registerEmployeeUseCase.execute(parseValuesToInput(values));

@@ -7,11 +7,9 @@ import { UpdateEmployeeUseCase } from 'employee/application/use-cases/update-emp
 import { GetEmployeeUseCase } from 'employee/application/use-cases/get-employee.use-case';
 import { Employee } from 'employee/domain/entities/employee.entity';
 import { EntityValidationError } from 'shared/domain/errors/validation.error';
-import {
-  FormProvider,
-  FormProviderData,
-} from 'shared/infra/providers/form.provider';
+import { FormProvider } from 'shared/infra/providers/form.provider';
 import { RouterService } from 'shared/application/router.port';
+import { FormStorageService } from 'shared/application/form-storage.port';
 import { Form } from '../../../components/form/employee-form.component';
 
 type Props = {
@@ -35,7 +33,7 @@ export const UpdateEmployeeView = ({
 
   const onSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
-    { values, setErrors }: FormProviderData<EmployeeFormFields>,
+    { values, setErrors }: FormStorageService<EmployeeFormFields>,
   ) => {
     try {
       await updateEmployeeUseCase.execute({

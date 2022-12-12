@@ -4,7 +4,6 @@ import { EmployeeFormService } from 'employee/application/ports/employee-form.po
 import { UpdateEmployeeUseCase } from 'employee/application/use-cases/update-employee.use-case';
 import { GetEmployeeUseCase } from 'employee/application/use-cases/get-employee.use-case';
 import { useNotification } from 'shared/infra/adapters/notification.adapter';
-import { personsApiConfig } from 'shared/infra/adapters/persons-api.adapter';
 import { RouterService } from 'shared/application/router.port';
 import { useRouter } from 'shared/infra/adapters/router.adapter';
 import { NotificationService } from 'shared/application/notification.port';
@@ -15,13 +14,11 @@ export const MakeUpdateEmployeePage = () => {
   const routerService: RouterService = useRouter();
   const notifier: NotificationService = useNotification();
   const updateEmployeeUseCase = new UpdateEmployeeUseCase(
-    makeHttpClient(personsApiConfig.baseUrl, personsApiConfig.mock),
+    makeHttpClient(),
     routerService,
     notifier,
   );
-  const getEmployeeUseCase = new GetEmployeeUseCase(
-    makeHttpClient(personsApiConfig.baseUrl, personsApiConfig.mock),
-  );
+  const getEmployeeUseCase = new GetEmployeeUseCase(makeHttpClient());
 
   return (
     <UpdateEmployeeView

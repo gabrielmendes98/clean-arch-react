@@ -4,10 +4,8 @@ import {
 } from 'authentication/application/ports/login-form.port';
 import { AuthenticateUseCase } from 'authentication/application/use-cases/authenticate.use-case';
 import { LoginForm } from 'authentication/user-interface/components/login-form/login-form.component';
-import {
-  FormProvider,
-  FormProviderData,
-} from 'shared/infra/providers/form.provider';
+import { FormStorageService } from 'shared/application/form-storage.port';
+import { FormProvider } from 'shared/infra/providers/form.provider';
 
 type Props = {
   formService: LoginFormService;
@@ -19,7 +17,7 @@ export const LoginView = ({ formService, authenticateUseCase }: Props) => {
 
   const onSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
-    { values }: FormProviderData<LoginFormFields>,
+    { values }: FormStorageService<LoginFormFields>,
   ) => {
     await authenticateUseCase.execute(values);
   };

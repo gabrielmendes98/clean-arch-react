@@ -4,18 +4,15 @@ import { ListEmployeesUseCase } from 'employee/application/use-cases/list-employ
 import { useEmployeeList } from 'employee/infra/adapters/employee-list.adapter';
 import { makeHttpClient } from 'employee/infra/factories/http-client.factory';
 import { RouterService } from 'shared/application/router.port';
-import { personsApiConfig } from 'shared/infra/adapters/persons-api.adapter';
 import { useRouter } from 'shared/infra/adapters/router.adapter';
 import { ListEmployeesView } from './views/list-employees.view';
 
 export const MakeListEmployeesPage = () => {
   const employeeListService: EmployeeListService = useEmployeeList();
   const routerService: RouterService = useRouter();
-  const listEmployeesUseCase = new ListEmployeesUseCase(
-    makeHttpClient(personsApiConfig.baseUrl, personsApiConfig.mock),
-  );
+  const listEmployeesUseCase = new ListEmployeesUseCase(makeHttpClient());
   const deleteEmployeeUseCase = new DeleteEmployeeFromListUseCase(
-    makeHttpClient(personsApiConfig.baseUrl, personsApiConfig.mock),
+    makeHttpClient(),
     employeeListService,
   );
 

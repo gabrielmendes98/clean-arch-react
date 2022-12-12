@@ -4,10 +4,8 @@ import {
 } from 'authentication/application/ports/sign-up-form.port';
 import { SignUpUseCase } from 'authentication/application/use-cases/sign-up.use-case';
 import { SignUpForm } from 'authentication/user-interface/components/sign-up-form/sign-up-form.component';
-import {
-  FormProvider,
-  FormProviderData,
-} from 'shared/infra/providers/form.provider';
+import { FormStorageService } from 'shared/application/form-storage.port';
+import { FormProvider } from 'shared/infra/providers/form.provider';
 
 type Props = {
   formService: SignUpFormService;
@@ -19,7 +17,7 @@ export const SignUpView = ({ formService, signUpUseCase }: Props) => {
 
   const onSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
-    { values }: FormProviderData<SignUpFormFields>,
+    { values }: FormStorageService<SignUpFormFields>,
   ) => {
     await signUpUseCase.execute(values);
   };
