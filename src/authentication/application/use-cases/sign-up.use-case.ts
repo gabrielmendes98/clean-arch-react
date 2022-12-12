@@ -2,11 +2,13 @@ import {
   HttpClientService,
   HttpStatusCode,
 } from 'shared/application/http-client.port';
+import { NotificationService } from 'shared/application/notification.port';
 import { RouterService } from 'shared/application/router.port';
 import { UseCase } from 'shared/application/use-case';
 import { UserStorageService } from 'shared/application/user-storage.port';
 import { PAGES } from 'shared/domain/constants/pages';
 import { User } from 'shared/domain/entities/user.entity';
+import { InvalidPasswordError } from 'shared/domain/errors/invalid-password.error';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { validator } from 'shared/domain/validator';
 import { Email } from 'shared/domain/value-objects/email.vo';
@@ -19,6 +21,7 @@ export class SignUpUseCase implements UseCase<Input, Output> {
     private httpClient: HttpClientService,
     private storage: UserStorageService,
     private routerService: RouterService,
+    private notifier: NotificationService,
   ) {}
 
   async execute(input: Input): Promise<Output> {
@@ -27,6 +30,10 @@ export class SignUpUseCase implements UseCase<Input, Output> {
     Email.validate(email);
     Password.validate(password);
     Password.validate(confirmPassword);
+    if (password !== confirmPassword) {
+      this.notifier.notify('As senhas devem ser iguais.', 'error');
+      throw new InvalidPasswordError('As senhas devem ser iguais.');
+    }
     const response = await this.httpClient.post<SignUpDto>('/users', {
       name,
       email,
