@@ -4,4 +4,5 @@ export const PAGES = {
   LIST_EMPLOYEES: '/employees',
   UPDATE_EMPLOYEE: (id: string) => `/employees/${id}`,
   LOGIN: '/login',
+  SIGN_UP: '/sign-up',
 };

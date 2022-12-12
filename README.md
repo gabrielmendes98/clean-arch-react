@@ -41,7 +41,7 @@
   - when an error occurs while deleting, should rollback list state
   - update button should redirect to employee update screen
 - Create an account
-  - the user must inform email, password and confirm the password
+  - the user must inform name, email, password and confirm the password
   - at the end of the registration, the user should be logged in automatically
     and redirected to home
   - the form fields must be validated when they lose the focus state

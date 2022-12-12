@@ -33,7 +33,8 @@ export const FastInput = ({
     try {
       validations[name](value);
     } catch (e: any) {
-      const error = e.message || 'Campo inválido';
+      console.log('error', JSON.parse(JSON.stringify(e)));
+      const error = e.errors?.[0] || e.message || 'Campo inválido';
       setErrorMessage(error);
     }
   };

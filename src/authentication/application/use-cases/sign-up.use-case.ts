@@ -8,12 +8,13 @@ import { UserStorageService } from 'shared/application/user-storage.port';
 import { PAGES } from 'shared/domain/constants/pages';
 import { User } from 'shared/domain/entities/user.entity';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
+import { validator } from 'shared/domain/validator';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { Password } from 'shared/domain/value-objects/password.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 import { SignUpDto } from '../dto/sign-up.dto';
 
-export class AuthenticateUseCase implements UseCase<Input, Output> {
+export class SignUpUseCase implements UseCase<Input, Output> {
   constructor(
     private httpClient: HttpClientService,
     private storage: UserStorageService,
@@ -21,12 +22,16 @@ export class AuthenticateUseCase implements UseCase<Input, Output> {
   ) {}
 
   async execute(input: Input): Promise<Output> {
-    const { email, password } = input;
+    const { email, password, confirmPassword, name } = input;
+    validator.string().required().validateAttribute(name, 'Nome');
     Email.validate(email);
     Password.validate(password);
-    const response = await this.httpClient.post<SignUpDto>('/session', {
+    Password.validate(confirmPassword);
+    const response = await this.httpClient.post<SignUpDto>('/users', {
+      name,
       email,
       password,
+      confirmPassword,
     });
     const {
       id: responseId,
@@ -54,8 +59,10 @@ export class AuthenticateUseCase implements UseCase<Input, Output> {
 }
 
 export type Input = {
+  name: string;
   email: string;
   password: string;
+  confirmPassword: string;
 };
 
 export type Output = {
