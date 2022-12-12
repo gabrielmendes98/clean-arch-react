@@ -7,7 +7,7 @@ import { LoginForm } from 'authentication/user-interface/components/login-form/l
 import {
   FormProvider,
   FormProviderData,
-} from 'shared/infra/storage/form/form.provider';
+} from 'shared/infra/providers/form.provider';
 
 type Props = {
   formService: LoginFormService;

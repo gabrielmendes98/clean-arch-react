@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useFormStorage } from 'shared/infra/storage/form/form.storage';
+import { useFormStorage } from 'shared/infra/adapters/form-storage.adapter';
 import styles from './slow-input.module.scss';
 
 type Props = {

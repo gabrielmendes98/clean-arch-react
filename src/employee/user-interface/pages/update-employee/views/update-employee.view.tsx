@@ -10,7 +10,7 @@ import { EntityValidationError } from 'shared/domain/errors/validation.error';
 import {
   FormProvider,
   FormProviderData,
-} from 'shared/infra/storage/form/form.provider';
+} from 'shared/infra/providers/form.provider';
 import { RouterService } from 'shared/application/router.port';
 import { Form } from '../../../components/form/employee-form.component';
 

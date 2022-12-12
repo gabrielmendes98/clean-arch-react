@@ -7,7 +7,7 @@ import { SignUpForm } from 'authentication/user-interface/components/sign-up-for
 import {
   FormProvider,
   FormProviderData,
-} from 'shared/infra/storage/form/form.provider';
+} from 'shared/infra/providers/form.provider';
 
 type Props = {
   formService: SignUpFormService;

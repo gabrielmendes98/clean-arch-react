@@ -4,39 +4,25 @@ import {
   FormEvent,
   PropsWithChildren,
   useCallback,
-  Dispatch,
-  SetStateAction,
   useMemo,
   useEffect,
 } from 'react';
+import {
+  FormErrors,
+  FormStorageService,
+  FormValidations,
+} from 'shared/application/form-storage.port';
 import { validator } from 'shared/domain/validator';
 
-export type FormErrors<FormFields> = Partial<{
-  [K in keyof FormFields]: string[];
-}>;
-
-export type FormValidations<FormFields> = Partial<{
-  [K in keyof FormFields]: (value: any) => boolean;
-}>;
-
-export const FormContext = createContext<FormProviderData<object> | null>(null);
-
-export type FormProviderData<FormFields = object> = {
-  values: FormFields;
-  onChangeField: (name: string, value: any) => void;
-  resetForm: () => void;
-  errors: FormErrors<FormFields>;
-  setErrors: Dispatch<SetStateAction<FormErrors<FormFields>>>;
-  setFieldErrors: (field: string, errors: string[] | null) => void;
-  validations: FormValidations<FormFields>;
-  wasSubmitted: boolean;
-};
+export const FormContext = createContext<FormStorageService<object> | null>(
+  null,
+);
 
 type Props<FormFields = object> = {
   initialValues: FormFields;
   onSubmit: (
     e: FormEvent<HTMLFormElement>,
-    formBag: FormProviderData<FormFields>,
+    formBag: FormStorageService<FormFields>,
   ) => void;
   validations?: FormValidations<FormFields>;
 };
