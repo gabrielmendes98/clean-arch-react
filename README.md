@@ -4,7 +4,6 @@
   any time
 - avoid prop drilling like when using useRouter
 - use more factories
-- refactor makeHttpClient(personsApiConfig.baseUrl, personsApiConfig.mock)
 - refactor api error handling
 - get user from localstorage when start app -> should be on user.provider?
 
