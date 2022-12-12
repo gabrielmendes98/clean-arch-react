@@ -5,19 +5,18 @@ import {
   useCallback,
   useEffect,
 } from 'react';
-import {
-  PersistedUser,
-  UserStorageService,
-} from 'shared/application/user-storage.port';
+import { StoragePersistor } from 'shared/application/storage-persistor.port';
+import { RetrivePersistedUserUseCase } from 'shared/application/use-cases/retrive-persisted-user.use-case';
+import { UserStorageService } from 'shared/application/user-storage.port';
 import { User } from 'shared/domain/entities/user.entity';
-import { Email } from 'shared/domain/value-objects/email.vo';
-import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
-import { makeStoragePersistor } from 'shared/infra/factories/storage-persistor.factory';
 
 export const UserContext = createContext<UserStorageService | null>(null);
 
-export const UserProvider = ({ children }: PropsWithChildren) => {
-  const persistor = makeStoragePersistor<PersistedUser>();
+export type Props = {
+  persistor: StoragePersistor;
+} & PropsWithChildren;
+
+export const UserProvider = ({ children, persistor }: Props) => {
   const [user, setUser] = useState<User | null>(null);
 
   const updateUser = useCallback((user: User) => {
@@ -31,17 +30,15 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
   };
 
   useEffect(() => {
-    const persistedUser = persistor.get('user');
-    if (persistedUser) {
-      setUser(
-        new User(
-          new UniqueEntityId(persistedUser.id),
-          new Email(persistedUser.email),
-          persistedUser.token,
-          persistedUser.name,
-        ),
-      );
-    }
+    const retrivePersistedUserUseCase = new RetrivePersistedUserUseCase(
+      persistor,
+      {
+        user,
+        updateUser,
+        removeUser,
+      },
+    );
+    retrivePersistedUserUseCase.execute();
   }, []);
 
   const value = {
