@@ -17,11 +17,11 @@ export type Props = {
 } & PropsWithChildren;
 
 export const UserProvider = ({ children, persistor }: Props) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null | undefined>();
 
-  const updateUser = useCallback((user: User) => {
+  const updateUser = useCallback((user: User | null) => {
     setUser(user);
-    persistor.set('user', user.toJSON());
+    persistor.set('user', user?.toJSON());
   }, []);
 
   const removeUser = () => {

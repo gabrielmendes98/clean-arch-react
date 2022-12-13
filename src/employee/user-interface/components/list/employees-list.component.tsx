@@ -1,7 +1,6 @@
 import { EmployeeListItem } from 'employee/domain/entities/employee-list.entity';
 import { PAGES } from 'shared/domain/constants/pages';
 import { Button } from 'shared/user-interface/components/button/button.component';
-import { useRouter } from 'shared/infra/adapters/router.adapter';
 
 export type Props = {
   employees: {

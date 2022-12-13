@@ -22,6 +22,8 @@ export class RetrivePersistedUserUseCase implements UseCase<Input, Output> {
           persistedUser.name,
         ),
       );
+    } else {
+      this.userService.updateUser(null);
     }
   }
 }
