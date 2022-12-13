@@ -1,10 +1,28 @@
 export interface HttpClientService {
   baseUrl: string;
-  get<Response>(endpoint: string): Promise<HttpResponse<Response>>;
-  post<Response>(endpoint: string, body: any): Promise<HttpResponse<Response>>;
-  put<Response>(endpoint: string, body: any): Promise<HttpResponse<Response>>;
-  delete<Response>(endpoint: string): Promise<HttpResponse<Response>>;
+  get<Response>(
+    endpoint: string,
+    options?: HttpClientOptions,
+  ): Promise<HttpResponse<Response>>;
+  post<Response>(
+    endpoint: string,
+    body: any,
+    options?: HttpClientOptions,
+  ): Promise<HttpResponse<Response>>;
+  put<Response>(
+    endpoint: string,
+    body: any,
+    options?: HttpClientOptions,
+  ): Promise<HttpResponse<Response>>;
+  delete<Response>(
+    endpoint: string,
+    options?: HttpClientOptions,
+  ): Promise<HttpResponse<Response>>;
 }
+
+export type HttpClientOptions = {
+  headers: any;
+};
 
 export type HttpMethod = 'post' | 'get' | 'put' | 'delete';
 

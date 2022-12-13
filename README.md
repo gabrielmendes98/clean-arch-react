@@ -4,7 +4,6 @@
   any time
 - avoid prop drilling like when using useRouter
 - use more factories
-- refactor api error handling
 
 ## System Requirements Specification
 

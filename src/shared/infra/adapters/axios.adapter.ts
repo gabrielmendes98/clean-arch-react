@@ -1,5 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import {
+  HttpClientOptions,
   HttpClientService,
   HttpResponse,
 } from 'shared/application/http-client.port';
@@ -9,8 +10,16 @@ export class AxiosAdapter implements HttpClientService {
     axios.defaults.baseURL = baseUrl;
   }
 
-  async get<Response>(endpoint: string): Promise<HttpResponse<Response>> {
-    const response = await axios.get(endpoint);
+  async get<Response>(
+    endpoint: string,
+    options: HttpClientOptions,
+  ): Promise<HttpResponse<Response>> {
+    let response: AxiosResponse;
+    try {
+      response = await axios.get(endpoint, options);
+    } catch (e: any) {
+      response = e.response;
+    }
     return {
       statusCode: response.status,
       body: response.data,
@@ -20,8 +29,14 @@ export class AxiosAdapter implements HttpClientService {
   async post<Response>(
     endpoint: string,
     body: any,
+    options: HttpClientOptions,
   ): Promise<HttpResponse<Response>> {
-    const response = await axios.post(endpoint, body);
+    let response: AxiosResponse;
+    try {
+      response = await axios.post(endpoint, body, options);
+    } catch (e: any) {
+      response = e.response;
+    }
     return {
       statusCode: response.status,
       body: response.data,
@@ -31,16 +46,30 @@ export class AxiosAdapter implements HttpClientService {
   async put<Response>(
     endpoint: string,
     body: any,
+    options: HttpClientOptions,
   ): Promise<HttpResponse<Response>> {
-    const response = await axios.put(endpoint, body);
+    let response: AxiosResponse;
+    try {
+      response = await axios.put(endpoint, body, options);
+    } catch (e: any) {
+      response = e.response;
+    }
     return {
       statusCode: response.status,
       body: response.data,
     };
   }
 
-  async delete<Response>(endpoint: string): Promise<HttpResponse<Response>> {
-    const response = await axios.delete(endpoint);
+  async delete<Response>(
+    endpoint: string,
+    options: HttpClientOptions,
+  ): Promise<HttpResponse<Response>> {
+    let response: AxiosResponse;
+    try {
+      response = await axios.delete(endpoint, options);
+    } catch (e: any) {
+      response = e.response;
+    }
     return {
       statusCode: response.status,
       body: response.data,
