@@ -1,5 +1,5 @@
 import { EmployeeListItem } from 'employee/domain/entities/employee-list.entity';
-import { PAGES } from 'shared/domain/constants/pages';
+import { pages } from 'shared/domain/config/pages';
 import { Button } from 'shared/user-interface/components/button/button.component';
 
 export type Props = {
@@ -20,7 +20,7 @@ export const EmployeesList = ({
   navigate,
 }: Props) => {
   const handleEdit = (id: string) => {
-    navigate(PAGES.UPDATE_EMPLOYEE(id));
+    navigate(pages.updateEmployee(id));
   };
 
   return (

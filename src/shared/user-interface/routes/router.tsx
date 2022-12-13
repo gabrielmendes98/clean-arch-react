@@ -5,9 +5,9 @@ import { MakeListEmployeesPage } from 'employee/user-interface/pages/list-employ
 import { MakeUpdateEmployeePage } from 'employee/user-interface/pages/update-employee/update-employee.factory';
 import { MakeLoginPage } from 'authentication/user-interface/pages/login/login.factory';
 import { MakeSignUpPage } from 'authentication/user-interface/pages/sign-up/sign-up.factory';
-import { PAGES } from 'shared/domain/constants/pages';
 import { MainLayout } from 'shared/user-interface/components/layouts/main/main.layout';
 import { useUserStorage } from 'shared/infra/adapters/user-storage.adapter';
+import { pages } from 'shared/domain/config/pages';
 import { ProtectedRoute } from './ProtectedRoute';
 
 export const Router = () => {
@@ -18,19 +18,19 @@ export const Router = () => {
       <Routes>
         <Route element={<MainLayout />} path="/">
           <Route path="" element={<MakeHome />} />
-          <Route path={PAGES.LOGIN} element={<MakeLoginPage />} />
-          <Route path={PAGES.SIGN_UP} element={<MakeSignUpPage />} />
+          <Route path={pages.login} element={<MakeLoginPage />} />
+          <Route path={pages.signUp} element={<MakeSignUpPage />} />
           <Route element={<ProtectedRoute userStorage={userStorage} />}>
             <Route
-              path={PAGES.REGISTER_EMPLOYEES}
+              path={pages.registerEmployees}
               element={<MakeRegisterEmployeePage />}
             />
             <Route
-              path={PAGES.LIST_EMPLOYEES}
+              path={pages.listEmployees}
               element={<MakeListEmployeesPage />}
             />
             <Route
-              path={PAGES.UPDATE_EMPLOYEE(':id')}
+              path={pages.updateEmployee(':id')}
               element={<MakeUpdateEmployeePage />}
             />
           </Route>

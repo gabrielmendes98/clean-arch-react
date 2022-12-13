@@ -9,7 +9,7 @@ import {
   HttpStatusCode,
 } from 'shared/application/http-client.port';
 import { RouterService } from 'shared/application/router.port';
-import { PAGES } from 'shared/domain/constants/pages';
+import { pages } from 'shared/domain/config/pages';
 import { NotificationService } from '../../../shared/application/notification.port';
 
 export class UpdateEmployeeUseCase implements UseCase<Input, Output> {
@@ -26,7 +26,7 @@ export class UpdateEmployeeUseCase implements UseCase<Input, Output> {
       input,
     );
     this.notifier.notify('Funcionário atualizado com sucesso!', 'success');
-    this.routerService.navigate(PAGES.LIST_EMPLOYEES);
+    this.routerService.navigate(pages.listEmployees);
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         return response.body;

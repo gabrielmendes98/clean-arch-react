@@ -4,8 +4,6 @@
   any time
 - avoid prop drilling like when using useRouter
 - use more factories
-- wait localstorage retrive before http request
-- refactor pages constants
 
 ## System Requirements Specification
 

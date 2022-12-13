@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { PAGES } from 'shared/domain/constants/pages';
+import { pages } from 'shared/domain/config/pages';
 import styles from './header.module.scss';
 
 export const HeaderComponent = () => (
@@ -8,19 +8,19 @@ export const HeaderComponent = () => (
     <nav>
       <ul>
         <li>
-          <Link to={PAGES.HOME}>Home</Link>
+          <Link to={pages.home}>Home</Link>
         </li>
         <li>
-          <Link to={PAGES.LOGIN}>Login</Link>
+          <Link to={pages.login}>Login</Link>
         </li>
         <li>
-          <Link to={PAGES.SIGN_UP}>Registrar-se</Link>
+          <Link to={pages.signUp}>Registrar-se</Link>
         </li>
         <li>
-          <Link to={PAGES.REGISTER_EMPLOYEES}>Cadastrar Funcionario</Link>
+          <Link to={pages.registerEmployees}>Cadastrar Funcionario</Link>
         </li>
         <li>
-          <Link to={PAGES.LIST_EMPLOYEES}>Lista de Funcionarios</Link>
+          <Link to={pages.listEmployees}>Lista de Funcionarios</Link>
         </li>
       </ul>
     </nav>

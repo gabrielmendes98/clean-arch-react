@@ -5,7 +5,7 @@ import {
 import { RouterService } from 'shared/application/router.port';
 import { UseCase } from 'shared/application/use-case';
 import { UserStorageService } from 'shared/application/user-storage.port';
-import { PAGES } from 'shared/domain/constants/pages';
+import { pages } from 'shared/domain/config/pages';
 import { User } from 'shared/domain/entities/user.entity';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { Email } from 'shared/domain/value-objects/email.vo';
@@ -41,7 +41,7 @@ export class AuthenticateUseCase implements UseCase<Input, Output> {
       responseName,
     );
     this.storage.updateUser(user);
-    this.routerService.navigate(PAGES.HOME);
+    this.routerService.navigate(pages.home);
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         return {
