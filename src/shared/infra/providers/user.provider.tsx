@@ -1,22 +1,14 @@
-import {
-  useState,
-  PropsWithChildren,
-  createContext,
-  useCallback,
-  useEffect,
-} from 'react';
-import { StoragePersistor } from 'shared/application/storage-persistor.port';
+import { useState, createContext, useCallback, useEffect } from 'react';
 import { RetrivePersistedUserUseCase } from 'shared/application/use-cases/retrive-persisted-user.use-case';
-import { UserStorageService } from 'shared/application/user-storage.port';
+import {
+  UserStorageProps,
+  UserStorageService,
+} from 'shared/application/user-storage.port';
 import { User } from 'shared/domain/entities/user.entity';
 
 export const UserContext = createContext<UserStorageService | null>(null);
 
-export type Props = {
-  persistor: StoragePersistor;
-} & PropsWithChildren;
-
-export const UserProvider = ({ children, persistor }: Props) => {
+export const UserProvider = ({ children, persistor }: UserStorageProps) => {
   const [user, setUser] = useState<User | null | undefined>();
 
   const updateUser = useCallback((user: User | null) => {

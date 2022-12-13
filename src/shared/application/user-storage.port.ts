@@ -1,4 +1,6 @@
+import { PropsWithChildren } from 'react';
 import { User } from 'shared/domain/entities/user.entity';
+import { StoragePersistor } from './storage-persistor.port';
 
 export interface UserStorageService {
   user: User | null | undefined;
@@ -11,4 +13,8 @@ export interface PersistedUser {
   id: string;
   email: string;
   token: string;
+}
+
+export interface UserStorageProps extends PropsWithChildren {
+  persistor: StoragePersistor;
 }

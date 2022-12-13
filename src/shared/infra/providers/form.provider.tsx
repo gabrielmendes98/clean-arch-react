@@ -2,15 +2,14 @@ import {
   createContext,
   useState,
   FormEvent,
-  PropsWithChildren,
   useCallback,
   useMemo,
   useEffect,
 } from 'react';
 import {
   FormErrors,
+  FormProviderProps,
   FormStorageService,
-  FormValidations,
 } from 'shared/application/form-storage.port';
 import { validator } from 'shared/domain/validator';
 
@@ -18,21 +17,12 @@ export const FormContext = createContext<FormStorageService<object> | null>(
   null,
 );
 
-type Props<FormFields = object> = {
-  initialValues: FormFields;
-  onSubmit: (
-    e: FormEvent<HTMLFormElement>,
-    formBag: FormStorageService<FormFields>,
-  ) => void;
-  validations?: FormValidations<FormFields>;
-};
-
 export const FormProvider = <FormFields extends object>({
   initialValues,
   children,
   onSubmit,
   validations = {},
-}: PropsWithChildren<Props<FormFields>>) => {
+}: FormProviderProps<FormFields>) => {
   const [values, setValues] = useState<FormFields>(initialValues);
   const [errors, setErrors] = useState<FormErrors<FormFields>>({});
   const [wasSubmitted, setWasSubmitted] = useState<boolean>(false);

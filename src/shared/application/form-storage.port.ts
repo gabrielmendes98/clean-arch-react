@@ -1,3 +1,5 @@
+import { FormEvent, PropsWithChildren } from 'react';
+
 export type FormErrors<FormFields> = Partial<{
   [K in keyof FormFields]: string[];
 }>;
@@ -15,4 +17,14 @@ export interface FormStorageService<FormFields = object> {
   setFieldErrors: (field: string, errors: string[] | null) => void;
   validations: FormValidations<FormFields>;
   wasSubmitted: boolean;
+}
+
+export interface FormProviderProps<FormFields = object>
+  extends PropsWithChildren {
+  initialValues: FormFields;
+  onSubmit: (
+    e: FormEvent<HTMLFormElement>,
+    formBag: FormStorageService<FormFields>,
+  ) => void;
+  validations?: FormValidations<FormFields>;
 }
