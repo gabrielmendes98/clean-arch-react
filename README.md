@@ -1,9 +1,24 @@
-## TODO
+# Clean Arch React
 
-- identify design patterns used
-- identify solid principles used
+Este é um projeto feito com o intuito de aplicar os conceitos da Arquitetura
+Limpa e Ports and Adapters em uma aplicação front-end, já que na maioria das
+vezes vemos esses conceitos sendo aplicados somente no back-end. Além disso,
+foram usados alguns principios da programação e design patterns para deixar o
+código mais legivel, flexivel e resiliente.
 
-## System Requirements Specification
+Sumário:
+
+This is a project made with the intention of applying the concepts of Clean
+Architecture and Ports and Adapters in a front-end application, as in most cases
+we see these concepts being applied only on the backend. Furthermore, some
+programming principles and design patterns were used to make the code more
+readable, flexible and resilient.
+
+Summary:
+
+- [System Requirements Specification](#system-requirements-specification)
+
+## [System Requirements Specification](#system-requirements-specification)
 
 - the system must have screens: home, employee registration, list of employees,
   employee update, account registration and login
@@ -130,6 +145,23 @@ Sometimes this rule can be violated, although it is better not to abuse it. For
 example, it is sometimes convenient to use some “library-like” code in a domain,
 even though there should be no dependencies. In this repository we are using
 yupjs lib on the domain layer to validate our entities.
+
+## Principles
+
+- Single Responsibility Principle
+- Open Closed Principle
+- Liskov Substitution Principle
+- Dependency Inversion Principle
+- Don't Repeat Yourself
+- You Aren't Gonna Need It
+- Keep It Simple, Stupid
+
+## Design Patterns
+
+- Factory
+- Adapter
+- Decorator
+- Composite
 
 ## References
 
