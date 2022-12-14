@@ -11,7 +11,7 @@ import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { Password } from 'shared/domain/value-objects/password.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
-import { SignUpDto } from '../dto/sign-up.dto';
+import { AuthenticateDto } from '../dto/authenticate.dto';
 
 export class AuthenticateUseCase implements UseCase<Input, Output> {
   constructor(
@@ -24,7 +24,7 @@ export class AuthenticateUseCase implements UseCase<Input, Output> {
     const { email, password } = input;
     Email.validate(email);
     Password.validate(password);
-    const response = await this.httpClient.post<SignUpDto>('/session', {
+    const response = await this.httpClient.post<AuthenticateDto>('/session', {
       email,
       password,
     });
