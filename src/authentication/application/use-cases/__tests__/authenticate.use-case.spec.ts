@@ -1,21 +1,10 @@
 import { AuthenticationInMemoryHttpClient } from 'authentication/infra/adapters/in-memory-http-client.adapter';
-import { RouterService } from 'shared/application/router.port';
-import { UserStorageService } from 'shared/application/user-storage.port';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { Password } from 'shared/domain/value-objects/password.vo';
+import { routerServiceMock } from 'shared/testing/mocks/router.mock';
+import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';
 import { AuthenticateUseCase } from '../authenticate.use-case';
-
-const stubUserStorageService: UserStorageService = {
-  user: null,
-  updateUser: jest.fn(),
-  removeUser: jest.fn(),
-};
-
-const stubRouterService: RouterService = {
-  navigate: jest.fn(),
-  getUrlParams: jest.fn().mockReturnValue({}),
-};
 
 describe('AuthenticateUseCase', () => {
   it('should validate user email and password', async () => {
@@ -23,8 +12,8 @@ describe('AuthenticateUseCase', () => {
     const passwordValidate = jest.spyOn(Password, 'validate');
     const useCase = new AuthenticateUseCase(
       new AuthenticationInMemoryHttpClient('fakeurl.com'),
-      stubUserStorageService,
-      stubRouterService,
+      userStorageServiceMock,
+      routerServiceMock,
     );
 
     await useCase.execute({ email: 'email@gmail.com', password: '123123' });
@@ -35,11 +24,11 @@ describe('AuthenticateUseCase', () => {
   it('should update user storage', async () => {
     const useCase = new AuthenticateUseCase(
       new AuthenticationInMemoryHttpClient('fakeurl.com'),
-      stubUserStorageService,
-      stubRouterService,
+      userStorageServiceMock,
+      routerServiceMock,
     );
     await useCase.execute({ email: 'email@gmail.com', password: '123123' });
-    expect(stubUserStorageService.updateUser).toHaveBeenCalledWith(
+    expect(userStorageServiceMock.updateUser).toHaveBeenCalledWith(
       expect.objectContaining({
         token:
           'eyJhbGciOiJIUzI1NiJ9.eyJJc3N1ZXIiOiJjbGVhbi1hcmNoLXJlYWN0IiwiaWQiOiJjZTczNGY4Mi0yZmFjLTQ4NDUtYjM5NC02NmJkNjdlNmUyNzEiLCJleHAiOjE2NzA0MTQ5MjAsImlhdCI6MTY3MDQxNDkyMCwiZW1haWwiOiJmYWtlZW1haWxAZ21haWwuY29tIn0.wBOgBI4olSa8LzovYjDhea5I_vO0HTKR2vq5K1rG3AI',
@@ -53,18 +42,18 @@ describe('AuthenticateUseCase', () => {
   it('should navigate to home after authenticate', async () => {
     const useCase = new AuthenticateUseCase(
       new AuthenticationInMemoryHttpClient('fakeurl.com'),
-      stubUserStorageService,
-      stubRouterService,
+      userStorageServiceMock,
+      routerServiceMock,
     );
     await useCase.execute({ email: 'email@gmail.com', password: '123123' });
-    expect(stubRouterService.navigate).toHaveBeenCalledWith('/');
+    expect(routerServiceMock.navigate).toHaveBeenCalledWith('/');
   });
 
   it('should return success', async () => {
     const useCase = new AuthenticateUseCase(
       new AuthenticationInMemoryHttpClient('fakeurl.com'),
-      stubUserStorageService,
-      stubRouterService,
+      userStorageServiceMock,
+      routerServiceMock,
     );
     const response = await useCase.execute({
       email: 'email@gmail.com',
@@ -83,8 +72,8 @@ describe('AuthenticateUseCase', () => {
     );
     const useCase = new AuthenticateUseCase(
       httpClient,
-      stubUserStorageService,
-      stubRouterService,
+      userStorageServiceMock,
+      routerServiceMock,
     );
 
     await expect(
