@@ -6,28 +6,29 @@ import { routerServiceMock } from 'shared/testing/mocks/router.mock';
 import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';
 import { AuthenticateUseCase } from '../authenticate.use-case';
 
+const makeAuthenticateUseCase = () =>
+  new AuthenticateUseCase(
+    new AuthenticationInMemoryHttpClient('fakeurl.com'),
+    userStorageServiceMock,
+    routerServiceMock,
+  );
+
+const executeSuccessUseCase = async (useCase: AuthenticateUseCase) =>
+  await useCase.execute({ email: 'email@gmail.com', password: '123123' });
+
 describe('AuthenticateUseCase', () => {
   it('should validate user email and password', async () => {
     const emailValidate = jest.spyOn(Email, 'validate');
     const passwordValidate = jest.spyOn(Password, 'validate');
-    const useCase = new AuthenticateUseCase(
-      new AuthenticationInMemoryHttpClient('fakeurl.com'),
-      userStorageServiceMock,
-      routerServiceMock,
-    );
-
-    await useCase.execute({ email: 'email@gmail.com', password: '123123' });
+    const useCase = makeAuthenticateUseCase();
+    await executeSuccessUseCase(useCase);
     expect(emailValidate).toHaveBeenCalledWith('email@gmail.com');
     expect(passwordValidate).toHaveBeenCalledWith('123123');
   });
 
   it('should update user storage', async () => {
-    const useCase = new AuthenticateUseCase(
-      new AuthenticationInMemoryHttpClient('fakeurl.com'),
-      userStorageServiceMock,
-      routerServiceMock,
-    );
-    await useCase.execute({ email: 'email@gmail.com', password: '123123' });
+    const useCase = makeAuthenticateUseCase();
+    await executeSuccessUseCase(useCase);
     expect(userStorageServiceMock.updateUser).toHaveBeenCalledWith(
       expect.objectContaining({
         token:
@@ -40,25 +41,14 @@ describe('AuthenticateUseCase', () => {
   });
 
   it('should navigate to home after authenticate', async () => {
-    const useCase = new AuthenticateUseCase(
-      new AuthenticationInMemoryHttpClient('fakeurl.com'),
-      userStorageServiceMock,
-      routerServiceMock,
-    );
-    await useCase.execute({ email: 'email@gmail.com', password: '123123' });
+    const useCase = makeAuthenticateUseCase();
+    await executeSuccessUseCase(useCase);
     expect(routerServiceMock.navigate).toHaveBeenCalledWith('/');
   });
 
   it('should return success', async () => {
-    const useCase = new AuthenticateUseCase(
-      new AuthenticationInMemoryHttpClient('fakeurl.com'),
-      userStorageServiceMock,
-      routerServiceMock,
-    );
-    const response = await useCase.execute({
-      email: 'email@gmail.com',
-      password: '123123',
-    });
+    const useCase = makeAuthenticateUseCase();
+    const response = await executeSuccessUseCase(useCase);
     expect(response.success).toBeTruthy();
   });
 
@@ -76,12 +66,8 @@ describe('AuthenticateUseCase', () => {
       routerServiceMock,
     );
 
-    await expect(
-      async () =>
-        await useCase.execute({
-          email: 'email@gmail.com',
-          password: '123123',
-        }),
-    ).rejects.toThrow(UnexpectedError);
+    await expect(async () => executeSuccessUseCase(useCase)).rejects.toThrow(
+      UnexpectedError,
+    );
   });
 });

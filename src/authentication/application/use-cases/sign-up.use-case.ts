@@ -40,20 +40,24 @@ export class SignUpUseCase implements UseCase<Input, Output> {
       password,
       confirmPassword,
     });
-    const {
-      id: responseId,
-      email: responseEmail,
-      token: responseToken,
-      name: responseName,
-    } = response.body;
-    const user = new User(
-      new UniqueEntityId(responseId),
-      new Email(responseEmail),
-      responseToken,
-      responseName,
-    );
-    this.storage.updateUser(user);
-    this.routerService.navigate(pages.home);
+
+    if (response.statusCode === HttpStatusCode.ok) {
+      const {
+        id: responseId,
+        email: responseEmail,
+        token: responseToken,
+        name: responseName,
+      } = response.body;
+      const user = new User(
+        new UniqueEntityId(responseId),
+        new Email(responseEmail),
+        responseToken,
+        responseName,
+      );
+      this.storage.updateUser(user);
+      this.routerService.navigate(pages.home);
+    }
+
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         return {
