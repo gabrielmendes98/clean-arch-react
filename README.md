@@ -1,13 +1,5 @@
 # Clean Arch React
 
-Este é um projeto feito com o intuito de aplicar os conceitos da Arquitetura
-Limpa e Ports and Adapters em uma aplicação front-end, já que na maioria das
-vezes vemos esses conceitos sendo aplicados somente no back-end. Além disso,
-foram usados alguns principios da programação e design patterns para deixar o
-código mais legivel, flexivel e resiliente.
-
-Sumário:
-
 This is a project made with the intention of applying the concepts of Clean
 Architecture and Ports and Adapters in a front-end application, as in most cases
 we see these concepts being applied only on the backend. Furthermore, some
@@ -17,6 +9,15 @@ readable, flexible and resilient.
 Summary:
 
 - [System Requirements Specification](#system-requirements-specification)
+- [Layers](#layers)
+- [Domain Layer](#domain-layer)
+- [Application Layer](#application-layer)
+- [Infrastructure Layer](#infrastructure-layer)
+- [User Interface Layer](#user-interface-layer)
+- [Dependency Rule](#dependency-rule)
+- [Principles](#principles)
+- [Design Patterns](#design-patterns)
+- [References](#references)
 
 ## [System Requirements Specification](#system-requirements-specification)
 
@@ -59,7 +60,7 @@ Summary:
   - the form fields must be validated when they lose the focus state
   - when logging in, the user must be redirected to the home
 
-## Layers
+## [Layers](#layers)
 
 - User Interface -> react files, components, views, pages, page factory.
 - Infrastructure -> drivers, adapters, repository implementation, libs,
@@ -70,7 +71,7 @@ Summary:
 
 <img src='./resources/ca-diagram.png' width="350" />
 
-## Domain Layer
+## [Domain Layer](#domain-layer)
 
 At the center is the domain layer. It is the entities and data that describe the
 subject area of the application, as well as the code to transform that data. The
@@ -83,7 +84,7 @@ The data structure of domain entities and the essence of their transformations
 are independent from the outer world. External events trigger domain
 transformations, but do not determine how they will occur.
 
-## Application Layer
+## [Application Layer](#application-layer)
 
 Around the domain is the application layer. This layer describes use cases, i.e.
 user scenarios. They are responsible for what happens after some event occurs.
@@ -97,7 +98,7 @@ Input Ports tell us how the application wants to be contacted by the outside
 world. Output Ports say how the application is going to communicate with the
 outside world to make it ready.
 
-## Infrastructure Layer
+## [Infrastructure Layer](#infrastructure-layer)
 
 This layer is responsible to implement the Interface Contracts defined within
 the application layer to the Secondary Actors as Adapters. Infrastructure Layer
@@ -111,7 +112,7 @@ the application layer.
 
 Converts data from data layers to use case or entity layers.
 
-## User Interface Layer
+## [User Interface Layer](#user-interface-layer)
 
 This layer is also called as Presentation. Presentation Layer contains the UI
 elements (pages, components, routes) of the application. It handles the
@@ -129,7 +130,7 @@ code functionality is, the farther it is from the domain knowledge of our
 application. This will be important later on, when we decide which layer any
 module should belong to.
 
-## Dependency Rule
+## [Dependency Rule](#dependency-rule)
 
 Only the outer layers can depend on the inner layers.
 
@@ -146,7 +147,7 @@ example, it is sometimes convenient to use some “library-like” code in a dom
 even though there should be no dependencies. In this repository we are using
 yupjs lib on the domain layer to validate our entities.
 
-## Principles
+## [Principles](#principles)
 
 - Single Responsibility Principle
 - Open Closed Principle
@@ -156,14 +157,14 @@ yupjs lib on the domain layer to validate our entities.
 - You Aren't Gonna Need It
 - Keep It Simple, Stupid
 
-## Design Patterns
+## [Design Patterns](#design-patterns)
 
 - Factory
 - Adapter
 - Decorator
 - Composite
 
-## References
+## [References](#references)
 
 - https://bespoyasov.me/blog/clean-architecture-on-frontend/
 - https://medium.com/dotnet-hub/clean-architecture-with-dotnet-and-dotnet-core-aspnetcore-overview-introduction-getting-started-ec922e53bb97
