@@ -1,4 +1,5 @@
 import { render, RenderOptions } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { ReactElement } from 'react';
 
 const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
@@ -11,4 +12,4 @@ const customRender = (
 ) => render(ui, { wrapper: AllTheProviders, ...options });
 
 export * from '@testing-library/react';
-export { customRender as render };
+export { customRender as render, userEvent };

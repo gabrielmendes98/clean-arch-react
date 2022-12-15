@@ -17,9 +17,9 @@ export const FastInput = ({
   type = 'text',
   onChange,
 }: Props) => {
-  const [value, setValue] = useState('');
+  const { validations, wasSubmitted, values } = useFormStorage();
+  const [value, setValue] = useState(values[name]);
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const { validations, wasSubmitted } = useFormStorage();
 
   const _id = useMemo(() => id || name, [id, name]);
 
