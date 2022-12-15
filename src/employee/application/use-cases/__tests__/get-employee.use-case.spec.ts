@@ -29,10 +29,12 @@ describe('GetEmployeeUseCase', () => {
 
   it('should throw unexpected error when api returns any error', async () => {
     const httpClient = new EmployeesInMemoryHttpClient('fakeurl.com');
-    jest.spyOn(httpClient, 'get').mockReturnValue({
-      statusCode: 500,
-      body: {},
-    });
+    jest.spyOn(httpClient, 'get').mockReturnValue(
+      Promise.resolve({
+        statusCode: 500,
+        body: {},
+      }),
+    );
     const useCase = new GetEmployeeUseCase(httpClient);
     await expect(
       async () =>

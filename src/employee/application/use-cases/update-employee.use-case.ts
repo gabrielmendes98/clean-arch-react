@@ -25,10 +25,11 @@ export class UpdateEmployeeUseCase implements UseCase<Input, Output> {
       `/employees/${input.id}`,
       input,
     );
-    this.notifier.notify('Funcionário atualizado com sucesso!', 'success');
-    this.routerService.navigate(pages.listEmployees);
+
     switch (response.statusCode) {
       case HttpStatusCode.ok:
+        this.notifier.notify('Funcionário atualizado com sucesso!', 'success');
+        this.routerService.navigate(pages.listEmployees);
         return response.body;
       default:
         this.notifier.notify(UNEXPECTED_ERROR_MESSAGE, 'error');
