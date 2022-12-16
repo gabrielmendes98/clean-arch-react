@@ -4,25 +4,15 @@ import {
   HttpStatusCode,
 } from 'shared/application/http-client.port';
 
-const getRouteType = (route: string): 'getByIdRoute' | 'listRoute' => {
-  const routes = {
-    getByIdRoute: /\/employees\/(.+)/i,
-    listRoute: /^\/employees$/,
-  };
-  const isListRoute = routes.listRoute.test(route);
-  return isListRoute ? 'listRoute' : 'getByIdRoute';
-};
-
 export class EmployeesInMemoryHttpClient implements HttpClientService {
   constructor(public baseUrl: string) {
     this.baseUrl = baseUrl;
   }
 
   async get<Response>(url: string): Promise<HttpResponse<Response>> {
-    const route = getRouteType(url);
     let response;
 
-    if (route === 'listRoute') {
+    if (url === '/employees') {
       response = [
         {
           email: 'gabriel@gmail.com',
