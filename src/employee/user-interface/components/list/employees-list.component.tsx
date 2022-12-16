@@ -1,5 +1,4 @@
 import { EmployeeListItem } from 'employee/domain/entities/employee-list.entity';
-import { pages } from 'shared/domain/config/pages';
 import { Button } from 'shared/user-interface/components/button/button.component';
 
 export type Props = {

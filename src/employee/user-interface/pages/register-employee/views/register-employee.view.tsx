@@ -6,7 +6,7 @@ import {
 import { EntityValidationError } from 'shared/domain/errors/validation.error';
 import { FormProvider } from 'shared/infra/providers/form.provider';
 import { FormStorageService } from 'shared/application/form-storage.port';
-import { Form } from '../../../components/form/employee-form.component';
+import { EmployeeForm } from '../../../components/form/employee-form.component';
 
 type Props = {
   registerEmployeeUseCase: RegisterEmployeeUseCase;
@@ -35,7 +35,7 @@ export const RegisterEmployeeView = ({
 
   return (
     <FormProvider onSubmit={onSubmit} initialValues={initialValues}>
-      <Form />
+      <EmployeeForm />
     </FormProvider>
   );
 };
