@@ -57,6 +57,8 @@
   },
   "jest": {
     "clearMocks": true,
+    "resetMocks": true,
+    "restoreMocks": true,
     "moduleNameMapper": {
       "^axios$": "axios/dist/node/axios.cjs"
     }
