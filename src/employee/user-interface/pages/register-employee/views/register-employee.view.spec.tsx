@@ -1,3 +1,4 @@
+import { ValidationError } from 'yup';
 import {
   Output,
   RegisterEmployeeUseCase,
@@ -6,6 +7,7 @@ import { useEmployeeForm } from 'employee/infra/adapters/employee-form.adapter';
 import { EmployeesInMemoryHttpClient } from 'employee/infra/adapters/in-memory-http-client.adapter';
 import { notificationServiceMock } from 'shared/testing/mocks/notification.mock';
 import { render, screen, userEvent } from 'shared/testing/test-utils';
+import { EntityValidationError } from 'shared/domain/errors/validation.error';
 import { RegisterEmployeeView } from './register-employee.view';
 
 const fakeEmployee = {
@@ -52,6 +54,14 @@ describe('RegisterEmployeeView', () => {
   });
 
   it('should display form errors when has validation errors', () => {
+    jest.spyOn(registerEmployeeUseCase, 'execute').mockImplementation(() => {
+      throw new EntityValidationError({
+        name: ['Nome é obrigatório'],
+        salary: ['Salário deve ser um número positivo'],
+        document: ['Documento deve ser um CPF ou CNPJ valido'],
+        email: ['Email inválido'],
+      });
+    });
     const Component = () => {
       const formService = useEmployeeForm();
       return (
