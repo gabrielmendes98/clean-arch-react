@@ -12,7 +12,7 @@ export type Validations = {
   [key: string]: (value: any) => boolean;
 };
 
-const validationMessages = {
+export const validationMessages = {
   mixed: {
     default: '${path} é inválido',
     required: '${path} é obrigatório',
