@@ -3,11 +3,11 @@ import { Email } from 'shared/domain/value-objects/email.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 import { StoragePersistor } from '../storage-persistor.port';
 import { UseCase } from '../use-case';
-import { UserStorageService } from '../user-storage.port';
+import { PersistedUser, UserStorageService } from '../user-storage.port';
 
 export class RetrivePersistedUserUseCase implements UseCase<Input, Output> {
   constructor(
-    private persistor: StoragePersistor,
+    private persistor: StoragePersistor<PersistedUser>,
     private userService: UserStorageService,
   ) {}
 
