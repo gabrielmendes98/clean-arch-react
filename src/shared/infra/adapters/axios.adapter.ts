@@ -12,7 +12,7 @@ export class AxiosAdapter implements HttpClientService {
 
   async get<Response>(
     endpoint: string,
-    options: HttpClientOptions,
+    options?: HttpClientOptions,
   ): Promise<HttpResponse<Response>> {
     let response: AxiosResponse;
     try {
@@ -29,7 +29,7 @@ export class AxiosAdapter implements HttpClientService {
   async post<Response>(
     endpoint: string,
     body: any,
-    options: HttpClientOptions,
+    options?: HttpClientOptions,
   ): Promise<HttpResponse<Response>> {
     let response: AxiosResponse;
     try {
@@ -46,7 +46,7 @@ export class AxiosAdapter implements HttpClientService {
   async put<Response>(
     endpoint: string,
     body: any,
-    options: HttpClientOptions,
+    options?: HttpClientOptions,
   ): Promise<HttpResponse<Response>> {
     let response: AxiosResponse;
     try {
@@ -62,7 +62,7 @@ export class AxiosAdapter implements HttpClientService {
 
   async delete<Response>(
     endpoint: string,
-    options: HttpClientOptions,
+    options?: HttpClientOptions,
   ): Promise<HttpResponse<Response>> {
     let response: AxiosResponse;
     try {
