@@ -1,6 +1,6 @@
 export class MethodNotImplementedError extends Error {
-  constructor() {
-    super('Método não implementado');
+  constructor(message?: string) {
+    super(message || 'Método não implementado');
     this.name = 'MethodNotImplementedError';
   }
 }
