@@ -1,4 +1,3 @@
-import { ValidationError } from 'yup';
 import {
   Output,
   RegisterEmployeeUseCase,
@@ -6,7 +5,7 @@ import {
 import { useEmployeeForm } from 'employee/infra/adapters/employee-form.adapter';
 import { EmployeesInMemoryHttpClient } from 'employee/infra/adapters/in-memory-http-client.adapter';
 import { notificationServiceMock } from 'shared/testing/mocks/notification.mock';
-import { render, screen, userEvent } from 'shared/testing/test-utils';
+import { render, screen, userEvent, waitFor } from 'shared/testing/test-utils';
 import { EntityValidationError } from 'shared/domain/errors/validation.error';
 import { RegisterEmployeeView } from './register-employee.view';
 
@@ -31,7 +30,7 @@ const registerEmployeeUseCase = new FakeRegisterEmployeeUseCase(
 );
 
 describe('RegisterEmployeeView', () => {
-  it('should call register employee use case and reset form on success submit', () => {
+  it('should call register employee use case and reset form on success submit', async () => {
     const registerEmployee = jest.spyOn(registerEmployeeUseCase, 'execute');
     const Component = () => {
       const formService = useEmployeeForm();
@@ -47,9 +46,11 @@ describe('RegisterEmployeeView', () => {
     };
     render(<Component />);
     userEvent.click(screen.getByRole('button', { name: /enviar/i }));
-    expect(registerEmployee).toHaveBeenCalledWith({
-      ...fakeEmployee,
-      salary: 123123,
+    await waitFor(() => {
+      expect(registerEmployee).toHaveBeenCalledWith({
+        ...fakeEmployee,
+        salary: 123123,
+      });
     });
   });
 

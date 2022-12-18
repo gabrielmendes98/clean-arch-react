@@ -46,6 +46,7 @@ export const FormProvider = <FormFields extends object>({
 
   const resetForm = useCallback(() => {
     setValues(initialValues);
+    setErrors({});
   }, []);
 
   const valuesToProvide = useMemo(
