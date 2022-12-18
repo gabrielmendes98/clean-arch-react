@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header should navigate to pages 1`] = `
+<DocumentFragment>
+  <header
+    class="header"
+  >
+    <nav>
+      <ul>
+        <li>
+          <a
+            href="/"
+          >
+            Home
+          </a>
+        </li>
+        <li>
+          <a
+            href="/login"
+          >
+            Login
+          </a>
+        </li>
+        <li>
+          <a
+            href="/sign-up"
+          >
+            Registrar-se
+          </a>
+        </li>
+        <li>
+          <a
+            href="/register-employees"
+          >
+            Cadastrar Funcionario
+          </a>
+        </li>
+        <li>
+          <a
+            href="/employees"
+          >
+            Lista de Funcionarios
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+</DocumentFragment>
+`;

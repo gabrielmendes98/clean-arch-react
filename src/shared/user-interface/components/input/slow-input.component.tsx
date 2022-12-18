@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useFormStorage } from 'shared/infra/adapters/form-storage.adapter';
-import styles from './slow-input.module.scss';
+import styles from './input.module.scss';
 
 type Props = {
   label: string;
