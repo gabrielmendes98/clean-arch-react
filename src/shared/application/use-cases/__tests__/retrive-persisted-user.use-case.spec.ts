@@ -1,16 +1,9 @@
-import { StoragePersistor } from 'shared/application/storage-persistor.port';
-import { PersistedUser } from 'shared/application/user-storage.port';
 import { User } from 'shared/domain/entities/user.entity';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
+import { storagePersistorMock } from 'shared/testing/mocks/persistor.mock';
 import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';
 import { RetrivePersistedUserUseCase } from '../retrive-persisted-user.use-case';
-
-const fakeStoragePersistor: StoragePersistor<PersistedUser> = {
-  delete: jest.fn(),
-  get: jest.fn(),
-  set: jest.fn(),
-};
 
 const fakeUser = {
   email: 'someemail@gmail.com',
@@ -22,9 +15,9 @@ const fakeUser = {
 
 describe('RetrivePersistedUserUseCase', () => {
   it('should get persisted user and update in-memory user', () => {
-    jest.spyOn(fakeStoragePersistor, 'get').mockReturnValue(fakeUser);
+    jest.spyOn(storagePersistorMock, 'get').mockReturnValue(fakeUser);
     const useCase = new RetrivePersistedUserUseCase(
-      fakeStoragePersistor,
+      storagePersistorMock,
       userStorageServiceMock,
     );
     useCase.execute();
@@ -39,9 +32,9 @@ describe('RetrivePersistedUserUseCase', () => {
   });
 
   it('should update user with null value when do not have user', () => {
-    jest.spyOn(fakeStoragePersistor, 'get').mockReturnValue(null);
+    jest.spyOn(storagePersistorMock, 'get').mockReturnValue(null);
     const useCase = new RetrivePersistedUserUseCase(
-      fakeStoragePersistor,
+      storagePersistorMock,
       userStorageServiceMock,
     );
     useCase.execute();
