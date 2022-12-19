@@ -21,7 +21,7 @@ export const FormProvider = <FormFields extends object>({
   initialValues,
   children,
   onSubmit,
-  validations = {},
+  validations,
 }: FormProviderProps<FormFields>) => {
   const [values, setValues] = useState<FormFields>(initialValues);
   const [errors, setErrors] = useState<FormErrors<FormFields>>({});
@@ -72,7 +72,7 @@ export const FormProvider = <FormFields extends object>({
       const fieldValues = Object.fromEntries(formData.entries());
       validator
         .entityValidationSchema(
-          validations as Record<string, (value: string) => boolean>,
+          (validations || {}) as Record<string, (value: string) => boolean>,
         )
         .validate(fieldValues);
       onSubmit(e, {

@@ -1,8 +1,8 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useFormStorage } from 'shared/infra/adapters/form-storage.adapter';
 import styles from './input.module.scss';
 
-type Props = {
+export type Props = {
   label: string;
   name: string;
   id?: string;
@@ -17,7 +17,14 @@ export const SlowInput = ({
   type = 'text',
   onChange,
 }: Props) => {
-  const { values, onChangeField, errors, setFieldErrors } = useFormStorage();
+  const {
+    values,
+    onChangeField,
+    errors,
+    setFieldErrors,
+    wasSubmitted,
+    validations,
+  } = useFormStorage();
 
   const _id = useMemo(() => id || name, [id, name]);
 
@@ -33,6 +40,23 @@ export const SlowInput = ({
     setFieldErrors(e.target.name, null);
     onChange && onChange(e);
   };
+
+  const validate = () => {
+    try {
+      if (validations) {
+        validations[name](values[name]);
+      }
+    } catch (e: any) {
+      const error = e.errors?.[0] || e.message || 'Campo inválido';
+      setFieldErrors(name, [error]);
+    }
+  };
+
+  useEffect(() => {
+    if (wasSubmitted) {
+      validate();
+    }
+  }, [wasSubmitted]);
 
   return (
     <div className={styles.box}>

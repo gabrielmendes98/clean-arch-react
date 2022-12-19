@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useFormStorage } from 'shared/infra/adapters/form-storage.adapter';
 import styles from './input.module.scss';
 
-type Props = {
+export type Props = {
   label: string;
   name: string;
   id?: string;
@@ -31,7 +31,9 @@ export const FastInput = ({
 
   const validate = () => {
     try {
-      validations[name](value);
+      if (validations) {
+        validations[name](value);
+      }
     } catch (e: any) {
       const error = e.errors?.[0] || e.message || 'Campo inválido';
       setErrorMessage(error);

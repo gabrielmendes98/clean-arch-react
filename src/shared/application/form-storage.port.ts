@@ -15,7 +15,7 @@ export interface FormStorageService<FormFields = object> {
   errors: FormErrors<FormFields>;
   setErrors: (errors: FormErrors<FormFields>) => void;
   setFieldErrors: (field: string, errors: string[] | null) => void;
-  validations: FormValidations<FormFields>;
+  validations?: FormValidations<FormFields>;
   wasSubmitted: boolean;
 }
 

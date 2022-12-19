@@ -59,7 +59,7 @@ describe('FormProvider', () => {
   });
   test('validations', () => {
     const { result } = useHook();
-    expect(result.current?.validations).toStrictEqual({});
+    expect(result.current?.validations).not.toBeDefined();
   });
   test('wasSubmitted', () => {
     const { result } = useHook();
