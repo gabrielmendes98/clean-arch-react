@@ -5,7 +5,11 @@ import { useFormStorage } from '../form-storage.adapter';
 describe('useFormStorage', () => {
   it('should return all provider values', () => {
     const wrapper = ({ children }) => (
-      <FormProvider initialValues={{ name: '' }} onSubmit={jest.fn()}>
+      <FormProvider
+        initialValues={{ name: '' }}
+        onSubmit={jest.fn()}
+        validations={{}}
+      >
         {children}
       </FormProvider>
     );
