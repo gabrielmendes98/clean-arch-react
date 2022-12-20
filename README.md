@@ -1,3 +1,8 @@
+ideias:
+
+- adicionar gateway
+- injeção de dependencia com context pra evitar prop drilling
+
 # Clean Arch React
 
 This is a project made with the intention of applying the concepts of Clean

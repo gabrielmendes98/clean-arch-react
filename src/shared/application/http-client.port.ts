@@ -1,23 +1,23 @@
 export interface HttpClientService {
-  baseUrl: string;
-  get<Response>(
+  baseUrl?: string;
+  get<DTOResponse = any>(
     endpoint: string,
     options?: HttpClientOptions,
-  ): Promise<HttpResponse<Response>>;
-  post<Response>(
-    endpoint: string,
-    body: any,
-    options?: HttpClientOptions,
-  ): Promise<HttpResponse<Response>>;
-  put<Response>(
+  ): Promise<HttpResponse<DTOResponse>>;
+  post<DTOResponse = any>(
     endpoint: string,
     body: any,
     options?: HttpClientOptions,
-  ): Promise<HttpResponse<Response>>;
-  delete<Response>(
+  ): Promise<HttpResponse<DTOResponse>>;
+  put<DTOResponse = any>(
+    endpoint: string,
+    body: any,
+    options?: HttpClientOptions,
+  ): Promise<HttpResponse<DTOResponse>>;
+  delete<DTOResponse = any>(
     endpoint: string,
     options?: HttpClientOptions,
-  ): Promise<HttpResponse<Response>>;
+  ): Promise<HttpResponse<DTOResponse>>;
 }
 
 export type HttpClientOptions = {

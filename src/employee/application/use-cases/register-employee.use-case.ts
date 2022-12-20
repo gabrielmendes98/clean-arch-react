@@ -9,6 +9,7 @@ import {
   HttpStatusCode,
 } from 'shared/application/http-client.port';
 import { NotificationService } from '../../../shared/application/notification.port';
+import { RegisterEmployeeDto } from '../dto/register-employee.dto';
 
 export class RegisterEmployeeUseCase implements UseCase<Input, Output> {
   constructor(
@@ -18,7 +19,10 @@ export class RegisterEmployeeUseCase implements UseCase<Input, Output> {
 
   async execute(input: Input): Promise<Output> {
     Employee.validate(input);
-    const response = await this.httpClient.post<Output>('/employees', input);
+    const response = await this.httpClient.post<RegisterEmployeeDto>(
+      '/employees',
+      input,
+    );
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         this.notifier.notify('Funcionário cadastrado com sucesso!', 'success');

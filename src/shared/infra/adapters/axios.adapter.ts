@@ -10,10 +10,10 @@ export class AxiosAdapter implements HttpClientService {
     axios.defaults.baseURL = baseUrl;
   }
 
-  async get<Response>(
+  async get<DTOResponse>(
     endpoint: string,
     options?: HttpClientOptions,
-  ): Promise<HttpResponse<Response>> {
+  ): Promise<HttpResponse<DTOResponse>> {
     let response: AxiosResponse;
     try {
       response = await axios.get(endpoint, options);
@@ -26,11 +26,11 @@ export class AxiosAdapter implements HttpClientService {
     };
   }
 
-  async post<Response>(
+  async post<DTOResponse>(
     endpoint: string,
     body: any,
     options?: HttpClientOptions,
-  ): Promise<HttpResponse<Response>> {
+  ): Promise<HttpResponse<DTOResponse>> {
     let response: AxiosResponse;
     try {
       response = await axios.post(endpoint, body, options);
@@ -43,11 +43,11 @@ export class AxiosAdapter implements HttpClientService {
     };
   }
 
-  async put<Response>(
+  async put<DTOResponse>(
     endpoint: string,
     body: any,
     options?: HttpClientOptions,
-  ): Promise<HttpResponse<Response>> {
+  ): Promise<HttpResponse<DTOResponse>> {
     let response: AxiosResponse;
     try {
       response = await axios.put(endpoint, body, options);
@@ -60,10 +60,10 @@ export class AxiosAdapter implements HttpClientService {
     };
   }
 
-  async delete<Response>(
+  async delete<DTOResponse>(
     endpoint: string,
     options?: HttpClientOptions,
-  ): Promise<HttpResponse<Response>> {
+  ): Promise<HttpResponse<DTOResponse>> {
     let response: AxiosResponse;
     try {
       response = await axios.delete(endpoint, options);

@@ -9,6 +9,7 @@ import {
   HttpStatusCode,
 } from 'shared/application/http-client.port';
 import { EmployeeListService } from '../ports/employee-list.port';
+import { DeleteEmployeeDto } from '../dto/delete-employee.dto';
 
 export class DeleteEmployeeFromListUseCase implements UseCase<Input, Output> {
   constructor(
@@ -23,7 +24,7 @@ export class DeleteEmployeeFromListUseCase implements UseCase<Input, Output> {
     const removedIndex = list.removeItem(item);
     updateList(new EmployeeList(list.items));
 
-    const response = await this.httpClient.delete<Output>(
+    const response = await this.httpClient.delete<DeleteEmployeeDto>(
       `/employees/${item.id}`,
     );
     switch (response.statusCode) {

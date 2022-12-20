@@ -11,6 +11,7 @@ import {
 import { RouterService } from 'shared/application/router.port';
 import { pages } from 'shared/domain/config/pages';
 import { NotificationService } from '../../../shared/application/notification.port';
+import { UpdateEmployeeDto } from '../dto/update-employee.dto';
 
 export class UpdateEmployeeUseCase implements UseCase<Input, Output> {
   constructor(
@@ -21,7 +22,7 @@ export class UpdateEmployeeUseCase implements UseCase<Input, Output> {
 
   async execute(input: Input): Promise<Output> {
     Employee.validate(input);
-    const response = await this.httpClient.put<Output>(
+    const response = await this.httpClient.put<UpdateEmployeeDto>(
       `/employees/${input.id}`,
       input,
     );

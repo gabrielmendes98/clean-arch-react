@@ -16,6 +16,7 @@ describe('GetEmployeeUseCase', () => {
 
   it('should call api and return employee entity', async () => {
     const httpClient = new EmployeesInMemoryHttpClient('fakeurl.com');
+    const x = httpClient.get('/employees');
     const getEmployee = jest.spyOn(httpClient, 'get');
     const useCase = new GetEmployeeUseCase(httpClient);
     const response = await useCase.execute({
