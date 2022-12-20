@@ -1,17 +1,14 @@
 import { EmployeeList } from 'employee/domain/entities/employee-list.entity';
 import { UseCase } from 'shared/application/use-case';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
-import {
-  HttpClientService,
-  HttpStatusCode,
-} from 'shared/application/http-client.port';
-import { ListEmployeesDto } from '../dto/list-employees.dto';
+import { HttpStatusCode } from 'shared/application/http-client.port';
+import { EmployeeApiService } from '../ports/employee-api-service.port';
 
 export class ListEmployeesUseCase implements UseCase<Input, Output> {
-  constructor(private httpClient: HttpClientService) {}
+  constructor(private employeeApiService: EmployeeApiService) {}
 
   async execute(): Promise<Output> {
-    const response = await this.httpClient.get<ListEmployeesDto>('/employees');
+    const response = await this.employeeApiService.listEmployees();
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         return new EmployeeList(response.body);
@@ -21,6 +18,6 @@ export class ListEmployeesUseCase implements UseCase<Input, Output> {
   }
 }
 
-export type Input = undefined;
+export type Input = void;
 
 export type Output = EmployeeList;

@@ -1,3 +1,3 @@
-export type DeleteEmployeeDto = {
+export type DeleteEmployeeResponseDto = {
   success: boolean;
 };

@@ -1,15 +1,11 @@
-import { BrowserRouter } from 'react-router-dom';
-import {
-  GetEmployeeUseCase,
-  Input,
-} from 'employee/application/use-cases/get-employee.use-case';
+import { GetEmployeeUseCase } from 'employee/application/use-cases/get-employee.use-case';
 import {
   Output,
   UpdateEmployeeUseCase,
 } from 'employee/application/use-cases/update-employee.use-case';
 import { Employee } from 'employee/domain/entities/employee.entity';
 import { useEmployeeForm } from 'employee/infra/adapters/employee-form.adapter';
-import { EmployeesInMemoryHttpClient } from 'employee/infra/adapters/in-memory-http-client.adapter';
+import { makeEmployeeApiService } from 'employee/infra/factories/employee-api-service.factory';
 import { Document } from 'shared/domain/value-objects/document.vo';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
@@ -47,12 +43,10 @@ class FakeGetEmployeeUseCase extends GetEmployeeUseCase {
   }
 }
 
-const getEmployeeUseCase = new FakeGetEmployeeUseCase(
-  new EmployeesInMemoryHttpClient('fake.com'),
-);
+const getEmployeeUseCase = new FakeGetEmployeeUseCase(makeEmployeeApiService());
 
 const updateEmployeeUseCase = new FakeUpdateEmployeeUseCase(
-  new EmployeesInMemoryHttpClient('fake.com'),
+  makeEmployeeApiService(),
   routerServiceMock,
   notificationServiceMock,
 );

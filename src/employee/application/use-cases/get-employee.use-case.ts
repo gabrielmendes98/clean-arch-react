@@ -1,23 +1,18 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
 import { UseCase } from 'shared/application/use-case';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
-import {
-  HttpClientService,
-  HttpStatusCode,
-} from 'shared/application/http-client.port';
+import { HttpStatusCode } from 'shared/application/http-client.port';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 import { Document } from 'shared/domain/value-objects/document.vo';
 import { Email } from 'shared/domain/value-objects/email.vo';
-import { GetEmployeeDto } from '../dto/get-employee.dto';
+import { EmployeeApiService } from '../ports/employee-api-service.port';
 
 export class GetEmployeeUseCase implements UseCase<Input, Output> {
-  constructor(private httpClient: HttpClientService) {}
+  constructor(private employeeApiService: EmployeeApiService) {}
 
   async execute(input: Input): Promise<Output> {
     UniqueEntityId.validate(input.id);
-    const response = await this.httpClient.get<GetEmployeeDto>(
-      `/employees/${input.id}`,
-    );
+    const response = await this.employeeApiService.getEmployee(input.id);
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         return new Employee({

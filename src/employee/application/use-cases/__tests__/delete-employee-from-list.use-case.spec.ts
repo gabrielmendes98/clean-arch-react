@@ -3,7 +3,7 @@ import {
   EmployeeList,
   EmployeeListItem,
 } from 'employee/domain/entities/employee-list.entity';
-import { EmployeesInMemoryHttpClient } from 'employee/infra/adapters/in-memory-http-client.adapter';
+import { makeEmployeeApiService } from 'employee/infra/factories/employee-api-service.factory';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { DeleteEmployeeFromListUseCase } from '../delete-employee-from-list.use-case';
 
@@ -27,7 +27,7 @@ describe('DeleteEmployeeFromListUseCase', () => {
 
   it('should update list', async () => {
     const useCase = new DeleteEmployeeFromListUseCase(
-      new EmployeesInMemoryHttpClient('fakeurl.com'),
+      makeEmployeeApiService(),
       mockEmployeeListService,
     );
     await useCase.execute({ item: fakeItem });
@@ -38,30 +38,35 @@ describe('DeleteEmployeeFromListUseCase', () => {
   });
 
   it('should call api to delete item and return success', async () => {
-    const httpClient = new EmployeesInMemoryHttpClient('fakeurl.com');
-    const deleteMethod = jest.spyOn(httpClient, 'delete');
+    const apiService = makeEmployeeApiService();
+    const deleteMethod = jest.spyOn(apiService, 'deleteEmployee');
     const useCase = new DeleteEmployeeFromListUseCase(
-      httpClient,
+      apiService,
       mockEmployeeListService,
     );
     const response = await useCase.execute({ item: fakeItem });
-    expect(deleteMethod).toHaveBeenCalledWith(`/employees/${fakeItem.id}`);
+    expect(deleteMethod).toHaveBeenCalledWith(fakeItem.id);
     expect(response.success).toBeTruthy();
   });
 
   it('shuold add item back to list when api throw error', async () => {
-    const httpClient = new EmployeesInMemoryHttpClient('fakeurl.com');
+    const apiService = makeEmployeeApiService();
     const deleteMethod = jest
-      .spyOn(httpClient, 'delete')
-      .mockReturnValue(Promise.resolve({ statusCode: 500, body: {} }));
+      .spyOn(apiService, 'deleteEmployee')
+      .mockReturnValue(
+        Promise.resolve({
+          statusCode: 500,
+          body: { message: 'some error message' },
+        }),
+      );
     const useCase = new DeleteEmployeeFromListUseCase(
-      httpClient,
+      apiService,
       mockEmployeeListService,
     );
     await expect(
       async () => await useCase.execute({ item: fakeItem }),
     ).rejects.toThrow(UnexpectedError);
-    expect(deleteMethod).toHaveBeenCalledWith(`/employees/${fakeItem.id}`);
+    expect(deleteMethod).toHaveBeenCalledWith(fakeItem.id);
     expect(mockEmployeeListService.list.items).toHaveLength(1);
     expect(mockEmployeeListService.list.items).toContain(fakeItem);
     expect(mockEmployeeListService.updateList).toHaveBeenCalledWith(

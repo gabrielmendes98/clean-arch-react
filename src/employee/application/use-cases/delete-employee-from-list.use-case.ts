@@ -4,16 +4,13 @@ import {
 } from 'employee/domain/entities/employee-list.entity';
 import { UseCase } from 'shared/application/use-case';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
-import {
-  HttpClientService,
-  HttpStatusCode,
-} from 'shared/application/http-client.port';
+import { HttpStatusCode } from 'shared/application/http-client.port';
 import { EmployeeListService } from '../ports/employee-list.port';
-import { DeleteEmployeeDto } from '../dto/delete-employee.dto';
+import { EmployeeApiService } from '../ports/employee-api-service.port';
 
 export class DeleteEmployeeFromListUseCase implements UseCase<Input, Output> {
   constructor(
-    private httpClient: HttpClientService,
+    private employeeApiService: EmployeeApiService,
     private employeeListService: EmployeeListService,
   ) {}
 
@@ -24,9 +21,8 @@ export class DeleteEmployeeFromListUseCase implements UseCase<Input, Output> {
     const removedIndex = list.removeItem(item);
     updateList(new EmployeeList(list.items));
 
-    const response = await this.httpClient.delete<DeleteEmployeeDto>(
-      `/employees/${item.id}`,
-    );
+    const response = await this.employeeApiService.deleteEmployee(item.id);
+
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         return response.body;

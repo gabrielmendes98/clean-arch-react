@@ -5,7 +5,7 @@ import {
 } from 'employee/application/use-cases/delete-employee-from-list.use-case';
 import { ListEmployeesUseCase } from 'employee/application/use-cases/list-employees.use-case';
 import { EmployeeList } from 'employee/domain/entities/employee-list.entity';
-import { EmployeesInMemoryHttpClient } from 'employee/infra/adapters/in-memory-http-client.adapter';
+import { makeEmployeeApiService } from 'employee/infra/factories/employee-api-service.factory';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
 import { render, screen, userEvent, waitFor } from 'shared/testing/test-utils';
 import { ListEmployeesView } from './list-employees.view';
@@ -39,11 +39,11 @@ const employeeListServiceMock: EmployeeListService = {
 };
 
 const deleteEmployeeUseCase = new MockDeleteEmployeeUseCase(
-  new EmployeesInMemoryHttpClient('fakeurl.com'),
+  makeEmployeeApiService(),
   employeeListServiceMock,
 );
 const listEmployeesUseCase = new MockListEmployeeUseCase(
-  new EmployeesInMemoryHttpClient('fakeurl.com'),
+  makeEmployeeApiService(),
 );
 
 describe('ListEmployeesView', () => {

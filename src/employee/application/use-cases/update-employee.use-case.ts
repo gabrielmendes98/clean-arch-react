@@ -4,29 +4,26 @@ import {
   UnexpectedError,
   UNEXPECTED_ERROR_MESSAGE,
 } from 'shared/domain/errors/unexpected.error';
-import {
-  HttpClientService,
-  HttpStatusCode,
-} from 'shared/application/http-client.port';
+import { HttpStatusCode } from 'shared/application/http-client.port';
 import { RouterService } from 'shared/application/router.port';
 import { pages } from 'shared/domain/config/pages';
 import { NotificationService } from '../../../shared/application/notification.port';
-import { UpdateEmployeeDto } from '../dto/update-employee.dto';
+import {
+  UpdateEmployeeRequestDto,
+  UpdateEmployeeResponseDto,
+} from '../dto/update-employee.dto';
+import { EmployeeApiService } from '../ports/employee-api-service.port';
 
 export class UpdateEmployeeUseCase implements UseCase<Input, Output> {
   constructor(
-    private httpClient: HttpClientService,
+    private employeeApiService: EmployeeApiService,
     private routerService: RouterService,
     private notifier: NotificationService,
   ) {}
 
   async execute(input: Input): Promise<Output> {
     Employee.validate(input);
-    const response = await this.httpClient.put<UpdateEmployeeDto>(
-      `/employees/${input.id}`,
-      input,
-    );
-
+    const response = await this.employeeApiService.updateEmployee(input);
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         this.notifier.notify('Funcionário atualizado com sucesso!', 'success');
@@ -39,14 +36,6 @@ export class UpdateEmployeeUseCase implements UseCase<Input, Output> {
   }
 }
 
-export type Input = {
-  id: string;
-  name: string;
-  email: string;
-  document: string;
-  salary: number;
-};
+export type Input = UpdateEmployeeRequestDto;
 
-export type Output = {
-  success: boolean;
-};
+export type Output = UpdateEmployeeResponseDto;

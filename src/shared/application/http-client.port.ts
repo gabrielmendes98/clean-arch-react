@@ -1,3 +1,5 @@
+import { ErrorDto } from './dto/error.dto';
+
 export interface HttpClientService {
   baseUrl?: string;
   get<DTOResponse = any>(
@@ -38,5 +40,5 @@ export enum HttpStatusCode {
 
 export type HttpResponse<T = any> = {
   statusCode: HttpStatusCode;
-  body: T;
+  body: T | ErrorDto;
 };

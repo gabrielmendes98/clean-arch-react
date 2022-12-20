@@ -1,5 +1,5 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
-import { EmployeesInMemoryHttpClient } from 'employee/infra/adapters/in-memory-http-client.adapter';
+import { makeEmployeeApiService } from 'employee/infra/factories/employee-api-service.factory';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { notificationServiceMock } from 'shared/testing/mocks/notification.mock';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
@@ -17,7 +17,7 @@ describe('UpdateEmployeeUseCase', () => {
   it('should validate employee', async () => {
     const validateEmployee = jest.spyOn(Employee, 'validate');
     const useCase = new UpdateEmployeeUseCase(
-      new EmployeesInMemoryHttpClient('fakeurl.com'),
+      makeEmployeeApiService(),
       routerServiceMock,
       notificationServiceMock,
     );
@@ -26,18 +26,15 @@ describe('UpdateEmployeeUseCase', () => {
   });
 
   it('should call api, return success, notify user and go back to listing page', async () => {
-    const httpClient = new EmployeesInMemoryHttpClient('fakeurl.com');
-    const updateEmployee = jest.spyOn(httpClient, 'put');
+    const apiService = makeEmployeeApiService();
+    const updateEmployee = jest.spyOn(apiService, 'updateEmployee');
     const useCase = new UpdateEmployeeUseCase(
-      httpClient,
+      apiService,
       routerServiceMock,
       notificationServiceMock,
     );
     const response = await useCase.execute(fakeEmployee);
-    expect(updateEmployee).toHaveBeenCalledWith(
-      `/employees/${fakeEmployee.id}`,
-      fakeEmployee,
-    );
+    expect(updateEmployee).toHaveBeenCalledWith(fakeEmployee);
     expect(notificationServiceMock.notify).toHaveBeenCalledWith(
       'Funcionário atualizado com sucesso!',
       'success',
@@ -46,10 +43,15 @@ describe('UpdateEmployeeUseCase', () => {
   });
 
   it('should throw unexpected error when api returns any error and notify user', async () => {
-    const httpClient = new EmployeesInMemoryHttpClient('fakeurl.com');
+    const httpClient = makeEmployeeApiService();
     const updateEmployee = jest
-      .spyOn(httpClient, 'put')
-      .mockReturnValue(Promise.resolve({ statusCode: 500, body: {} }));
+      .spyOn(httpClient, 'updateEmployee')
+      .mockReturnValue(
+        Promise.resolve({
+          statusCode: 500,
+          body: { message: 'some error message' },
+        }),
+      );
     const useCase = new UpdateEmployeeUseCase(
       httpClient,
       routerServiceMock,
@@ -58,10 +60,7 @@ describe('UpdateEmployeeUseCase', () => {
     await expect(
       async () => await useCase.execute(fakeEmployee),
     ).rejects.toThrow(UnexpectedError);
-    expect(updateEmployee).toHaveBeenCalledWith(
-      `/employees/${fakeEmployee.id}`,
-      fakeEmployee,
-    );
+    expect(updateEmployee).toHaveBeenCalledWith(fakeEmployee);
     expect(notificationServiceMock.notify).toHaveBeenCalledWith(
       new UnexpectedError().message,
       'error',

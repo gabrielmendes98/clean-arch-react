@@ -4,25 +4,23 @@ import {
   UnexpectedError,
   UNEXPECTED_ERROR_MESSAGE,
 } from 'shared/domain/errors/unexpected.error';
-import {
-  HttpClientService,
-  HttpStatusCode,
-} from 'shared/application/http-client.port';
+import { HttpStatusCode } from 'shared/application/http-client.port';
 import { NotificationService } from '../../../shared/application/notification.port';
-import { RegisterEmployeeDto } from '../dto/register-employee.dto';
+import {
+  RegisterEmployeeRequestDto,
+  RegisterEmployeeResponseDto,
+} from '../dto/register-employee.dto';
+import { EmployeeApiService } from '../ports/employee-api-service.port';
 
 export class RegisterEmployeeUseCase implements UseCase<Input, Output> {
   constructor(
-    private httpClient: HttpClientService,
+    private employeeApiService: EmployeeApiService,
     private notifier: NotificationService,
   ) {}
 
   async execute(input: Input): Promise<Output> {
     Employee.validate(input);
-    const response = await this.httpClient.post<RegisterEmployeeDto>(
-      '/employees',
-      input,
-    );
+    const response = await this.employeeApiService.createEmployee(input);
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         this.notifier.notify('Funcionário cadastrado com sucesso!', 'success');
@@ -34,13 +32,6 @@ export class RegisterEmployeeUseCase implements UseCase<Input, Output> {
   }
 }
 
-export type Input = {
-  name: string;
-  email: string;
-  document: string;
-  salary: number;
-};
+export type Input = RegisterEmployeeRequestDto;
 
-export type Output = {
-  success: boolean;
-};
+export type Output = RegisterEmployeeResponseDto;

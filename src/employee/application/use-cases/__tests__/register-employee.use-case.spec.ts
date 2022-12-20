@@ -1,5 +1,5 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
-import { EmployeesInMemoryHttpClient } from 'employee/infra/adapters/in-memory-http-client.adapter';
+import { makeEmployeeApiService } from 'employee/infra/factories/employee-api-service.factory';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { notificationServiceMock } from 'shared/testing/mocks/notification.mock';
 import { RegisterEmployeeUseCase } from '../register-employee.use-case';
@@ -15,7 +15,7 @@ describe('RegisterEmployeeUseCase', () => {
   it('should validate employee', async () => {
     const validateEmployee = jest.spyOn(Employee, 'validate');
     const useCase = new RegisterEmployeeUseCase(
-      new EmployeesInMemoryHttpClient('fakeurl.com'),
+      makeEmployeeApiService(),
       notificationServiceMock,
     );
     await useCase.execute(fakeEmployee);
@@ -23,14 +23,14 @@ describe('RegisterEmployeeUseCase', () => {
   });
 
   it('should call api, return success and notify user', async () => {
-    const httpClient = new EmployeesInMemoryHttpClient('fakeurl.com');
-    const registerEmployee = jest.spyOn(httpClient, 'post');
+    const apiService = makeEmployeeApiService();
+    const registerEmployee = jest.spyOn(apiService, 'createEmployee');
     const useCase = new RegisterEmployeeUseCase(
-      httpClient,
+      apiService,
       notificationServiceMock,
     );
     const response = await useCase.execute(fakeEmployee);
-    expect(registerEmployee).toHaveBeenCalledWith('/employees', fakeEmployee);
+    expect(registerEmployee).toHaveBeenCalledWith(fakeEmployee);
     expect(notificationServiceMock.notify).toHaveBeenCalledWith(
       'Funcionário cadastrado com sucesso!',
       'success',
@@ -39,18 +39,20 @@ describe('RegisterEmployeeUseCase', () => {
   });
 
   it('should throw unexpected error when api returns any error and notify user', async () => {
-    const httpClient = new EmployeesInMemoryHttpClient('fakeurl.com');
+    const apiService = makeEmployeeApiService();
     const registerEmployee = jest
-      .spyOn(httpClient, 'post')
-      .mockReturnValue(Promise.resolve({ statusCode: 500, body: {} }));
+      .spyOn(apiService, 'createEmployee')
+      .mockReturnValue(
+        Promise.resolve({ statusCode: 500, body: { success: false } }),
+      );
     const useCase = new RegisterEmployeeUseCase(
-      httpClient,
+      apiService,
       notificationServiceMock,
     );
     await expect(
       async () => await useCase.execute(fakeEmployee),
     ).rejects.toThrow(UnexpectedError);
-    expect(registerEmployee).toHaveBeenCalledWith('/employees', fakeEmployee);
+    expect(registerEmployee).toHaveBeenCalledWith(fakeEmployee);
     expect(notificationServiceMock.notify).toHaveBeenCalledWith(
       new UnexpectedError().message,
       'error',

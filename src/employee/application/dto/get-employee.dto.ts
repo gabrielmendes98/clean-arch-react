@@ -1,4 +1,4 @@
-export type GetEmployeeDto = {
+export type GetEmployeeResponseDto = {
   name: string;
   salary: number;
   id: string;
