@@ -1,3 +1,4 @@
+import { MethodNotImplementedError } from 'shared/domain/errors/method-not-implemented.error';
 import { AuthenticationInMemoryHttpClient } from '../in-memory-http-client.adapter';
 
 describe('AuthenticationInMemoryHttpClient', () => {
@@ -14,5 +15,18 @@ describe('AuthenticationInMemoryHttpClient', () => {
         name: 'Gabriel',
       },
     });
+  });
+
+  it('should throw MethodNotImplementedError when call get, put and delete methods', async () => {
+    const httpClient = new AuthenticationInMemoryHttpClient('fakeurl.com');
+    await expect(async () => await httpClient.get()).rejects.toThrow(
+      MethodNotImplementedError,
+    );
+    await expect(async () => await httpClient.delete()).rejects.toThrow(
+      MethodNotImplementedError,
+    );
+    await expect(async () => await httpClient.put()).rejects.toThrow(
+      MethodNotImplementedError,
+    );
   });
 });

@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainLayout should match snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="box"
+  >
+    <header
+      class="header"
+    >
+      <nav>
+        <ul>
+          <li>
+            <a
+              href="/"
+            >
+              Home
+            </a>
+          </li>
+          <li>
+            <a
+              href="/login"
+            >
+              Login
+            </a>
+          </li>
+          <li>
+            <a
+              href="/sign-up"
+            >
+              Registrar-se
+            </a>
+          </li>
+          <li>
+            <a
+              href="/register-employees"
+            >
+              Cadastrar Funcionario
+            </a>
+          </li>
+          <li>
+            <a
+              href="/employees"
+            >
+              Lista de Funcionarios
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <main
+      class="main"
+    >
+      <div>
+        some children
+      </div>
+    </main>
+    <footer
+      class="footer"
+    >
+      © Copyright 2022, Gabriel Santiago
+    </footer>
+  </div>
+</DocumentFragment>
+`;

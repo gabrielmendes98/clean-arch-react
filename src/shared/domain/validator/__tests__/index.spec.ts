@@ -2,7 +2,7 @@ import {
   EntityValidationError,
   ValidationError,
 } from 'shared/domain/errors/validation.error';
-import { validationMessages, validator } from '..';
+import { validator } from '..';
 
 describe('validator', () => {
   describe('validateAttribute', () => {
@@ -11,6 +11,14 @@ describe('validator', () => {
         .string()
         .required()
         .validateAttribute('some name', 'Nome');
+      expect(isValid).toBeTruthy();
+    });
+
+    test('success without label', () => {
+      const isValid = validator
+        .string()
+        .required()
+        .validateAttribute('some name');
       expect(isValid).toBeTruthy();
     });
 

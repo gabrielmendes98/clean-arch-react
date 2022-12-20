@@ -12,7 +12,7 @@ export const Home = ({ userStorage }: Props) => {
     <section className={styles.box}>
       <p>
         welcome to clean arch react application
-        {user && <span>, {user.name}</span>}
+        {user && <span id="welcome-user-name">, {user.name}</span>}
       </p>
     </section>
   );
