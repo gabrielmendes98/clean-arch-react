@@ -21,7 +21,7 @@ exports[`MainLayout should match snapshot 1`] = `
             <a
               href="/login"
             >
-              Login
+              Entrar
             </a>
           </li>
           <li>
@@ -35,14 +35,14 @@ exports[`MainLayout should match snapshot 1`] = `
             <a
               href="/register-employees"
             >
-              Cadastrar Funcionario
+              Cadastrar Funcionário
             </a>
           </li>
           <li>
             <a
               href="/employees"
             >
-              Lista de Funcionarios
+              Lista de Funcionários
             </a>
           </li>
         </ul>

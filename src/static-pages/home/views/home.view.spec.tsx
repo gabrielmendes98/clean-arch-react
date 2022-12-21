@@ -9,7 +9,7 @@ describe('Home', () => {
   it('should show welcome message without user name when has no user', () => {
     render(<Home userStorage={userStorageServiceMock} />);
     expect(
-      screen.getByText(/welcome to clean arch react application/i),
+      screen.getByText(/Bem-vindo\(a\) à aplicação Clean Arch React/i),
     ).toBeInTheDocument();
     expect(screen.queryByTestId('welcome-user-name')).not.toBeInTheDocument();
   });
@@ -24,7 +24,7 @@ describe('Home', () => {
 
     render(<Home userStorage={userStorageServiceMock} />);
     expect(
-      screen.getByText(/welcome to clean arch react application/i),
+      screen.getByText(/Bem-vindo\(a\) à aplicação Clean Arch React/i),
     ).toBeInTheDocument();
     expect(screen.getByText(/some name/i)).toBeInTheDocument();
   });

@@ -18,7 +18,7 @@ exports[`Header should navigate to pages 1`] = `
           <a
             href="/login"
           >
-            Login
+            Entrar
           </a>
         </li>
         <li>
@@ -32,14 +32,14 @@ exports[`Header should navigate to pages 1`] = `
           <a
             href="/register-employees"
           >
-            Cadastrar Funcionario
+            Cadastrar Funcionário
           </a>
         </li>
         <li>
           <a
             href="/employees"
           >
-            Lista de Funcionarios
+            Lista de Funcionários
           </a>
         </li>
       </ul>

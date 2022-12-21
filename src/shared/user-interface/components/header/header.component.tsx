@@ -11,16 +11,16 @@ export const HeaderComponent = () => (
           <Link to={pages.home}>Home</Link>
         </li>
         <li>
-          <Link to={pages.login}>Login</Link>
+          <Link to={pages.login}>Entrar</Link>
         </li>
         <li>
           <Link to={pages.signUp}>Registrar-se</Link>
         </li>
         <li>
-          <Link to={pages.registerEmployees}>Cadastrar Funcionario</Link>
+          <Link to={pages.registerEmployees}>Cadastrar Funcionário</Link>
         </li>
         <li>
-          <Link to={pages.listEmployees}>Lista de Funcionarios</Link>
+          <Link to={pages.listEmployees}>Lista de Funcionários</Link>
         </li>
       </ul>
     </nav>
