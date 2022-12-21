@@ -10,11 +10,11 @@ import {
   RegisterEmployeeRequestDto,
   RegisterEmployeeResponseDto,
 } from '../dto/register-employee.dto';
-import { EmployeeApiService } from '../ports/employee-api-service.port';
+import { EmployeeGateway } from '../ports/employee-gateway.port';
 
 export class RegisterEmployeeUseCase implements UseCase<Input, Output> {
   constructor(
-    private employeeApiService: EmployeeApiService,
+    private employeeApiService: EmployeeGateway,
     private notifier: NotificationService,
   ) {}
 

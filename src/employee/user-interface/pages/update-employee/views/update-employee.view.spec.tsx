@@ -5,7 +5,7 @@ import {
 } from 'employee/application/use-cases/update-employee.use-case';
 import { Employee } from 'employee/domain/entities/employee.entity';
 import { useEmployeeForm } from 'employee/infra/adapters/employee-form.adapter';
-import { makeEmployeeApiService } from 'employee/infra/factories/employee-api-service.factory';
+import { makeEmployeeGateway } from 'employee/infra/factories/employee-gateway.factory';
 import { Document } from 'shared/domain/value-objects/document.vo';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
@@ -43,10 +43,10 @@ class FakeGetEmployeeUseCase extends GetEmployeeUseCase {
   }
 }
 
-const getEmployeeUseCase = new FakeGetEmployeeUseCase(makeEmployeeApiService());
+const getEmployeeUseCase = new FakeGetEmployeeUseCase(makeEmployeeGateway());
 
 const updateEmployeeUseCase = new FakeUpdateEmployeeUseCase(
-  makeEmployeeApiService(),
+  makeEmployeeGateway(),
   routerServiceMock,
   notificationServiceMock,
 );

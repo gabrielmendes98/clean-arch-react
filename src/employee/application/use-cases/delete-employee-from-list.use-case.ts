@@ -6,11 +6,11 @@ import { UseCase } from 'shared/application/use-case';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { HttpStatusCode } from 'shared/application/http-client.port';
 import { EmployeeListService } from '../ports/employee-list.port';
-import { EmployeeApiService } from '../ports/employee-api-service.port';
+import { EmployeeGateway } from '../ports/employee-gateway.port';
 
 export class DeleteEmployeeFromListUseCase implements UseCase<Input, Output> {
   constructor(
-    private employeeApiService: EmployeeApiService,
+    private employeeApiService: EmployeeGateway,
     private employeeListService: EmployeeListService,
   ) {}
 

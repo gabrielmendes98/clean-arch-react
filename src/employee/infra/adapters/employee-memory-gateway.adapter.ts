@@ -3,13 +3,13 @@ import { GetEmployeeResponseDto } from 'employee/application/dto/get-employee.dt
 import { ListEmployeesResponseDto } from 'employee/application/dto/list-employees.dto';
 import { RegisterEmployeeResponseDto } from 'employee/application/dto/register-employee.dto';
 import { UpdateEmployeeResponseDto } from 'employee/application/dto/update-employee.dto';
-import { EmployeeApiService } from 'employee/application/ports/employee-api-service.port';
+import { EmployeeGateway } from 'employee/application/ports/employee-gateway.port';
 import {
   HttpResponse,
   HttpStatusCode,
 } from 'shared/application/http-client.port';
 
-export class EmployeeInMemoryService implements EmployeeApiService {
+export class EmployeeMemoryGateway implements EmployeeGateway {
   async deleteEmployee(): Promise<HttpResponse<DeleteEmployeeResponseDto>> {
     return {
       statusCode: HttpStatusCode.ok,

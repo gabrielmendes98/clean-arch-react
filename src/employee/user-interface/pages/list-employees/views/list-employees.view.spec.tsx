@@ -5,7 +5,7 @@ import {
 } from 'employee/application/use-cases/delete-employee-from-list.use-case';
 import { ListEmployeesUseCase } from 'employee/application/use-cases/list-employees.use-case';
 import { EmployeeList } from 'employee/domain/entities/employee-list.entity';
-import { makeEmployeeApiService } from 'employee/infra/factories/employee-api-service.factory';
+import { makeEmployeeGateway } from 'employee/infra/factories/employee-gateway.factory';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
 import { render, screen, userEvent, waitFor } from 'shared/testing/test-utils';
 import { ListEmployeesView } from './list-employees.view';
@@ -39,12 +39,10 @@ const employeeListServiceMock: EmployeeListService = {
 };
 
 const deleteEmployeeUseCase = new MockDeleteEmployeeUseCase(
-  makeEmployeeApiService(),
+  makeEmployeeGateway(),
   employeeListServiceMock,
 );
-const listEmployeesUseCase = new MockListEmployeeUseCase(
-  makeEmployeeApiService(),
-);
+const listEmployeesUseCase = new MockListEmployeeUseCase(makeEmployeeGateway());
 
 describe('ListEmployeesView', () => {
   it('should call delete employee use case', () => {

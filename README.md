@@ -175,3 +175,4 @@ yupjs lib on the domain layer to validate our entities.
 - https://medium.com/dotnet-hub/clean-architecture-with-dotnet-and-dotnet-core-aspnetcore-overview-introduction-getting-started-ec922e53bb97
 - https://www.youtube.com/watch?v=kCSiGeUFi_U&t=1955s&ab_channel=RodrigoBranas
 - https://www.youtube.com/watch?v=iUQVZHzqGuc&t=1681s&ab_channel=Mango
+- https://martinfowler.com/articles/gateway-pattern.html

@@ -11,7 +11,7 @@ import {
   UpdateEmployeeResponseDto,
 } from '../dto/update-employee.dto';
 
-export interface EmployeeApiService {
+export interface EmployeeGateway {
   deleteEmployee(id: string): Promise<HttpResponse<DeleteEmployeeResponseDto>>;
   getEmployee(id: string): Promise<HttpResponse<GetEmployeeResponseDto>>;
   listEmployees(): Promise<HttpResponse<ListEmployeesResponseDto>>;

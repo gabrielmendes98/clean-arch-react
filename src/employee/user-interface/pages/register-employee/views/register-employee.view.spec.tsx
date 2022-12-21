@@ -3,7 +3,7 @@ import {
   RegisterEmployeeUseCase,
 } from 'employee/application/use-cases/register-employee.use-case';
 import { useEmployeeForm } from 'employee/infra/adapters/employee-form.adapter';
-import { makeEmployeeApiService } from 'employee/infra/factories/employee-api-service.factory';
+import { makeEmployeeGateway } from 'employee/infra/factories/employee-gateway.factory';
 import { notificationServiceMock } from 'shared/testing/mocks/notification.mock';
 import { render, screen, userEvent, waitFor } from 'shared/testing/test-utils';
 import { EntityValidationError } from 'shared/domain/errors/validation.error';
@@ -25,7 +25,7 @@ class FakeRegisterEmployeeUseCase extends RegisterEmployeeUseCase {
 }
 
 const registerEmployeeUseCase = new FakeRegisterEmployeeUseCase(
-  makeEmployeeApiService(),
+  makeEmployeeGateway(),
   notificationServiceMock,
 );
 

@@ -2,10 +2,10 @@ import { EmployeeList } from 'employee/domain/entities/employee-list.entity';
 import { UseCase } from 'shared/application/use-case';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { HttpStatusCode } from 'shared/application/http-client.port';
-import { EmployeeApiService } from '../ports/employee-api-service.port';
+import { EmployeeGateway } from '../ports/employee-gateway.port';
 
 export class ListEmployeesUseCase implements UseCase<Input, Output> {
-  constructor(private employeeApiService: EmployeeApiService) {}
+  constructor(private employeeApiService: EmployeeGateway) {}
 
   async execute(): Promise<Output> {
     const response = await this.employeeApiService.listEmployees();

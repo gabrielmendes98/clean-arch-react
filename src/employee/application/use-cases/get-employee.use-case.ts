@@ -5,10 +5,10 @@ import { HttpStatusCode } from 'shared/application/http-client.port';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 import { Document } from 'shared/domain/value-objects/document.vo';
 import { Email } from 'shared/domain/value-objects/email.vo';
-import { EmployeeApiService } from '../ports/employee-api-service.port';
+import { EmployeeGateway } from '../ports/employee-gateway.port';
 
 export class GetEmployeeUseCase implements UseCase<Input, Output> {
-  constructor(private employeeApiService: EmployeeApiService) {}
+  constructor(private employeeApiService: EmployeeGateway) {}
 
   async execute(input: Input): Promise<Output> {
     UniqueEntityId.validate(input.id);

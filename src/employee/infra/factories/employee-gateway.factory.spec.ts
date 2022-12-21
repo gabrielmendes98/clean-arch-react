@@ -1,18 +1,18 @@
 import { personsApiConfig } from 'shared/infra/adapters/persons-api.adapter';
-import { EmployeeHttpService } from '../adapters/employee-http-service';
-import { EmployeeInMemoryService } from '../adapters/employee-in-memory-service';
-import { makeEmployeeApiService } from './employee-api-service.factory';
+import { EmployeeHttpGateway } from '../adapters/employee-http-gateway.adapter';
+import { EmployeeMemoryGateway } from '../adapters/employee-memory-gateway.adapter';
+import { makeEmployeeGateway } from './employee-gateway.factory';
 
 jest.mock('shared/infra/factories/http-client-authorize.factory');
 
 describe('makeEmployeeApiService', () => {
   it('should return EmployeeInMemoryService when mock is on', () => {
     personsApiConfig.mock = true;
-    expect(makeEmployeeApiService()).toBeInstanceOf(EmployeeInMemoryService);
+    expect(makeEmployeeGateway()).toBeInstanceOf(EmployeeMemoryGateway);
   });
 
   it('should return EmployeeHttpService when mock is off', () => {
     personsApiConfig.mock = false;
-    expect(makeEmployeeApiService()).toBeInstanceOf(EmployeeHttpService);
+    expect(makeEmployeeGateway()).toBeInstanceOf(EmployeeHttpGateway);
   });
 });
