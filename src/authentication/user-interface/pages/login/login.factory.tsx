@@ -12,16 +12,11 @@ export const MakeLoginPage = () => {
   const formService: LoginFormService = useLoginForm();
   const userStorage: UserStorageService = useUserStorage();
   const routerService: RouterService = useRouter();
-  const authenticateUseCase: LoginUseCase = new LoginUseCase(
+  const loginUseCase: LoginUseCase = new LoginUseCase(
     makeAuthGateway(),
     userStorage,
     routerService,
   );
 
-  return (
-    <LoginView
-      formService={formService}
-      authenticateUseCase={authenticateUseCase}
-    />
-  );
+  return <LoginView formService={formService} loginUseCase={loginUseCase} />;
 };

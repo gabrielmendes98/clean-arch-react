@@ -16,7 +16,7 @@ const makeAuthenticateUseCase = () =>
 const executeSuccessUseCase = async (useCase: LoginUseCase) =>
   await useCase.execute({ email: 'email@gmail.com', password: '123123' });
 
-describe('AuthenticateUseCase', () => {
+describe('LoginUseCase', () => {
   it('should validate user email and password', async () => {
     const emailValidate = jest.spyOn(Email, 'validate');
     const passwordValidate = jest.spyOn(Password, 'validate');
@@ -53,15 +53,15 @@ describe('AuthenticateUseCase', () => {
   });
 
   it('should throw unexpected error when response is not ok', async () => {
-    const apiService = makeAuthGateway();
-    jest.spyOn(apiService, 'login').mockReturnValue(
+    const gateway = makeAuthGateway();
+    jest.spyOn(gateway, 'login').mockReturnValue(
       Promise.resolve({
         statusCode: 500,
         body: { message: 'some message' },
       }),
     );
     const useCase = new LoginUseCase(
-      apiService,
+      gateway,
       userStorageServiceMock,
       routerServiceMock,
     );

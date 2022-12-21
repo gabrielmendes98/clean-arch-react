@@ -85,15 +85,15 @@ describe('SignUpUseCase', () => {
   });
 
   it('should throw unexpected error when response is not ok', async () => {
-    const apiService = makeAuthGateway();
-    jest.spyOn(apiService, 'signUp').mockReturnValue(
+    const gateway = makeAuthGateway();
+    jest.spyOn(gateway, 'signUp').mockReturnValue(
       Promise.resolve({
         statusCode: 500,
         body: { message: 'error message' },
       }),
     );
     const useCase = new SignUpUseCase(
-      apiService,
+      gateway,
       userStorageServiceMock,
       routerServiceMock,
       notificationServiceMock,

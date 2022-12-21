@@ -19,14 +19,17 @@ class StubSignUpUseCase extends SignUpUseCase {
   }
 }
 
+const makeSignUpUseCase = () =>
+  new StubSignUpUseCase(
+    makeAuthGateway(),
+    userStorageServiceMock,
+    routerServiceMock,
+    notificationServiceMock,
+  );
+
 describe('SignUpView', () => {
   it('should call sign up use case with form values', async () => {
-    const signUpUseCase: SignUpUseCase = new StubSignUpUseCase(
-      makeAuthGateway(),
-      userStorageServiceMock,
-      routerServiceMock,
-      notificationServiceMock,
-    );
+    const signUpUseCase: SignUpUseCase = makeSignUpUseCase();
     const formService: SignUpFormService = {
       initialValues: {
         name: 'valid name',
@@ -58,12 +61,7 @@ describe('SignUpView', () => {
   });
 
   it('should validate fields on blur', () => {
-    const signUpUseCase: SignUpUseCase = new StubSignUpUseCase(
-      makeAuthGateway(),
-      userStorageServiceMock,
-      routerServiceMock,
-      notificationServiceMock,
-    );
+    const signUpUseCase: SignUpUseCase = makeSignUpUseCase();
     render(
       <SignUpView
         formService={useSignUpForm()}
@@ -81,12 +79,7 @@ describe('SignUpView', () => {
   });
 
   it('should validate fields on submit', () => {
-    const signUpUseCase: SignUpUseCase = new StubSignUpUseCase(
-      makeAuthGateway(),
-      userStorageServiceMock,
-      routerServiceMock,
-      notificationServiceMock,
-    );
+    const signUpUseCase: SignUpUseCase = makeSignUpUseCase();
     render(
       <SignUpView
         formService={useSignUpForm()}

@@ -9,17 +9,17 @@ import { FormProvider } from 'shared/infra/providers/form.provider';
 
 type Props = {
   formService: LoginFormService;
-  authenticateUseCase: LoginUseCase;
+  loginUseCase: LoginUseCase;
 };
 
-export const LoginView = ({ formService, authenticateUseCase }: Props) => {
+export const LoginView = ({ formService, loginUseCase }: Props) => {
   const { initialValues, validations } = formService;
 
   const onSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
     { values }: FormStorageService<LoginFormFields>,
   ) => {
-    await authenticateUseCase.execute(values);
+    await loginUseCase.execute(values);
   };
 
   return (

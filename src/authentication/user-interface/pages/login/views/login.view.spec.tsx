@@ -10,7 +10,7 @@ import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';
 import { render, screen, userEvent } from 'shared/testing/test-utils';
 import { LoginView } from './login.view';
 
-class StubAuthUseCase extends LoginUseCase {
+class StubLoginUseCase extends LoginUseCase {
   async execute(): Promise<Output> {
     return {
       success: true,
@@ -18,13 +18,16 @@ class StubAuthUseCase extends LoginUseCase {
   }
 }
 
+const makeLoginUseCase = () =>
+  new StubLoginUseCase(
+    makeAuthGateway(),
+    userStorageServiceMock,
+    routerServiceMock,
+  );
+
 describe('LoginView', () => {
-  it('should call authenticate use case with form values', async () => {
-    const authenticateUseCase: LoginUseCase = new StubAuthUseCase(
-      makeAuthGateway(),
-      userStorageServiceMock,
-      routerServiceMock,
-    );
+  it('should call login use case with form values', async () => {
+    const loginUseCase: LoginUseCase = makeLoginUseCase();
     const formService: LoginFormService = {
       initialValues: {
         email: 'valid@email.com',
@@ -36,14 +39,9 @@ describe('LoginView', () => {
       },
     };
 
-    const execute = jest.spyOn(authenticateUseCase, 'execute');
+    const execute = jest.spyOn(loginUseCase, 'execute');
 
-    render(
-      <LoginView
-        formService={formService}
-        authenticateUseCase={authenticateUseCase}
-      />,
-    );
+    render(<LoginView formService={formService} loginUseCase={loginUseCase} />);
 
     userEvent.click(screen.getByRole('button', { name: /enviar/i }));
     expect(execute).toHaveBeenCalledWith({
@@ -53,16 +51,9 @@ describe('LoginView', () => {
   });
 
   it('should validate fields on blur', () => {
-    const authenticateUseCase: LoginUseCase = new StubAuthUseCase(
-      makeAuthGateway(),
-      userStorageServiceMock,
-      routerServiceMock,
-    );
+    const loginUseCase: LoginUseCase = makeLoginUseCase();
     render(
-      <LoginView
-        formService={useLoginForm()}
-        authenticateUseCase={authenticateUseCase}
-      />,
+      <LoginView formService={useLoginForm()} loginUseCase={loginUseCase} />,
     );
     userEvent.click(screen.getByLabelText(/email/i));
     userEvent.click(screen.getByLabelText(/senha/i));
@@ -72,16 +63,9 @@ describe('LoginView', () => {
   });
 
   it('should validate fields on submit', () => {
-    const authenticateUseCase: LoginUseCase = new StubAuthUseCase(
-      makeAuthGateway(),
-      userStorageServiceMock,
-      routerServiceMock,
-    );
+    const loginUseCase: LoginUseCase = makeLoginUseCase();
     render(
-      <LoginView
-        formService={useLoginForm()}
-        authenticateUseCase={authenticateUseCase}
-      />,
+      <LoginView formService={useLoginForm()} loginUseCase={loginUseCase} />,
     );
     userEvent.click(screen.getByRole('button', { name: /enviar/i }));
     expect(screen.getByText(/email inválido/i)).toBeInTheDocument();
