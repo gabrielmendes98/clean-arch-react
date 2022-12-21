@@ -1,7 +1,7 @@
 import { HttpStatusCode } from 'shared/application/http-client.port';
 import { NotificationService } from 'shared/application/notification.port';
 import { RouterService } from 'shared/application/router.port';
-import { UseCase } from 'shared/application/use-case';
+import { UseCase } from 'shared/application/use-case.port';
 import { UserStorageService } from 'shared/application/user-storage.port';
 import { pages } from 'shared/domain/config/pages';
 import { User } from 'shared/domain/entities/user.entity';

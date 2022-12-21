@@ -2,7 +2,7 @@ import {
   EmployeeList,
   EmployeeListItem,
 } from 'employee/domain/entities/employee-list.entity';
-import { UseCase } from 'shared/application/use-case';
+import { UseCase } from 'shared/application/use-case.port';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { HttpStatusCode } from 'shared/application/http-client.port';
 import { EmployeeListService } from '../ports/employee-list.port';

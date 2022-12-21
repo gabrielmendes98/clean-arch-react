@@ -1,5 +1,5 @@
 import { EmployeeList } from 'employee/domain/entities/employee-list.entity';
-import { UseCase } from 'shared/application/use-case';
+import { UseCase } from 'shared/application/use-case.port';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { HttpStatusCode } from 'shared/application/http-client.port';
 import { EmployeeGateway } from '../ports/employee-gateway.port';
