@@ -4,7 +4,7 @@ import { personsApiConfig } from 'shared/infra/adapters/persons-api.adapter';
 import { AuthenticationMemoryGateway } from '../adapters/authentication-memory-gateway.adapter';
 import { AuthenticationHttpGateway } from '../adapters/authentication-http-gateway.adapter';
 
-export const makeAuthApiService = (): AuthenticationGateway =>
+export const makeAuthGateway = (): AuthenticationGateway =>
   personsApiConfig.mock
     ? new AuthenticationMemoryGateway()
     : new AuthenticationHttpGateway(

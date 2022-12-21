@@ -4,7 +4,7 @@ import {
   Output,
 } from 'authentication/application/use-cases/sign-up.use-case';
 import { useSignUpForm } from 'authentication/infra/adapters/sign-up-form.adapter';
-import { makeAuthApiService } from 'authentication/infra/factories/authentication-api-service.factory';
+import { makeAuthGateway } from 'authentication/infra/factories/authentication-gateway.factory';
 import { notificationServiceMock } from 'shared/testing/mocks/notification.mock';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
 import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';
@@ -22,7 +22,7 @@ class StubSignUpUseCase extends SignUpUseCase {
 describe('SignUpView', () => {
   it('should call sign up use case with form values', async () => {
     const signUpUseCase: SignUpUseCase = new StubSignUpUseCase(
-      makeAuthApiService(),
+      makeAuthGateway(),
       userStorageServiceMock,
       routerServiceMock,
       notificationServiceMock,
@@ -59,7 +59,7 @@ describe('SignUpView', () => {
 
   it('should validate fields on blur', () => {
     const signUpUseCase: SignUpUseCase = new StubSignUpUseCase(
-      makeAuthApiService(),
+      makeAuthGateway(),
       userStorageServiceMock,
       routerServiceMock,
       notificationServiceMock,
@@ -82,7 +82,7 @@ describe('SignUpView', () => {
 
   it('should validate fields on submit', () => {
     const signUpUseCase: SignUpUseCase = new StubSignUpUseCase(
-      makeAuthApiService(),
+      makeAuthGateway(),
       userStorageServiceMock,
       routerServiceMock,
       notificationServiceMock,
