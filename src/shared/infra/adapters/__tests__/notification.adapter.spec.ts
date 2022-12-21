@@ -1,4 +1,4 @@
-import { renderHook, screen } from 'shared/testing/test-utils';
+import { renderHook } from 'shared/testing/test-utils';
 import { useNotification } from '../notification.adapter';
 
 describe('useNotification', () => {

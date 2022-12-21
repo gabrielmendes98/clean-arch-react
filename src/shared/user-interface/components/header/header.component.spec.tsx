@@ -1,5 +1,5 @@
 import { MemoryRouter } from 'react-router-dom';
-import { render, screen, userEvent, waitFor } from 'shared/testing/test-utils';
+import { render } from 'shared/testing/test-utils';
 import { Header } from './header.component';
 
 describe('Header', () => {

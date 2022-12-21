@@ -2,7 +2,7 @@ import { User } from 'shared/domain/entities/user.entity';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';
-import { render, screen, userEvent } from 'shared/testing/test-utils';
+import { render, screen } from 'shared/testing/test-utils';
 import { Home } from './home.view';
 
 describe('Home', () => {

@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { act, renderHook, waitFor } from 'shared/testing/test-utils';
+import { act, renderHook } from 'shared/testing/test-utils';
 import { FormContext, FormProvider } from '../form.provider';
 
 const useHook = () => {
