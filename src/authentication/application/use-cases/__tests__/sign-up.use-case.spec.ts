@@ -1,4 +1,4 @@
-import { makeAuthApiService } from 'authentication/infra/factories/authentication-api-service.factory';
+import { makeAuthGateway } from 'authentication/infra/factories/authentication-gateway.factory';
 import { InvalidPasswordError } from 'shared/domain/errors/invalid-password.error';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { ValidationError } from 'shared/domain/errors/validation.error';
@@ -11,7 +11,7 @@ import { SignUpUseCase } from '../sign-up.use-case';
 
 const makeSignUpUseCase = () =>
   new SignUpUseCase(
-    makeAuthApiService(),
+    makeAuthGateway(),
     userStorageServiceMock,
     routerServiceMock,
     notificationServiceMock,
@@ -85,7 +85,7 @@ describe('SignUpUseCase', () => {
   });
 
   it('should throw unexpected error when response is not ok', async () => {
-    const apiService = makeAuthApiService();
+    const apiService = makeAuthGateway();
     jest.spyOn(apiService, 'signUp').mockReturnValue(
       Promise.resolve({
         statusCode: 500,

@@ -3,7 +3,7 @@ import {
   EmployeeList,
   EmployeeListItem,
 } from 'employee/domain/entities/employee-list.entity';
-import { makeEmployeeApiService } from 'employee/infra/factories/employee-api-service.factory';
+import { makeEmployeeGateway } from 'employee/infra/factories/employee-gateway.factory';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { DeleteEmployeeFromListUseCase } from '../delete-employee-from-list.use-case';
 
@@ -27,7 +27,7 @@ describe('DeleteEmployeeFromListUseCase', () => {
 
   it('should update list', async () => {
     const useCase = new DeleteEmployeeFromListUseCase(
-      makeEmployeeApiService(),
+      makeEmployeeGateway(),
       mockEmployeeListService,
     );
     await useCase.execute({ item: fakeItem });
@@ -38,7 +38,7 @@ describe('DeleteEmployeeFromListUseCase', () => {
   });
 
   it('should call api to delete item and return success', async () => {
-    const apiService = makeEmployeeApiService();
+    const apiService = makeEmployeeGateway();
     const deleteMethod = jest.spyOn(apiService, 'deleteEmployee');
     const useCase = new DeleteEmployeeFromListUseCase(
       apiService,
@@ -50,7 +50,7 @@ describe('DeleteEmployeeFromListUseCase', () => {
   });
 
   it('shuold add item back to list when api throw error', async () => {
-    const apiService = makeEmployeeApiService();
+    const apiService = makeEmployeeGateway();
     const deleteMethod = jest
       .spyOn(apiService, 'deleteEmployee')
       .mockReturnValue(

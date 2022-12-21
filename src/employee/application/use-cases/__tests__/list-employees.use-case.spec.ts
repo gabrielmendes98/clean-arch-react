@@ -1,11 +1,11 @@
 import { EmployeeList } from 'employee/domain/entities/employee-list.entity';
-import { makeEmployeeApiService } from 'employee/infra/factories/employee-api-service.factory';
+import { makeEmployeeGateway } from 'employee/infra/factories/employee-gateway.factory';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { ListEmployeesUseCase } from '../list-employees.use-case';
 
 describe('ListEmployeesUseCase', () => {
   it('should call api and return employee list entity', async () => {
-    const apiService = makeEmployeeApiService();
+    const apiService = makeEmployeeGateway();
     const listEmployees = jest.spyOn(apiService, 'listEmployees');
     const useCase = new ListEmployeesUseCase(apiService);
     const response = await useCase.execute();
@@ -14,7 +14,7 @@ describe('ListEmployeesUseCase', () => {
   });
 
   it('should throw unexpected error when api returns any error', async () => {
-    const apiService = makeEmployeeApiService();
+    const apiService = makeEmployeeGateway();
     jest.spyOn(apiService, 'listEmployees').mockReturnValue(
       Promise.resolve({
         statusCode: 500,
