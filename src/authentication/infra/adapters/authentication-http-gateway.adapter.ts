@@ -6,13 +6,13 @@ import {
   SignUpRequestDto,
   SignUpResponseDto,
 } from 'authentication/application/dto/sign-up.dto';
-import { AuthenticationApiService } from 'authentication/application/ports/authentication-api-service.port';
+import { AuthenticationGateway } from 'authentication/application/ports/authentication-gateway.port';
 import {
   HttpClientService,
   HttpResponse,
 } from 'shared/application/http-client.port';
 
-export class AuthenticationHttpService implements AuthenticationApiService {
+export class AuthenticationHttpGateway implements AuthenticationGateway {
   constructor(private httpClient: HttpClientService) {}
 
   async login(data: LoginRequestDto): Promise<HttpResponse<LoginResponseDto>> {

@@ -1,12 +1,12 @@
-import { AuthenticationApiService } from 'authentication/application/ports/authentication-api-service.port';
+import { AuthenticationGateway } from 'authentication/application/ports/authentication-gateway.port';
 import { makeHttpClient as makeHttpClientFactory } from 'shared/infra/factories/http-client.factory';
 import { personsApiConfig } from 'shared/infra/adapters/persons-api.adapter';
-import { AuthenticationInMemoryService } from '../adapters/authentication-in-memory-service.port';
-import { AuthenticationHttpService } from '../adapters/authentication-http-service.port copy';
+import { AuthenticationMemoryGateway } from '../adapters/authentication-memory-gateway.adapter';
+import { AuthenticationHttpGateway } from '../adapters/authentication-http-gateway.adapter';
 
-export const makeAuthApiService = (): AuthenticationApiService =>
+export const makeAuthApiService = (): AuthenticationGateway =>
   personsApiConfig.mock
-    ? new AuthenticationInMemoryService()
-    : new AuthenticationHttpService(
+    ? new AuthenticationMemoryGateway()
+    : new AuthenticationHttpGateway(
         makeHttpClientFactory(personsApiConfig.baseUrl),
       );

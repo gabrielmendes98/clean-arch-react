@@ -1,12 +1,12 @@
 import { LoginResponseDto } from 'authentication/application/dto/login.dto';
 import { SignUpResponseDto } from 'authentication/application/dto/sign-up.dto';
-import { AuthenticationApiService } from 'authentication/application/ports/authentication-api-service.port';
+import { AuthenticationGateway } from 'authentication/application/ports/authentication-gateway.port';
 import {
   HttpResponse,
   HttpStatusCode,
 } from 'shared/application/http-client.port';
 
-export class AuthenticationInMemoryService implements AuthenticationApiService {
+export class AuthenticationMemoryGateway implements AuthenticationGateway {
   async login(): Promise<HttpResponse<LoginResponseDto>> {
     return {
       statusCode: HttpStatusCode.ok,

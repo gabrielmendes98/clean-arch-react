@@ -11,11 +11,11 @@ import { validator } from 'shared/domain/validator';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { Password } from 'shared/domain/value-objects/password.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
-import { AuthenticationApiService } from '../ports/authentication-api-service.port';
+import { AuthenticationGateway } from '../ports/authentication-gateway.port';
 
 export class SignUpUseCase implements UseCase<Input, Output> {
   constructor(
-    private authApiService: AuthenticationApiService,
+    private authApiService: AuthenticationGateway,
     private storage: UserStorageService,
     private routerService: RouterService,
     private notifier: NotificationService,
