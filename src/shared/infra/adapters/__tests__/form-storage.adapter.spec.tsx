@@ -1,5 +1,5 @@
 import { FormProvider } from 'shared/infra/providers/form.provider';
-import { renderHook } from 'shared/testing/test-utils';
+import { render, renderHook } from 'shared/testing/test-utils';
 import { useFormStorage } from '../form-storage.adapter';
 
 describe('useFormStorage', () => {
@@ -25,7 +25,8 @@ describe('useFormStorage', () => {
   });
 
   it('should throw error when use service without provider', () => {
-    expect(() => renderHook(() => useFormStorage())).toThrowError(
+    jest.spyOn(console, 'error').mockImplementation(jest.fn());
+    expect(() => renderHook(() => useFormStorage())).toThrow(
       'useFormStorage must be used under FormProvider',
     );
   });

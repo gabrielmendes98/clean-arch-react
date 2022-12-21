@@ -15,6 +15,7 @@ describe('useUserStorage', () => {
   });
 
   it('should throw error when use service without provider', () => {
+    jest.spyOn(console, 'error').mockImplementation(jest.fn());
     expect(() => renderHook(() => useUserStorage())).toThrowError(
       'useUserStorage must be used under UserContext',
     );
