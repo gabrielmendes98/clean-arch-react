@@ -32,7 +32,7 @@ export const ListEmployeesView = ({
   };
 
   useEffect(() => {
-    listEmployeesUseCase.execute().then(updateList);
+    listEmployeesUseCase.execute().then(response => updateList(response.list));
   }, []);
 
   return (

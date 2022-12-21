@@ -22,7 +22,7 @@ describe('GetEmployeeUseCase', () => {
     expect(getEmployee).toHaveBeenCalledWith(
       'ce734f82-2fac-4845-b394-66bd67e6e271',
     );
-    expect(response).toBeInstanceOf(Employee);
+    expect(response.employee).toBeInstanceOf(Employee);
   });
 
   it('should throw unexpected error when api returns any error', async () => {

@@ -8,10 +8,6 @@ import { HttpStatusCode } from 'shared/application/http-client.port';
 import { RouterService } from 'shared/application/router.port';
 import { pages } from 'shared/domain/config/pages';
 import { NotificationService } from '../../../shared/application/notification.port';
-import {
-  UpdateEmployeeRequestDto,
-  UpdateEmployeeResponseDto,
-} from '../dto/update-employee.dto';
 import { EmployeeGateway } from '../ports/employee-gateway.port';
 
 export class UpdateEmployeeUseCase implements UseCase<Input, Output> {
@@ -36,6 +32,14 @@ export class UpdateEmployeeUseCase implements UseCase<Input, Output> {
   }
 }
 
-export type Input = UpdateEmployeeRequestDto;
+export type Input = {
+  id: string;
+  name: string;
+  email: string;
+  document: string;
+  salary: number;
+};
 
-export type Output = UpdateEmployeeResponseDto;
+export type Output = {
+  success: boolean;
+};

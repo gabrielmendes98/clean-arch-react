@@ -28,8 +28,8 @@ class MockDeleteEmployeeUseCase extends DeleteEmployeeFromListUseCase {
 }
 
 class MockListEmployeeUseCase extends ListEmployeesUseCase {
-  async execute(): Promise<EmployeeList> {
-    return fakeEmployeeList;
+  async execute(): Promise<{ list: EmployeeList }> {
+    return { list: fakeEmployeeList };
   }
 }
 
@@ -79,7 +79,7 @@ describe('ListEmployeesView', () => {
   it('should populate employee list when mount component', async () => {
     const listEmployees = jest
       .spyOn(listEmployeesUseCase, 'execute')
-      .mockReturnValue(Promise.resolve(fakeEmployeeList));
+      .mockReturnValue(Promise.resolve({ list: fakeEmployeeList }));
     render(
       <ListEmployeesView
         deleteEmployeeUseCase={deleteEmployeeUseCase}

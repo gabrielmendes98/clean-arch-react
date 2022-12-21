@@ -15,13 +15,15 @@ export class GetEmployeeUseCase implements UseCase<Input, Output> {
     const response = await this.employeeApiService.getEmployee(input.id);
     switch (response.statusCode) {
       case HttpStatusCode.ok:
-        return new Employee({
-          document: new Document(response.body.document),
-          email: new Email(response.body.email),
-          id: new UniqueEntityId(response.body.id),
-          name: response.body.name,
-          salary: response.body.salary,
-        });
+        return {
+          employee: new Employee({
+            document: new Document(response.body.document),
+            email: new Email(response.body.email),
+            id: new UniqueEntityId(response.body.id),
+            name: response.body.name,
+            salary: response.body.salary,
+          }),
+        };
       default:
         throw new UnexpectedError();
     }
@@ -32,4 +34,4 @@ export type Input = {
   id: string;
 };
 
-export type Output = Employee;
+export type Output = { employee: Employee };

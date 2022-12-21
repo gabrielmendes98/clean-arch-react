@@ -6,10 +6,6 @@ import {
 } from 'shared/domain/errors/unexpected.error';
 import { HttpStatusCode } from 'shared/application/http-client.port';
 import { NotificationService } from '../../../shared/application/notification.port';
-import {
-  RegisterEmployeeRequestDto,
-  RegisterEmployeeResponseDto,
-} from '../dto/register-employee.dto';
 import { EmployeeGateway } from '../ports/employee-gateway.port';
 
 export class RegisterEmployeeUseCase implements UseCase<Input, Output> {
@@ -32,6 +28,13 @@ export class RegisterEmployeeUseCase implements UseCase<Input, Output> {
   }
 }
 
-export type Input = RegisterEmployeeRequestDto;
+export type Input = {
+  name: string;
+  email: string;
+  document: string;
+  salary: number;
+};
 
-export type Output = RegisterEmployeeResponseDto;
+export type Output = {
+  success: boolean;
+};

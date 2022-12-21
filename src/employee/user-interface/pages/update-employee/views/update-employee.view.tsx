@@ -54,7 +54,9 @@ export const UpdateEmployeeView = ({
 
   useEffect(() => {
     if (id) {
-      getEmployeeUseCase.execute({ id }).then(setEmployee);
+      getEmployeeUseCase
+        .execute({ id })
+        .then(response => setEmployee(response.employee));
     }
   }, []);
 

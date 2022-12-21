@@ -11,7 +11,9 @@ export class ListEmployeesUseCase implements UseCase<Input, Output> {
     const response = await this.employeeApiService.listEmployees();
     switch (response.statusCode) {
       case HttpStatusCode.ok:
-        return new EmployeeList(response.body);
+        return {
+          list: new EmployeeList(response.body),
+        };
       default:
         throw new UnexpectedError();
     }
@@ -20,4 +22,4 @@ export class ListEmployeesUseCase implements UseCase<Input, Output> {
 
 export type Input = void;
 
-export type Output = EmployeeList;
+export type Output = { list: EmployeeList };

@@ -10,7 +10,7 @@ describe('ListEmployeesUseCase', () => {
     const useCase = new ListEmployeesUseCase(apiService);
     const response = await useCase.execute();
     expect(listEmployees).toHaveBeenCalled();
-    expect(response).toBeInstanceOf(EmployeeList);
+    expect(response.list).toBeInstanceOf(EmployeeList);
   });
 
   it('should throw unexpected error when api returns any error', async () => {

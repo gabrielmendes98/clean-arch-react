@@ -32,14 +32,16 @@ class FakeUpdateEmployeeUseCase extends UpdateEmployeeUseCase {
 }
 
 class FakeGetEmployeeUseCase extends GetEmployeeUseCase {
-  async execute(): Promise<Employee> {
-    return new Employee({
-      document: new Document(fakeEmployee.document),
-      email: new Email(fakeEmployee.email),
-      id: new UniqueEntityId(fakeEmployee.id),
-      name: fakeEmployee.name,
-      salary: Number(fakeEmployee.salary),
-    });
+  async execute(): Promise<{ employee: Employee }> {
+    return {
+      employee: new Employee({
+        document: new Document(fakeEmployee.document),
+        email: new Email(fakeEmployee.email),
+        id: new UniqueEntityId(fakeEmployee.id),
+        name: fakeEmployee.name,
+        salary: Number(fakeEmployee.salary),
+      }),
+    };
   }
 }
 
