@@ -1,19 +1,19 @@
-import { AuthenticationInMemoryHttpClient } from 'authentication/infra/adapters/in-memory-http-client.adapter';
+import { makeAuthApiService } from 'authentication/infra/factories/authentication-api-service.factory';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { Password } from 'shared/domain/value-objects/password.vo';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
 import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';
-import { AuthenticateUseCase } from '../authenticate.use-case';
+import { LoginUseCase } from '../login.use-case';
 
 const makeAuthenticateUseCase = () =>
-  new AuthenticateUseCase(
-    new AuthenticationInMemoryHttpClient('fakeurl.com'),
+  new LoginUseCase(
+    makeAuthApiService(),
     userStorageServiceMock,
     routerServiceMock,
   );
 
-const executeSuccessUseCase = async (useCase: AuthenticateUseCase) =>
+const executeSuccessUseCase = async (useCase: LoginUseCase) =>
   await useCase.execute({ email: 'email@gmail.com', password: '123123' });
 
 describe('AuthenticateUseCase', () => {
@@ -53,15 +53,15 @@ describe('AuthenticateUseCase', () => {
   });
 
   it('should throw unexpected error when response is not ok', async () => {
-    const httpClient = new AuthenticationInMemoryHttpClient('fakeurl.com');
-    jest.spyOn(httpClient, 'post').mockReturnValue(
+    const apiService = makeAuthApiService();
+    jest.spyOn(apiService, 'login').mockReturnValue(
       Promise.resolve({
         statusCode: 500,
-        body: {},
+        body: { message: 'some message' },
       }),
     );
-    const useCase = new AuthenticateUseCase(
-      httpClient,
+    const useCase = new LoginUseCase(
+      apiService,
       userStorageServiceMock,
       routerServiceMock,
     );

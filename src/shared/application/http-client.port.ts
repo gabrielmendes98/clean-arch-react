@@ -38,7 +38,15 @@ export enum HttpStatusCode {
   serverError = 500,
 }
 
-export type HttpResponse<T = any> = {
-  statusCode: HttpStatusCode;
-  body: T | ErrorDto;
-};
+export type HttpResponse<T = any> =
+  | {
+      statusCode: HttpStatusCode.ok | HttpStatusCode.noContent;
+      body: T;
+    }
+  | {
+      statusCode: Exclude<
+        HttpStatusCode,
+        HttpStatusCode.ok | HttpStatusCode.noContent
+      >;
+      body: ErrorDto;
+    };

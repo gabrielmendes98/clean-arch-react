@@ -1,7 +1,4 @@
-import {
-  HttpClientService,
-  HttpStatusCode,
-} from 'shared/application/http-client.port';
+import { HttpStatusCode } from 'shared/application/http-client.port';
 import { NotificationService } from 'shared/application/notification.port';
 import { RouterService } from 'shared/application/router.port';
 import { UseCase } from 'shared/application/use-case';
@@ -14,11 +11,11 @@ import { validator } from 'shared/domain/validator';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { Password } from 'shared/domain/value-objects/password.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
-import { SignUpDto } from '../dto/sign-up.dto';
+import { AuthenticationApiService } from '../ports/authentication-api-service.port';
 
 export class SignUpUseCase implements UseCase<Input, Output> {
   constructor(
-    private httpClient: HttpClientService,
+    private authApiService: AuthenticationApiService,
     private storage: UserStorageService,
     private routerService: RouterService,
     private notifier: NotificationService,
@@ -34,35 +31,28 @@ export class SignUpUseCase implements UseCase<Input, Output> {
       this.notifier.notify('As senhas devem ser iguais.', 'error');
       throw new InvalidPasswordError('As senhas devem ser iguais.');
     }
-    const response = await this.httpClient.post<SignUpDto>('/users', {
-      name,
-      email,
-      password,
-      confirmPassword,
-    });
-
-    if (response.statusCode === HttpStatusCode.ok) {
-      const {
-        id: responseId,
-        email: responseEmail,
-        token: responseToken,
-        name: responseName,
-      } = response.body;
-      const user = new User(
-        new UniqueEntityId(responseId),
-        new Email(responseEmail),
-        responseToken,
-        responseName,
-      );
-      this.storage.updateUser(user);
-      this.routerService.navigate(pages.home);
-    }
+    const response = await this.authApiService.signUp(input);
 
     switch (response.statusCode) {
-      case HttpStatusCode.ok:
+      case HttpStatusCode.ok: {
+        const {
+          id: responseId,
+          email: responseEmail,
+          token: responseToken,
+          name: responseName,
+        } = response.body;
+        const user = new User(
+          new UniqueEntityId(responseId),
+          new Email(responseEmail),
+          responseToken,
+          responseName,
+        );
+        this.storage.updateUser(user);
+        this.routerService.navigate(pages.home);
         return {
           success: true,
         };
+      }
       default:
         throw new UnexpectedError();
     }

@@ -1,4 +1,4 @@
-import { AuthenticationInMemoryHttpClient } from 'authentication/infra/adapters/in-memory-http-client.adapter';
+import { makeAuthApiService } from 'authentication/infra/factories/authentication-api-service.factory';
 import { InvalidPasswordError } from 'shared/domain/errors/invalid-password.error';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { ValidationError } from 'shared/domain/errors/validation.error';
@@ -11,7 +11,7 @@ import { SignUpUseCase } from '../sign-up.use-case';
 
 const makeSignUpUseCase = () =>
   new SignUpUseCase(
-    new AuthenticationInMemoryHttpClient('fake.com'),
+    makeAuthApiService(),
     userStorageServiceMock,
     routerServiceMock,
     notificationServiceMock,
@@ -85,15 +85,15 @@ describe('SignUpUseCase', () => {
   });
 
   it('should throw unexpected error when response is not ok', async () => {
-    const httpClient = new AuthenticationInMemoryHttpClient('fakeurl.com');
-    jest.spyOn(httpClient, 'post').mockReturnValue(
+    const apiService = makeAuthApiService();
+    jest.spyOn(apiService, 'signUp').mockReturnValue(
       Promise.resolve({
         statusCode: 500,
-        body: {},
+        body: { message: 'error message' },
       }),
     );
     const useCase = new SignUpUseCase(
-      httpClient,
+      apiService,
       userStorageServiceMock,
       routerServiceMock,
       notificationServiceMock,

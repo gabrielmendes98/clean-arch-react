@@ -1,16 +1,16 @@
 import { LoginFormService } from 'authentication/application/ports/login-form.port';
 import {
-  AuthenticateUseCase,
+  LoginUseCase,
   Output,
-} from 'authentication/application/use-cases/authenticate.use-case';
-import { AuthenticationInMemoryHttpClient } from 'authentication/infra/adapters/in-memory-http-client.adapter';
+} from 'authentication/application/use-cases/login.use-case';
 import { useLoginForm } from 'authentication/infra/adapters/login-form.adapter';
+import { makeAuthApiService } from 'authentication/infra/factories/authentication-api-service.factory';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
 import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';
 import { render, screen, userEvent } from 'shared/testing/test-utils';
 import { LoginView } from './login.view';
 
-class StubAuthUseCase extends AuthenticateUseCase {
+class StubAuthUseCase extends LoginUseCase {
   async execute(): Promise<Output> {
     return {
       success: true,
@@ -20,8 +20,8 @@ class StubAuthUseCase extends AuthenticateUseCase {
 
 describe('LoginView', () => {
   it('should call authenticate use case with form values', async () => {
-    const authenticateUseCase: AuthenticateUseCase = new StubAuthUseCase(
-      new AuthenticationInMemoryHttpClient('fake.url.com'),
+    const authenticateUseCase: LoginUseCase = new StubAuthUseCase(
+      makeAuthApiService(),
       userStorageServiceMock,
       routerServiceMock,
     );
@@ -53,8 +53,8 @@ describe('LoginView', () => {
   });
 
   it('should validate fields on blur', () => {
-    const authenticateUseCase: AuthenticateUseCase = new StubAuthUseCase(
-      new AuthenticationInMemoryHttpClient('fake.url.com'),
+    const authenticateUseCase: LoginUseCase = new StubAuthUseCase(
+      makeAuthApiService(),
       userStorageServiceMock,
       routerServiceMock,
     );
@@ -72,8 +72,8 @@ describe('LoginView', () => {
   });
 
   it('should validate fields on submit', () => {
-    const authenticateUseCase: AuthenticateUseCase = new StubAuthUseCase(
-      new AuthenticationInMemoryHttpClient('fake.url.com'),
+    const authenticateUseCase: LoginUseCase = new StubAuthUseCase(
+      makeAuthApiService(),
       userStorageServiceMock,
       routerServiceMock,
     );

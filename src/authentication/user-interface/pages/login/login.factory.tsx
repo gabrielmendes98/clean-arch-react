@@ -1,7 +1,7 @@
 import { LoginFormService } from 'authentication/application/ports/login-form.port';
-import { AuthenticateUseCase } from 'authentication/application/use-cases/authenticate.use-case';
+import { LoginUseCase } from 'authentication/application/use-cases/login.use-case';
 import { useLoginForm } from 'authentication/infra/adapters/login-form.adapter';
-import { makeHttpClient } from 'authentication/infra/factories/http-client.factory';
+import { makeAuthApiService } from 'authentication/infra/factories/authentication-api-service.factory';
 import { RouterService } from 'shared/application/router.port';
 import { UserStorageService } from 'shared/application/user-storage.port';
 import { useRouter } from 'shared/infra/adapters/router.adapter';
@@ -12,8 +12,8 @@ export const MakeLoginPage = () => {
   const formService: LoginFormService = useLoginForm();
   const userStorage: UserStorageService = useUserStorage();
   const routerService: RouterService = useRouter();
-  const authenticateUseCase: AuthenticateUseCase = new AuthenticateUseCase(
-    makeHttpClient(),
+  const authenticateUseCase: LoginUseCase = new LoginUseCase(
+    makeAuthApiService(),
     userStorage,
     routerService,
   );
