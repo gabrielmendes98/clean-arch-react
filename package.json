@@ -62,6 +62,12 @@
     "restoreMocks": true,
     "moduleNameMapper": {
       "^axios$": "axios/dist/node/axios.cjs"
-    }
+    },
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx,js,jsx}",
+      "!src/**/*.port.ts",
+      "!src/**/*.dto.ts",
+      "!src/**/*.d.ts"
+    ]
   }
 }

@@ -1,5 +1,5 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
-import { UseCase } from 'shared/application/use-case';
+import { UseCase } from 'shared/application/use-case.port';
 import {
   UnexpectedError,
   UNEXPECTED_ERROR_MESSAGE,
