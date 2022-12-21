@@ -23,4 +23,10 @@ describe('useFormStorage', () => {
     expect(result.current.values).toBeDefined();
     expect(result.current.wasSubmitted).toBeDefined();
   });
+
+  it('should throw error when use service without provider', () => {
+    expect(() => renderHook(() => useFormStorage())).toThrowError(
+      'useFormStorage must be used under FormProvider',
+    );
+  });
 });

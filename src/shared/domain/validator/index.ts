@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable no-template-curly-in-string */
+/* istanbul ignore file */
 import * as yup from 'yup';
 import {
   EntityValidationError,

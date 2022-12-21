@@ -13,4 +13,10 @@ describe('useUserStorage', () => {
     expect(result.current.updateUser).toBeDefined();
     expect(result.current.user).toBeDefined();
   });
+
+  it('should throw error when use service without provider', () => {
+    expect(() => renderHook(() => useUserStorage())).toThrowError(
+      'useUserStorage must be used under UserContext',
+    );
+  });
 });

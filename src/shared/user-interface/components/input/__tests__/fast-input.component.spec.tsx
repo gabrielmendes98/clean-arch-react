@@ -70,4 +70,21 @@ describe('FastInput', () => {
     userEvent.click(getSumitBtn());
     expect(screen.getByText('Nome é obrigatório')).toBeInTheDocument();
   });
+
+  it('should call onChange method', () => {
+    const onChange = jest.fn();
+    renderInput({
+      inputProps: {
+        onChange,
+      },
+    });
+    userEvent.type(getInput(), 'some value');
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({
+        target: expect.objectContaining({
+          value: 'some value',
+        }),
+      }),
+    );
+  });
 });

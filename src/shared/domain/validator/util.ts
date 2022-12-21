@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 const { toString } = Object.prototype;
 const errorToString = Error.prototype.toString;
 const regExpToString = RegExp.prototype.toString;
