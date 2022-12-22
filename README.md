@@ -1,4 +1,4 @@
-# Clean Arch React
+# Clean Architecture + Ports and Adapters with Reactjs
 
 This is a project made with the intention of applying the concepts of Clean
 Architecture and Ports and Adapters in a front-end application, as in most cases
@@ -62,12 +62,11 @@ Summary:
 
 ## [Layers](#layers)
 
-- User Interface -> react files, components, views, pages, page factory.
+- User Interface -> react files, components, views, pages.
 - Infrastructure -> drivers, adapters, repository implementation, libs,
-  validations, formatters.
-- Application -> use cases, models, dtos, services, repository interface,
-  interfaces/ports.
-- Domain -> interfaces, validations, entities, value objects.
+  formatters, implementations in general.
+- Application -> use cases, models, dtos, services, repository/ports interfaces.
+- Domain -> business rules interfaces, validations, entities, value objects.
 
 <img src='./resources/ca-diagram.png' width="350" />
 
@@ -89,7 +88,7 @@ transformations, but do not determine how they will occur.
 Around the domain is the application layer. This layer describes use cases, i.e.
 user scenarios. They are responsible for what happens after some event occurs.
 
-Also, in the application layer there are ports—the specifications of how our
+Also, in the application layer there are ports, the specifications of how our
 application wants the outside world to communicate with it. Usually a port is an
 interface, a behavior contract.
 
@@ -102,7 +101,7 @@ outside world to make it ready.
 
 This layer is responsible to implement the Interface Contracts defined within
 the application layer to the Secondary Actors as Adapters. Infrastructure Layer
-supports other layer by implementing the abstractions and integrations to
+supports other layers by implementing the abstractions and integrations to
 3rd-party library and systems.
 
 Infrastructure layer contains most of your application’s dependencies on
@@ -171,3 +170,6 @@ yupjs lib on the domain layer to validate our entities.
 - https://www.youtube.com/watch?v=kCSiGeUFi_U&t=1955s&ab_channel=RodrigoBranas
 - https://www.youtube.com/watch?v=iUQVZHzqGuc&t=1681s&ab_channel=Mango
 - https://martinfowler.com/articles/gateway-pattern.html
+- http://wiki.c2.com/?FourLayerArchitecture
+- https://alistair.cockburn.us/hexagonal-architecture/
+- https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
