@@ -1,9 +1,5 @@
 name: ci-clean-arch-react-workflow
 on:
-  push:
-    branches:
-      - master
-      - develop
   pull_request:
     banches:
       - master
