@@ -166,6 +166,7 @@ yupjs lib on the domain layer to validate our entities.
 
 ## [Git](#git)
 
+- Branch protection
 - Pull request template
 - Codewoners
 - Conventional Commits
