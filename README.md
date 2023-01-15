@@ -17,6 +17,7 @@ Summary:
 - [Dependency Rule](#dependency-rule)
 - [Principles](#principles)
 - [Design Patterns](#design-patterns)
+- [Git](#git)
 - [References](#references)
 
 ## [System Requirements Specification](#system-requirements-specification)
@@ -162,6 +163,12 @@ yupjs lib on the domain layer to validate our entities.
 - Adapter
 - Decorator
 - Composite
+
+## [Git](#git)
+
+- Pull request template
+- Codewoners
+- Conventional Commits
 
 ## [References](#references)
 
