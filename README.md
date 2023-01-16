@@ -170,6 +170,7 @@ yupjs lib on the domain layer to validate our entities.
 - Pull request template
 - Codewoners
 - Conventional Commits
+- Github Actions
 
 ## [References](#references)
 
