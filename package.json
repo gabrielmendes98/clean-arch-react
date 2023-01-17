@@ -6,11 +6,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "test:cov": "react-scripts test --coverage .",
+    "test:cov": "react-scripts test --coverage . --watchAll=false",
     "eject": "react-scripts eject",
     "prettier": "prettier -w ./",
     "lint": "eslint .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "sonar": "npx sonar-scanner"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
@@ -45,7 +46,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^8.0.3",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "sonarqube-scanner": "^3.0.0"
   },
   "browserslist": {
     "production": [
