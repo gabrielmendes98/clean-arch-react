@@ -17,7 +17,7 @@ Summary:
 - [Dependency Rule](#dependency-rule)
 - [Principles](#principles)
 - [Design Patterns](#design-patterns)
-- [Git](#git)
+- [Git, CI, CD](#git-ci-cd)
 - [References](#references)
 
 ## [System Requirements Specification](#system-requirements-specification)
@@ -164,13 +164,14 @@ yupjs lib on the domain layer to validate our entities.
 - Decorator
 - Composite
 
-## [Git](#git)
+## [Git, CI, CD](#git-ci-cd)
 
 - Branch protection
 - Pull request template
 - Codewoners
 - Conventional Commits
 - Github Actions
+- SonarQube and SonarCloud
 
 ## [References](#references)
 
