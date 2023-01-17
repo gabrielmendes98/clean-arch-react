@@ -1,4 +1,4 @@
-# Clean Architecture + Ports and Adapters with Reactjs
+# Clean Architecture + Ports and Adapters with Reactj
 
 This is a project made with the intention of applying the concepts of Clean
 Architecture and Ports and Adapters in a front-end application, as in most cases
