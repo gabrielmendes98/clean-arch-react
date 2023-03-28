@@ -1,14 +1,14 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
 import { EmployeeService } from 'employee/domain/interfaces/employee-service.interface';
-import { UseCase } from 'shared/application/use-case.port';
 import {
   UnexpectedError,
   UNEXPECTED_ERROR_MESSAGE,
 } from 'shared/domain/errors/unexpected.error';
-import { HttpStatusCode } from 'shared/application/http-client.port';
-import { RouterService } from 'shared/application/router.port';
 import { pages } from 'shared/domain/config/pages';
-import { NotificationService } from 'shared/application/notification.port';
+import { UseCase } from 'shared/domain/interfaces/use-case.interface';
+import { NotificationService } from 'shared/domain/interfaces/notification.interface';
+import { RouterService } from 'shared/domain/interfaces/router.interface';
+import { HttpStatusCode } from 'shared/domain/interfaces/http-client.interface';
 
 export class UpdateEmployeeUseCase implements UseCase<Input, Output> {
   constructor(

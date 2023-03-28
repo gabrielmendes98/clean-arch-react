@@ -4,7 +4,7 @@ import { AuthenticationService } from 'authentication/domain/interfaces/authenti
 import {
   HttpResponse,
   HttpStatusCode,
-} from 'shared/application/http-client.port';
+} from 'shared/domain/interfaces/http-client.interface';
 
 export class AuthenticationMemoryService implements AuthenticationService {
   async login(): Promise<HttpResponse<LoginResponseDto>> {

@@ -1,5 +1,5 @@
 import { useContext, Context } from 'react';
-import { FormStorageService } from 'shared/application/form-storage.port';
+import { FormStorageService } from 'shared/domain/interfaces/form-storage.interface';
 import { FormContext } from '../providers/form.provider';
 
 export const useFormStorage = <FormFields = object>() => {

@@ -1,6 +1,6 @@
 import { BrowserRouter, MemoryRouter, Route, Routes } from 'react-router-dom';
 import { act, renderHook, render, screen } from 'shared/testing/test-utils';
-import { useRouter } from '../router.adapter';
+import { useRouter } from '../use-router.hook';
 
 describe('useRouter', () => {
   it('should navigate to page', () => {

@@ -1,9 +1,12 @@
 import { User } from 'shared/domain/entities/user.entity';
+import { StoragePersistor } from 'shared/domain/interfaces/storage-persistor.interface';
+import { UseCase } from 'shared/domain/interfaces/use-case.interface';
+import {
+  PersistedUser,
+  UserStorageService,
+} from 'shared/domain/interfaces/user-storage.interface';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
-import { StoragePersistor } from '../storage-persistor.port';
-import { UseCase } from '../use-case.port';
-import { PersistedUser, UserStorageService } from '../user-storage.port';
 
 export class RetrivePersistedUserUseCase implements UseCase<Input, Output> {
   constructor(

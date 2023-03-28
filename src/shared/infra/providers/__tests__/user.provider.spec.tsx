@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import { StoragePersistor } from 'shared/application/storage-persistor.port';
 import { User } from 'shared/domain/entities/user.entity';
+import { StoragePersistor } from 'shared/domain/interfaces/storage-persistor.interface';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 import { act, renderHook } from 'shared/testing/test-utils';

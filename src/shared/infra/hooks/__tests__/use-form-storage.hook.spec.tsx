@@ -1,6 +1,6 @@
 import { FormProvider } from 'shared/infra/providers/form.provider';
 import { renderHook } from 'shared/testing/test-utils';
-import { useFormStorage } from '../form-storage.adapter';
+import { useFormStorage } from '../use-form-storage.hook';
 
 describe('useFormStorage', () => {
   it('should return all provider values', () => {

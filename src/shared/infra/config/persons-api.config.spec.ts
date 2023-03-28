@@ -1,4 +1,4 @@
-import { personsApiConfig } from '../persons-api.adapter';
+import { personsApiConfig } from './persons-api.config';
 
 describe('personsApiConfig', () => {
   it('should be defined', () => {

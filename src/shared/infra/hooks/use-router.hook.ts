@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { RouterService } from 'shared/application/router.port';
+import { RouterService } from 'shared/domain/interfaces/router.interface';
 
 export const useRouter = (): RouterService => ({
   navigate: useNavigate(),

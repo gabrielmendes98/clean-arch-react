@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { User } from 'shared/domain/entities/user.entity';
-import { StoragePersistor } from './storage-persistor.port';
+import { StoragePersistor } from './storage-persistor.interface';
 
 export interface UserStorageService {
   user: User | null | undefined;

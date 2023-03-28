@@ -3,8 +3,8 @@ import { makeEmployeeService } from 'employee/infra/factories/employee-service.f
 import { useEmployeeList } from 'employee/infra/hooks/use-employee-list.hook';
 import { DeleteEmployeeFromListUseCase } from 'employee/use-cases/delete-employee-from-list.use-case';
 import { ListEmployeesUseCase } from 'employee/use-cases/list-employees.use-case';
-import { RouterService } from 'shared/application/router.port';
-import { useRouter } from 'shared/infra/adapters/router.adapter';
+import { RouterService } from 'shared/domain/interfaces/router.interface';
+import { useRouter } from 'shared/infra/hooks/use-router.hook';
 import { ListEmployeesView } from '../containers/list-employees.container';
 
 export const MakeListEmployeesPage = () => {

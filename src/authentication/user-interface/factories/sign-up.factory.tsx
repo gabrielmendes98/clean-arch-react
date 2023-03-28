@@ -2,12 +2,13 @@ import { SignUpFormService } from 'authentication/domain/interfaces/sign-up-form
 import { makeAuthService } from 'authentication/infra/factories/authentication-service.factory';
 import { useSignUpForm } from 'authentication/infra/hooks/use-sign-up-form.hook';
 import { SignUpUseCase } from 'authentication/use-cases/sign-up.use-case';
-import { NotificationService } from 'shared/application/notification.port';
-import { RouterService } from 'shared/application/router.port';
-import { UserStorageService } from 'shared/application/user-storage.port';
-import { useNotification } from 'shared/infra/adapters/notification.adapter';
-import { useRouter } from 'shared/infra/adapters/router.adapter';
-import { useUserStorage } from 'shared/infra/adapters/user-storage.adapter';
+import { NotificationService } from 'shared/domain/interfaces/notification.interface';
+import { RouterService } from 'shared/domain/interfaces/router.interface';
+import { UserStorageService } from 'shared/domain/interfaces/user-storage.interface';
+import { useNotification } from 'shared/infra/hooks/use-notification.hook';
+import { useRouter } from 'shared/infra/hooks/use-router.hook';
+import { useUserStorage } from 'shared/infra/hooks/use-user-storage.hook';
+
 import { SignUpView } from '../containers/sign-up.container';
 
 export const MakeSignUpPage = () => {

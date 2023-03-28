@@ -1,10 +1,10 @@
 import { useState, createContext, useCallback, useEffect } from 'react';
-import { RetrivePersistedUserUseCase } from 'shared/application/use-cases/retrive-persisted-user.use-case';
+import { RetrivePersistedUserUseCase } from 'shared/use-cases/retrive-persisted-user.use-case';
+import { User } from 'shared/domain/entities/user.entity';
 import {
   UserStorageProps,
   UserStorageService,
-} from 'shared/application/user-storage.port';
-import { User } from 'shared/domain/entities/user.entity';
+} from 'shared/domain/interfaces/user-storage.interface';
 
 export const UserContext = createContext<UserStorageService | null>(null);
 

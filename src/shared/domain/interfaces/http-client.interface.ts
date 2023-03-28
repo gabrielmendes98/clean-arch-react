@@ -1,4 +1,4 @@
-import { ErrorDto } from './dto/error.dto';
+import { ErrorDto } from '../dto/error.dto';
 
 export interface HttpClientService {
   baseUrl?: string;

@@ -3,7 +3,7 @@ import {
   HttpClientOptions,
   HttpClientService,
   HttpResponse,
-} from 'shared/application/http-client.port';
+} from 'shared/domain/interfaces/http-client.interface';
 
 export class AxiosAdapter implements HttpClientService {
   constructor(public baseUrl: string) {

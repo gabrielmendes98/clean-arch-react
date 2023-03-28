@@ -1,11 +1,12 @@
 import { AuthenticationService } from 'authentication/domain/interfaces/authentication-service.interface';
-import { HttpStatusCode } from 'shared/application/http-client.port';
-import { RouterService } from 'shared/application/router.port';
-import { UseCase } from 'shared/application/use-case.port';
-import { UserStorageService } from 'shared/application/user-storage.port';
+
 import { pages } from 'shared/domain/config/pages';
 import { User } from 'shared/domain/entities/user.entity';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
+import { HttpStatusCode } from 'shared/domain/interfaces/http-client.interface';
+import { RouterService } from 'shared/domain/interfaces/router.interface';
+import { UseCase } from 'shared/domain/interfaces/use-case.interface';
+import { UserStorageService } from 'shared/domain/interfaces/user-storage.interface';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { Password } from 'shared/domain/value-objects/password.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';

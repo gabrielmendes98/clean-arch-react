@@ -1,11 +1,11 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
 import { EmployeeService } from 'employee/domain/interfaces/employee-service.interface';
-import { UseCase } from 'shared/application/use-case.port';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
-import { HttpStatusCode } from 'shared/application/http-client.port';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 import { Document } from 'shared/domain/value-objects/document.vo';
 import { Email } from 'shared/domain/value-objects/email.vo';
+import { UseCase } from 'shared/domain/interfaces/use-case.interface';
+import { HttpStatusCode } from 'shared/domain/interfaces/http-client.interface';
 
 export class GetEmployeeUseCase implements UseCase<Input, Output> {
   constructor(private employeeApiService: EmployeeService) {}

@@ -1,4 +1,4 @@
-import { personsApiConfig } from 'shared/infra/adapters/persons-api.adapter';
+import { personsApiConfig } from 'shared/infra/config/persons-api.config';
 import { EmployeeHttpService } from '../services/employee-http.service';
 import { EmployeeMemoryService } from '../services/employee-memory.service';
 import { makeEmployeeService } from './employee-service.factory';

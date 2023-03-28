@@ -1,13 +1,13 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { MakeRegisterEmployeePage } from 'employee/user-interface/pages/register-employee/register-employee.factory';
 import { MakeHome } from 'static-pages/home/home.factory';
-import { MakeListEmployeesPage } from 'employee/user-interface/pages/list-employees/list-employees.factory';
-import { MakeUpdateEmployeePage } from 'employee/user-interface/pages/update-employee/update-employee.factory';
-import { MakeLoginPage } from 'authentication/user-interface/containers/login/login.factory';
-import { MakeSignUpPage } from 'authentication/user-interface/containers/sign-up/sign-up.factory';
-import { MainLayout } from 'shared/user-interface/components/layouts/main/main.layout';
-import { useUserStorage } from 'shared/infra/adapters/user-storage.adapter';
+import { MakeLoginPage } from 'authentication/user-interface/factories/login.factory';
+import { MakeSignUpPage } from 'authentication/user-interface/factories/sign-up.factory';
+import { MakeRegisterEmployeePage } from 'employee/user-interface/factories/register-employee.factory';
+import { MakeListEmployeesPage } from 'employee/user-interface/factories/list-employees.factory';
+import { MakeUpdateEmployeePage } from 'employee/user-interface/factories/update-employee.factory';
+import { useUserStorage } from 'shared/infra/hooks/use-user-storage.hook';
 import { pages } from 'shared/domain/config/pages';
+import { MainLayout } from '../components/layouts/main/main.layout';
 import { ProtectedRoute } from './ProtectedRoute';
 
 export const Router = () => {

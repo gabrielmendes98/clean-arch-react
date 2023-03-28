@@ -7,7 +7,7 @@ import { EmployeeService } from 'employee/domain/interfaces/employee-service.int
 import {
   HttpResponse,
   HttpStatusCode,
-} from 'shared/application/http-client.port';
+} from 'shared/domain/interfaces/http-client.interface';
 
 export class EmployeeMemoryService implements EmployeeService {
   async deleteEmployee(): Promise<HttpResponse<DeleteEmployeeResponseDto>> {

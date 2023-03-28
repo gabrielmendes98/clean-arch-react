@@ -1,7 +1,7 @@
 import { UserProvider } from 'shared/infra/providers/user.provider';
 import { storagePersistorMock } from 'shared/testing/mocks/persistor.mock';
 import { renderHook } from 'shared/testing/test-utils';
-import { useUserStorage } from '../user-storage.adapter';
+import { useUserStorage } from '../use-user-storage.hook';
 
 describe('useUserStorage', () => {
   it('should return all provider values', () => {

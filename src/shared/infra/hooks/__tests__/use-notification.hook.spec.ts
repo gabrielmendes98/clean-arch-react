@@ -1,5 +1,5 @@
 import { renderHook } from 'shared/testing/test-utils';
-import { useNotification } from '../notification.adapter';
+import { useNotification } from '../use-notification.hook';
 
 describe('useNotification', () => {
   it('should notify user without error', () => {

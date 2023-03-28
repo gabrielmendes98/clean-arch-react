@@ -1,4 +1,4 @@
-import { personsApiConfig } from 'shared/infra/adapters/persons-api.adapter';
+import { personsApiConfig } from 'shared/infra/config/persons-api.config';
 import { AuthenticationHttpService } from '../services/authentication-http.service';
 import { AuthenticationMemoryService } from '../services/authentication-memory.service';
 import { makeAuthService } from './authentication-service.factory';

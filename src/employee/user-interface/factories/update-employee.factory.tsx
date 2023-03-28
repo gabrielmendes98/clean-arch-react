@@ -3,10 +3,10 @@ import { EmployeeFormService } from 'employee/domain/interfaces/employee-form.in
 import { UpdateEmployeeUseCase } from 'employee/use-cases/update-employee.use-case';
 import { makeEmployeeService } from 'employee/infra/factories/employee-service.factory';
 import { GetEmployeeUseCase } from 'employee/use-cases/get-employee.use-case';
-import { useNotification } from 'shared/infra/adapters/notification.adapter';
-import { RouterService } from 'shared/application/router.port';
-import { useRouter } from 'shared/infra/adapters/router.adapter';
-import { NotificationService } from 'shared/application/notification.port';
+import { RouterService } from 'shared/domain/interfaces/router.interface';
+import { useRouter } from 'shared/infra/hooks/use-router.hook';
+import { useNotification } from 'shared/infra/hooks/use-notification.hook';
+import { NotificationService } from 'shared/domain/interfaces/notification.interface';
 import { UpdateEmployeeView } from '../containers/update-employee.container';
 
 export const MakeUpdateEmployeePage = () => {

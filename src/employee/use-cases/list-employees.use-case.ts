@@ -1,8 +1,8 @@
 import { EmployeeList } from 'employee/domain/entities/employee-list.entity';
 import { EmployeeService } from 'employee/domain/interfaces/employee-service.interface';
-import { UseCase } from 'shared/application/use-case.port';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
-import { HttpStatusCode } from 'shared/application/http-client.port';
+import { HttpStatusCode } from 'shared/domain/interfaces/http-client.interface';
+import { UseCase } from 'shared/domain/interfaces/use-case.interface';
 
 export class ListEmployeesUseCase implements UseCase<Input, Output> {
   constructor(private employeeApiService: EmployeeService) {}

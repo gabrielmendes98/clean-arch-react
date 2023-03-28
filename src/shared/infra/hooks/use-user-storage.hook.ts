@@ -1,5 +1,5 @@
 import { useContext, Context } from 'react';
-import { UserStorageService } from 'shared/application/user-storage.port';
+import { UserStorageService } from 'shared/domain/interfaces/user-storage.interface';
 import { UserContext } from '../providers/user.provider';
 
 export const useUserStorage = (): UserStorageService => {

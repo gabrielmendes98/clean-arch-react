@@ -1,4 +1,4 @@
-import { UserStorageService } from 'shared/application/user-storage.port';
+import { UserStorageService } from 'shared/domain/interfaces/user-storage.interface';
 
 export const userStorageServiceMock: UserStorageService = {
   user: null,

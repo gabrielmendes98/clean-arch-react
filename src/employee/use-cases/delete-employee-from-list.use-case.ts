@@ -4,9 +4,9 @@ import {
 } from 'employee/domain/entities/employee-list.entity';
 import { EmployeeService } from 'employee/domain/interfaces/employee-service.interface';
 import { EmployeeListService } from 'employee/domain/interfaces/employee-list.interface';
-import { UseCase } from 'shared/application/use-case.port';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
-import { HttpStatusCode } from 'shared/application/http-client.port';
+import { UseCase } from 'shared/domain/interfaces/use-case.interface';
+import { HttpStatusCode } from 'shared/domain/interfaces/http-client.interface';
 
 export class DeleteEmployeeFromListUseCase implements UseCase<Input, Output> {
   constructor(

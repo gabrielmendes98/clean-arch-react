@@ -1,5 +1,5 @@
-import { HttpClientService } from 'shared/application/http-client.port';
 import { User } from 'shared/domain/entities/user.entity';
+import { HttpClientService } from 'shared/domain/interfaces/http-client.interface';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';

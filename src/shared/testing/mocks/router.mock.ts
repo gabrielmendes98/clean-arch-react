@@ -1,4 +1,4 @@
-import { RouterService } from 'shared/application/router.port';
+import { RouterService } from 'shared/domain/interfaces/router.interface';
 
 export const routerServiceMock: RouterService = {
   navigate: jest.fn(),

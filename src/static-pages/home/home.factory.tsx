@@ -1,5 +1,5 @@
-import { UserStorageService } from 'shared/application/user-storage.port';
-import { useUserStorage } from 'shared/infra/adapters/user-storage.adapter';
+import { UserStorageService } from 'shared/domain/interfaces/user-storage.interface';
+import { useUserStorage } from 'shared/infra/hooks/use-user-storage.hook';
 import { Home } from './views/home.view';
 
 export const MakeHome = () => {

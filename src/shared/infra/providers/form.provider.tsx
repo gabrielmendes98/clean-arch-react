@@ -10,7 +10,7 @@ import {
   FormErrors,
   FormProviderProps,
   FormStorageService,
-} from 'shared/application/form-storage.port';
+} from 'shared/domain/interfaces/form-storage.interface';
 import { validator } from 'shared/domain/validator';
 
 export const FormContext = createContext<FormStorageService<object> | null>(
