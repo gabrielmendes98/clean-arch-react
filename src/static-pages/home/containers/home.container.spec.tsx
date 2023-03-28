@@ -3,7 +3,7 @@ import { Email } from 'shared/domain/value-objects/email.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';
 import { render, screen } from 'shared/testing/test-utils';
-import { Home } from './home.view';
+import { Home } from './home.container';
 
 describe('Home', () => {
   it('should show welcome message without user name when has no user', () => {
