@@ -6,9 +6,7 @@ import {
 import { GetEmployeeUseCase } from 'employee/use-cases/get-employee.use-case';
 import { makeEmployeeService } from 'employee/infra/factories/employee-service.factory';
 import { useEmployeeForm } from 'employee/infra/hooks/use-employee-form.hook';
-import { Document } from 'shared/domain/value-objects/document.vo';
-import { Email } from 'shared/domain/value-objects/email.vo';
-import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
+import { EmployeeFactory } from 'employee/domain/factories/employee.factory';
 import { notificationServiceMock } from 'shared/testing/mocks/notification.mock';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
 import { render, screen, userEvent, waitFor } from 'shared/testing/test-utils';
@@ -34,10 +32,10 @@ class FakeUpdateEmployeeUseCase extends UpdateEmployeeUseCase {
 class FakeGetEmployeeUseCase extends GetEmployeeUseCase {
   async execute(): Promise<{ employee: Employee }> {
     return {
-      employee: new Employee({
-        document: new Document(fakeEmployee.document),
-        email: new Email(fakeEmployee.email),
-        id: new UniqueEntityId(fakeEmployee.id),
+      employee: EmployeeFactory.create({
+        document: fakeEmployee.document,
+        email: fakeEmployee.email,
+        id: fakeEmployee.id,
         name: fakeEmployee.name,
         salary: Number(fakeEmployee.salary),
       }),
