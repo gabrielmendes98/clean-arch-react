@@ -23,7 +23,7 @@ describe('useEmployeeList', () => {
         ]),
       );
     });
-    expect(result.current.list.items).toStrictEqual([
+    expect(result.current.list.employees).toStrictEqual([
       {
         id: 'ce734f82-2fac-4845-b394-66bd67e6e271',
         document: '03542157015',

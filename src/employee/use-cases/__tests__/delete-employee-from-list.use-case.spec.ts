@@ -34,7 +34,7 @@ describe('DeleteEmployeeFromListUseCase', () => {
     expect(mockEmployeeListService.updateList).toHaveBeenCalledWith(
       new EmployeeList([]),
     );
-    expect(mockEmployeeListService.list).toMatchObject({ items: [] });
+    expect(mockEmployeeListService.list.employees).toStrictEqual([]);
   });
 
   it('should call api to delete item and return success', async () => {
@@ -67,8 +67,8 @@ describe('DeleteEmployeeFromListUseCase', () => {
       async () => await useCase.execute({ item: fakeItem }),
     ).rejects.toThrow(UnexpectedError);
     expect(deleteMethod).toHaveBeenCalledWith(fakeItem.id);
-    expect(mockEmployeeListService.list.items).toHaveLength(1);
-    expect(mockEmployeeListService.list.items).toContain(fakeItem);
+    expect(mockEmployeeListService.list.employees).toHaveLength(1);
+    expect(mockEmployeeListService.list.employees).toContain(fakeItem);
     expect(mockEmployeeListService.updateList).toHaveBeenCalledWith(
       new EmployeeList([fakeItem]),
     );

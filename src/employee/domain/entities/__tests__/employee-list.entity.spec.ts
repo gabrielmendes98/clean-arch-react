@@ -19,29 +19,29 @@ const otherFakeEmployee = {
 describe('EmployeeList', () => {
   it('should start with empty array', () => {
     const list = new EmployeeList();
-    expect(list.items).toStrictEqual([]);
+    expect(list.employees).toStrictEqual([]);
   });
 
   it('should set initial items', () => {
     const list = new EmployeeList([fakeEmployee]);
-    expect(list.items).toStrictEqual([fakeEmployee]);
+    expect(list.employees).toStrictEqual([fakeEmployee]);
   });
 
   it('should be able to add item on list head by default', () => {
     const list = new EmployeeList([fakeEmployee]);
     list.addItem(otherFakeEmployee);
-    expect(list.items).toStrictEqual([otherFakeEmployee, fakeEmployee]);
+    expect(list.employees).toStrictEqual([otherFakeEmployee, fakeEmployee]);
   });
 
   it('should be able to add item on index', () => {
     const list = new EmployeeList([fakeEmployee]);
     list.addItem(otherFakeEmployee, 1);
-    expect(list.items).toStrictEqual([fakeEmployee, otherFakeEmployee]);
+    expect(list.employees).toStrictEqual([fakeEmployee, otherFakeEmployee]);
   });
 
   it('should be able to remove item', () => {
     const list = new EmployeeList([fakeEmployee]);
     list.removeItem(fakeEmployee);
-    expect(list.items).toStrictEqual([]);
+    expect(list.employees).toStrictEqual([]);
   });
 });

@@ -57,7 +57,7 @@ describe('ListEmployeesView', () => {
     );
     userEvent.click(screen.getByRole('button', { name: /deletar/i }));
     expect(deleteEmployee).toHaveBeenCalledWith({
-      item: fakeEmployeeList.items[0],
+      item: fakeEmployeeList.employees[0],
     });
   });
 

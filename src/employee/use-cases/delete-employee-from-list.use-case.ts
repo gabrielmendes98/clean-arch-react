@@ -19,7 +19,7 @@ export class DeleteEmployeeFromListUseCase implements UseCase<Input, Output> {
     const { item } = input;
 
     const removedIndex = list.removeItem(item);
-    updateList(new EmployeeList(list.items));
+    updateList(new EmployeeList(list.employees));
 
     const response = await this.employeeApiService.deleteEmployee(item.id);
 
@@ -28,7 +28,7 @@ export class DeleteEmployeeFromListUseCase implements UseCase<Input, Output> {
         return response.body;
       default:
         list.addItem(item, removedIndex);
-        updateList(new EmployeeList(list.items));
+        updateList(new EmployeeList(list.employees));
         throw new UnexpectedError();
     }
   }

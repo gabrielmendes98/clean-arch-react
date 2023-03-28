@@ -4,7 +4,7 @@ import { ListEmployeesUseCase } from 'employee/use-cases/list-employees.use-case
 import { DeleteEmployeeFromListUseCase } from 'employee/use-cases/delete-employee-from-list.use-case';
 import { EmployeeListService } from 'employee/domain/interfaces/employee-list.interface';
 import { pages } from 'shared/domain/config/pages';
-import { RouterService } from 'shared/application/router.port';
+import { RouterService } from 'shared/domain/interfaces/router.interface';
 import { EmployeesList } from '../components/employees-list.component';
 
 type Props = {
@@ -38,7 +38,7 @@ export const ListEmployeesView = ({
   return (
     list && (
       <EmployeesList
-        employees={list.items}
+        employees={list.employees}
         deleteEmployee={deleteEmployee}
         editEmployee={editEmployee}
       />
