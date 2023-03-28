@@ -9,13 +9,13 @@ import {
   UpdateEmployeeRequestDto,
   UpdateEmployeeResponseDto,
 } from 'employee/domain/dto/update-employee.dto';
-import { EmployeeService } from 'employee/domain/interfaces/employee-service.interface';
+import { EmployeeApiService } from 'employee/domain/interfaces/employee-service.interface';
 import {
   HttpClientService,
   HttpResponse,
 } from 'shared/application/http-client.port';
 
-export class EmployeeHttpService implements EmployeeService {
+export class EmployeeHttpService implements EmployeeApiService {
   constructor(private httpClient: HttpClientService) {}
 
   async deleteEmployee(

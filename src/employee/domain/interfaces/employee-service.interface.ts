@@ -1,4 +1,4 @@
-import { HttpResponse } from 'shared/application/http-client.port';
+import { HttpResponse } from 'shared/domain/interfaces/http-client.interface';
 import { DeleteEmployeeResponseDto } from '../dto/delete-employee.dto';
 import { GetEmployeeResponseDto } from '../dto/get-employee.dto';
 import { ListEmployeesResponseDto } from '../dto/list-employees.dto';
@@ -11,7 +11,7 @@ import {
   UpdateEmployeeResponseDto,
 } from '../dto/update-employee.dto';
 
-export interface EmployeeService {
+export interface EmployeeApiService {
   deleteEmployee(id: string): Promise<HttpResponse<DeleteEmployeeResponseDto>>;
   getEmployee(id: string): Promise<HttpResponse<GetEmployeeResponseDto>>;
   listEmployees(): Promise<HttpResponse<ListEmployeesResponseDto>>;

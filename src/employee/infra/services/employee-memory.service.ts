@@ -3,13 +3,13 @@ import { GetEmployeeResponseDto } from 'employee/domain/dto/get-employee.dto';
 import { ListEmployeesResponseDto } from 'employee/domain/dto/list-employees.dto';
 import { RegisterEmployeeResponseDto } from 'employee/domain/dto/register-employee.dto';
 import { UpdateEmployeeResponseDto } from 'employee/domain/dto/update-employee.dto';
-import { EmployeeService } from 'employee/domain/interfaces/employee-service.interface';
+import { EmployeeApiService } from 'employee/domain/interfaces/employee-service.interface';
 import {
   HttpResponse,
   HttpStatusCode,
 } from 'shared/domain/interfaces/http-client.interface';
 
-export class EmployeeMemoryService implements EmployeeService {
+export class EmployeeMemoryService implements EmployeeApiService {
   async deleteEmployee(): Promise<HttpResponse<DeleteEmployeeResponseDto>> {
     return {
       statusCode: HttpStatusCode.ok,

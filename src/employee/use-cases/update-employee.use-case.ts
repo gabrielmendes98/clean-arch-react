@@ -1,5 +1,5 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
-import { EmployeeService } from 'employee/domain/interfaces/employee-service.interface';
+import { EmployeeApiService } from 'employee/domain/interfaces/employee-service.interface';
 import {
   UnexpectedError,
   UNEXPECTED_ERROR_MESSAGE,
@@ -12,7 +12,7 @@ import { HttpStatusCode } from 'shared/domain/interfaces/http-client.interface';
 
 export class UpdateEmployeeUseCase implements UseCase<Input, Output> {
   constructor(
-    private employeeApiService: EmployeeService,
+    private employeeApiService: EmployeeApiService,
     private routerService: RouterService,
     private notifier: NotificationService,
   ) {}

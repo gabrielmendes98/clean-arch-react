@@ -1,5 +1,5 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
-import { EmployeeService } from 'employee/domain/interfaces/employee-service.interface';
+import { EmployeeApiService } from 'employee/domain/interfaces/employee-service.interface';
 import {
   UnexpectedError,
   UNEXPECTED_ERROR_MESSAGE,
@@ -10,7 +10,7 @@ import { UseCase } from 'shared/domain/interfaces/use-case.interface';
 
 export class RegisterEmployeeUseCase implements UseCase<Input, Output> {
   constructor(
-    private employeeApiService: EmployeeService,
+    private employeeApiService: EmployeeApiService,
     private notifier: NotificationService,
   ) {}
 
