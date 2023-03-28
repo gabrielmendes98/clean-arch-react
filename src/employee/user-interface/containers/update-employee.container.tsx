@@ -8,8 +8,8 @@ import {
 } from 'employee/domain/interfaces/employee-form.interface';
 import { EntityValidationError } from 'shared/domain/errors/validation.error';
 import { FormProvider } from 'shared/infra/providers/form.provider';
-import { RouterService } from 'shared/application/router.port';
-import { FormStorageService } from 'shared/application/form-storage.port';
+import { RouterService } from 'shared/domain/interfaces/router.interface';
+import { FormStorageService } from 'shared/domain/interfaces/form-storage.interface';
 import { EmployeeForm } from '../components/employee-form.component';
 
 type Props = {
@@ -19,7 +19,7 @@ type Props = {
   routerService: RouterService;
 };
 
-export const UpdateEmployeeView = ({
+export const UpdateEmployeeContainer = ({
   getEmployeeUseCase,
   updateEmployeeUseCase,
   formService,
@@ -37,7 +37,7 @@ export const UpdateEmployeeView = ({
   ) => {
     try {
       await updateEmployeeUseCase.execute({
-        id: employee!.id,
+        id: employee!.id!,
         ...parseValuesToInput(values),
       });
     } catch (e) {

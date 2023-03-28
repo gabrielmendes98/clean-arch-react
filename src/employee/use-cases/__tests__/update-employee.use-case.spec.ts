@@ -1,5 +1,5 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
-import { makeEmployeeRepository } from 'employee/infra/factories/employee-repository.factory';
+import { EmployeeRepositoryFactory } from 'employee/infra/factories/employee-repository.factory';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { notificationServiceMock } from 'shared/testing/mocks/notification.mock';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
@@ -17,7 +17,7 @@ describe('UpdateEmployeeUseCase', () => {
   it('should validate employee', async () => {
     const validateEmployee = jest.spyOn(Employee, 'validate');
     const useCase = new UpdateEmployeeUseCase(
-      makeEmployeeRepository(),
+      EmployeeRepositoryFactory.create(),
       routerServiceMock,
       notificationServiceMock,
     );
@@ -26,7 +26,7 @@ describe('UpdateEmployeeUseCase', () => {
   });
 
   it('should call api, return success, notify user and go back to listing page', async () => {
-    const employeeRepository = makeEmployeeRepository();
+    const employeeRepository = EmployeeRepositoryFactory.create();
     const updateEmployee = jest.spyOn(employeeRepository, 'update');
     const useCase = new UpdateEmployeeUseCase(
       employeeRepository,
@@ -43,7 +43,7 @@ describe('UpdateEmployeeUseCase', () => {
   });
 
   it('should throw unexpected error when api returns any error and notify user', async () => {
-    const employeeRepository = makeEmployeeRepository();
+    const employeeRepository = EmployeeRepositoryFactory.create();
     const updateEmployee = jest
       .spyOn(employeeRepository, 'update')
       .mockReturnValue(

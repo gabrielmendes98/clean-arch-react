@@ -1,10 +1,10 @@
-import { EmployeeMemoryService } from '../employee-memory.repository';
+import { EmployeeMemoryRepository } from '../employee-memory.repository';
 
 describe('EmployeeMemoryGateway', () => {
-  let gateway: EmployeeMemoryService;
+  let gateway: EmployeeMemoryRepository;
 
   beforeEach(() => {
-    gateway = new EmployeeMemoryService();
+    gateway = new EmployeeMemoryRepository();
   });
 
   it('should return correct payload when call deleteEmployee method', async () => {

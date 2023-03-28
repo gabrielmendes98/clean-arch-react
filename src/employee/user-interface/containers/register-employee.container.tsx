@@ -5,7 +5,7 @@ import {
 } from 'employee/domain/interfaces/employee-form.interface';
 import { EntityValidationError } from 'shared/domain/errors/validation.error';
 import { FormProvider } from 'shared/infra/providers/form.provider';
-import { FormStorageService } from 'shared/application/form-storage.port';
+import { FormStorageService } from 'shared/domain/interfaces/form-storage.interface';
 import { EmployeeForm } from '../components/employee-form.component';
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
   formService: EmployeeFormService;
 };
 
-export const RegisterEmployeeView = ({
+export const RegisterEmployeeContainer = ({
   registerEmployeeUseCase,
   formService,
 }: Props) => {

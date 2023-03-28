@@ -1,11 +1,11 @@
 import { httpClientMock } from 'shared/testing/mocks/http-client.mock';
-import { EmployeeHttpService } from '../employee-http.repository';
+import { EmployeeHttpRepository } from '../employee-http.repository';
 
 describe('EmployeeHttpGateway', () => {
-  let gateway: EmployeeHttpService;
+  let gateway: EmployeeHttpRepository;
 
   beforeEach(() => {
-    gateway = new EmployeeHttpService(httpClientMock);
+    gateway = new EmployeeHttpRepository(httpClientMock);
   });
 
   it('should call httpClient with correct params when call deleteEmployee method', async () => {

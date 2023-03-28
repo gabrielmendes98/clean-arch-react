@@ -15,7 +15,7 @@ import {
   HttpResponse,
 } from 'shared/domain/interfaces/http-client.interface';
 
-export class EmployeeHttpService implements EmployeeRepository {
+export class EmployeeHttpRepository implements EmployeeRepository {
   constructor(private httpClient: HttpClientService) {}
 
   async delete(id: string): Promise<HttpResponse<DeleteEmployeeResponseDto>> {

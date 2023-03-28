@@ -14,7 +14,7 @@ type Props = {
   routerService: RouterService;
 };
 
-export const ListEmployeesView = ({
+export const ListEmployeesContainer = ({
   listEmployeesUseCase,
   deleteEmployeeUseCase,
   employeeListStorage,

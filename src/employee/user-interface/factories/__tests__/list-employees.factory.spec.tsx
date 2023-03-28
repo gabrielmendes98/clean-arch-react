@@ -1,9 +1,9 @@
 import { BrowserRouter } from 'react-router-dom';
 import { UserContext } from 'shared/infra/providers/user.provider';
 import { render, screen } from 'shared/testing/test-utils';
-import { MakeListEmployeesPage } from '../list-employees.factory';
+import { MakeListEmployeesContainer } from '../list-employees.factory';
 
-describe('MakeListEmployeesPage', () => {
+describe('MakeListEmployeesContainer', () => {
   it('should render without errors', async () => {
     render(
       <UserContext.Provider
@@ -14,7 +14,7 @@ describe('MakeListEmployeesPage', () => {
         }}
       >
         <BrowserRouter>
-          <MakeListEmployeesPage />
+          <MakeListEmployeesContainer />
         </BrowserRouter>
       </UserContext.Provider>,
     );

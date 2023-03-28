@@ -2,12 +2,12 @@ import {
   RegisterEmployeeUseCase,
   Output,
 } from 'employee/use-cases/register-employee.use-case';
-import { makeEmployeeRepository } from 'employee/infra/factories/employee-repository.factory';
+import { EmployeeRepositoryFactory } from 'employee/infra/factories/employee-repository.factory';
 import { useEmployeeForm } from 'employee/infra/hooks/use-employee-form.hook';
 import { notificationServiceMock } from 'shared/testing/mocks/notification.mock';
 import { render, screen, userEvent, waitFor } from 'shared/testing/test-utils';
 import { EntityValidationError } from 'shared/domain/errors/validation.error';
-import { RegisterEmployeeView } from '../register-employee.container';
+import { RegisterEmployeeContainer } from '../register-employee.container';
 
 const fakeEmployee = {
   document: '03542157015',
@@ -25,17 +25,17 @@ class FakeRegisterEmployeeUseCase extends RegisterEmployeeUseCase {
 }
 
 const registerEmployeeUseCase = new FakeRegisterEmployeeUseCase(
-  makeEmployeeRepository(),
+  EmployeeRepositoryFactory.create(),
   notificationServiceMock,
 );
 
-describe('RegisterEmployeeView', () => {
+describe('RegisterEmployeeContainer', () => {
   it('should call register employee use case and reset form on success submit', async () => {
     const registerEmployee = jest.spyOn(registerEmployeeUseCase, 'execute');
     const Component = () => {
       const formService = useEmployeeForm();
       return (
-        <RegisterEmployeeView
+        <RegisterEmployeeContainer
           formService={{
             ...formService,
             initialValues: fakeEmployee,
@@ -66,7 +66,7 @@ describe('RegisterEmployeeView', () => {
     const Component = () => {
       const formService = useEmployeeForm();
       return (
-        <RegisterEmployeeView
+        <RegisterEmployeeContainer
           formService={formService}
           registerEmployeeUseCase={registerEmployeeUseCase}
         />

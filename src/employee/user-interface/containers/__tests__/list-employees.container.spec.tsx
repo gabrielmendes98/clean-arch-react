@@ -1,6 +1,6 @@
 import { EmployeeList } from 'employee/domain/entities/employee-list.entity';
 import { EmployeeListStorage } from 'employee/domain/interfaces/employee-list.interface';
-import { makeEmployeeRepository } from 'employee/infra/factories/employee-repository.factory';
+import { EmployeeRepositoryFactory } from 'employee/infra/factories/employee-repository.factory';
 import {
   DeleteEmployeeFromListUseCase,
   Output,
@@ -8,7 +8,7 @@ import {
 import { ListEmployeesUseCase } from 'employee/use-cases/list-employees.use-case';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
 import { render, screen, userEvent, waitFor } from 'shared/testing/test-utils';
-import { ListEmployeesView } from '../list-employees.container';
+import { ListEmployeesContainer } from '../list-employees.container';
 
 const fakeEmployeeList = new EmployeeList([
   {
@@ -39,18 +39,18 @@ const employeeListServiceMock: EmployeeListStorage = {
 };
 
 const deleteEmployeeUseCase = new MockDeleteEmployeeUseCase(
-  makeEmployeeRepository(),
+  EmployeeRepositoryFactory.create(),
   employeeListServiceMock,
 );
 const listEmployeesUseCase = new MockListEmployeeUseCase(
-  makeEmployeeRepository(),
+  EmployeeRepositoryFactory.create(),
 );
 
-describe('ListEmployeesView', () => {
+describe('ListEmployeesContainer', () => {
   it('should call delete employee use case', () => {
     const deleteEmployee = jest.spyOn(deleteEmployeeUseCase, 'execute');
     render(
-      <ListEmployeesView
+      <ListEmployeesContainer
         deleteEmployeeUseCase={deleteEmployeeUseCase}
         employeeListStorage={employeeListServiceMock}
         listEmployeesUseCase={listEmployeesUseCase}
@@ -65,7 +65,7 @@ describe('ListEmployeesView', () => {
 
   it('should navigate to employee edit page when click on edit button', () => {
     render(
-      <ListEmployeesView
+      <ListEmployeesContainer
         deleteEmployeeUseCase={deleteEmployeeUseCase}
         employeeListStorage={employeeListServiceMock}
         listEmployeesUseCase={listEmployeesUseCase}
@@ -83,7 +83,7 @@ describe('ListEmployeesView', () => {
       .spyOn(listEmployeesUseCase, 'execute')
       .mockReturnValue(Promise.resolve({ list: fakeEmployeeList }));
     render(
-      <ListEmployeesView
+      <ListEmployeesContainer
         deleteEmployeeUseCase={deleteEmployeeUseCase}
         employeeListStorage={employeeListServiceMock}
         listEmployeesUseCase={listEmployeesUseCase}

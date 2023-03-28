@@ -3,7 +3,7 @@ import {
   EmployeeListItem,
 } from 'employee/domain/entities/employee-list.entity';
 import { EmployeeListStorage } from 'employee/domain/interfaces/employee-list.interface';
-import { makeEmployeeRepository } from 'employee/infra/factories/employee-repository.factory';
+import { EmployeeRepositoryFactory } from 'employee/infra/factories/employee-repository.factory';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { DeleteEmployeeFromListUseCase } from '../delete-employee-from-list.use-case';
 
@@ -27,7 +27,7 @@ describe('DeleteEmployeeFromListUseCase', () => {
 
   it('should update list', async () => {
     const useCase = new DeleteEmployeeFromListUseCase(
-      makeEmployeeRepository(),
+      EmployeeRepositoryFactory.create(),
       mockEmployeeListStorage,
     );
     await useCase.execute({ item: fakeItem });
@@ -38,7 +38,7 @@ describe('DeleteEmployeeFromListUseCase', () => {
   });
 
   it('should call api to delete item and return success', async () => {
-    const employeeRepository = makeEmployeeRepository();
+    const employeeRepository = EmployeeRepositoryFactory.create();
     const deleteMethod = jest.spyOn(employeeRepository, 'delete');
     const useCase = new DeleteEmployeeFromListUseCase(
       employeeRepository,
@@ -50,7 +50,7 @@ describe('DeleteEmployeeFromListUseCase', () => {
   });
 
   it('shuold add item back to list when api throw error', async () => {
-    const employeeRepository = makeEmployeeRepository();
+    const employeeRepository = EmployeeRepositoryFactory.create();
     const deleteMethod = jest
       .spyOn(employeeRepository, 'delete')
       .mockReturnValue(

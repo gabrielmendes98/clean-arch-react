@@ -1,9 +1,9 @@
 import { BrowserRouter } from 'react-router-dom';
 import { UserContext } from 'shared/infra/providers/user.provider';
 import { render } from 'shared/testing/test-utils';
-import { MakeRegisterEmployeePage } from '../register-employee.factory';
+import { MakeRegisterEmployeeContainer } from '../register-employee.factory';
 
-describe('MakeRegisterEmployeePage', () => {
+describe('MakeRegisterEmployeeContainer', () => {
   it('should render without errors', () => {
     render(
       <UserContext.Provider
@@ -14,7 +14,7 @@ describe('MakeRegisterEmployeePage', () => {
         }}
       >
         <BrowserRouter>
-          <MakeRegisterEmployeePage />
+          <MakeRegisterEmployeeContainer />
         </BrowserRouter>
       </UserContext.Provider>,
     );

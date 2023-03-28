@@ -9,7 +9,7 @@ import {
   HttpStatusCode,
 } from 'shared/domain/interfaces/http-client.interface';
 
-export class EmployeeMemoryService implements EmployeeRepository {
+export class EmployeeMemoryRepository implements EmployeeRepository {
   async delete(): Promise<HttpResponse<DeleteEmployeeResponseDto>> {
     return {
       statusCode: HttpStatusCode.ok,

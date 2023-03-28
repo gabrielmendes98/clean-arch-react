@@ -4,14 +4,14 @@ import {
   Output,
 } from 'employee/use-cases/update-employee.use-case';
 import { GetEmployeeUseCase } from 'employee/use-cases/get-employee.use-case';
-import { makeEmployeeRepository } from 'employee/infra/factories/employee-repository.factory';
+import { EmployeeRepositoryFactory } from 'employee/infra/factories/employee-repository.factory';
 import { useEmployeeForm } from 'employee/infra/hooks/use-employee-form.hook';
 import { EmployeeFactory } from 'employee/domain/factories/employee.factory';
 import { notificationServiceMock } from 'shared/testing/mocks/notification.mock';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
 import { render, screen, userEvent, waitFor } from 'shared/testing/test-utils';
 import { EntityValidationError } from 'shared/domain/errors/validation.error';
-import { UpdateEmployeeView } from '../update-employee.container';
+import { UpdateEmployeeContainer } from '../update-employee.container';
 
 const fakeEmployee = {
   id: 'ce734f82-2fac-4845-b394-66bd67e6e271',
@@ -43,21 +43,23 @@ class FakeGetEmployeeUseCase extends GetEmployeeUseCase {
   }
 }
 
-const getEmployeeUseCase = new FakeGetEmployeeUseCase(makeEmployeeRepository());
+const getEmployeeUseCase = new FakeGetEmployeeUseCase(
+  EmployeeRepositoryFactory.create(),
+);
 
 const updateEmployeeUseCase = new FakeUpdateEmployeeUseCase(
-  makeEmployeeRepository(),
+  EmployeeRepositoryFactory.create(),
   routerServiceMock,
   notificationServiceMock,
 );
 
-describe('UpdateEmployeeView', () => {
+describe('UpdateEmployeeContainer', () => {
   it('should call update employee use case when submit form', async () => {
     const updateEmployee = jest.spyOn(updateEmployeeUseCase, 'execute');
     const Component = () => {
       const formService = useEmployeeForm();
       return (
-        <UpdateEmployeeView
+        <UpdateEmployeeContainer
           formService={formService}
           routerService={routerServiceMock}
           updateEmployeeUseCase={updateEmployeeUseCase}
@@ -88,7 +90,7 @@ describe('UpdateEmployeeView', () => {
     const Component = () => {
       const formService = useEmployeeForm();
       return (
-        <UpdateEmployeeView
+        <UpdateEmployeeContainer
           formService={formService}
           routerService={routerServiceMock}
           updateEmployeeUseCase={updateEmployeeUseCase}
