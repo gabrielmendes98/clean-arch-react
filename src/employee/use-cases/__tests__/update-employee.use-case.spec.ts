@@ -1,5 +1,5 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
-import { makeEmployeeService } from 'employee/infra/factories/employee-service.factory';
+import { makeEmployeeRepository } from 'employee/infra/factories/employee-repository.factory';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { notificationServiceMock } from 'shared/testing/mocks/notification.mock';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
@@ -17,7 +17,7 @@ describe('UpdateEmployeeUseCase', () => {
   it('should validate employee', async () => {
     const validateEmployee = jest.spyOn(Employee, 'validate');
     const useCase = new UpdateEmployeeUseCase(
-      makeEmployeeService(),
+      makeEmployeeRepository(),
       routerServiceMock,
       notificationServiceMock,
     );
@@ -26,10 +26,10 @@ describe('UpdateEmployeeUseCase', () => {
   });
 
   it('should call api, return success, notify user and go back to listing page', async () => {
-    const apiService = makeEmployeeService();
-    const updateEmployee = jest.spyOn(apiService, 'updateEmployee');
+    const employeeRepository = makeEmployeeRepository();
+    const updateEmployee = jest.spyOn(employeeRepository, 'update');
     const useCase = new UpdateEmployeeUseCase(
-      apiService,
+      employeeRepository,
       routerServiceMock,
       notificationServiceMock,
     );
@@ -43,9 +43,9 @@ describe('UpdateEmployeeUseCase', () => {
   });
 
   it('should throw unexpected error when api returns any error and notify user', async () => {
-    const httpClient = makeEmployeeService();
+    const employeeRepository = makeEmployeeRepository();
     const updateEmployee = jest
-      .spyOn(httpClient, 'updateEmployee')
+      .spyOn(employeeRepository, 'update')
       .mockReturnValue(
         Promise.resolve({
           statusCode: 500,
@@ -53,7 +53,7 @@ describe('UpdateEmployeeUseCase', () => {
         }),
       );
     const useCase = new UpdateEmployeeUseCase(
-      httpClient,
+      employeeRepository,
       routerServiceMock,
       notificationServiceMock,
     );

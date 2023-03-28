@@ -3,7 +3,7 @@ import {
   EmployeeListItem,
 } from 'employee/domain/entities/employee-list.entity';
 import { EmployeeListStorage } from 'employee/domain/interfaces/employee-list.interface';
-import { makeEmployeeService } from 'employee/infra/factories/employee-service.factory';
+import { makeEmployeeRepository } from 'employee/infra/factories/employee-repository.factory';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { DeleteEmployeeFromListUseCase } from '../delete-employee-from-list.use-case';
 
@@ -27,7 +27,7 @@ describe('DeleteEmployeeFromListUseCase', () => {
 
   it('should update list', async () => {
     const useCase = new DeleteEmployeeFromListUseCase(
-      makeEmployeeService(),
+      makeEmployeeRepository(),
       mockEmployeeListStorage,
     );
     await useCase.execute({ item: fakeItem });
@@ -38,10 +38,10 @@ describe('DeleteEmployeeFromListUseCase', () => {
   });
 
   it('should call api to delete item and return success', async () => {
-    const apiService = makeEmployeeService();
-    const deleteMethod = jest.spyOn(apiService, 'deleteEmployee');
+    const employeeRepository = makeEmployeeRepository();
+    const deleteMethod = jest.spyOn(employeeRepository, 'delete');
     const useCase = new DeleteEmployeeFromListUseCase(
-      apiService,
+      employeeRepository,
       mockEmployeeListStorage,
     );
     const response = await useCase.execute({ item: fakeItem });
@@ -50,9 +50,9 @@ describe('DeleteEmployeeFromListUseCase', () => {
   });
 
   it('shuold add item back to list when api throw error', async () => {
-    const apiService = makeEmployeeService();
+    const employeeRepository = makeEmployeeRepository();
     const deleteMethod = jest
-      .spyOn(apiService, 'deleteEmployee')
+      .spyOn(employeeRepository, 'delete')
       .mockReturnValue(
         Promise.resolve({
           statusCode: 500,
@@ -60,7 +60,7 @@ describe('DeleteEmployeeFromListUseCase', () => {
         }),
       );
     const useCase = new DeleteEmployeeFromListUseCase(
-      apiService,
+      employeeRepository,
       mockEmployeeListStorage,
     );
     await expect(

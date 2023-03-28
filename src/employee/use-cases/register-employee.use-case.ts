@@ -1,5 +1,5 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
-import { EmployeeApiService } from 'employee/domain/interfaces/employee-service.interface';
+import { EmployeeRepository } from 'employee/domain/interfaces/employee-repository.interface';
 import {
   UnexpectedError,
   UNEXPECTED_ERROR_MESSAGE,
@@ -10,13 +10,13 @@ import { UseCase } from 'shared/domain/interfaces/use-case.interface';
 
 export class RegisterEmployeeUseCase implements UseCase<Input, Output> {
   constructor(
-    private employeeApiService: EmployeeApiService,
+    private employeeApiService: EmployeeRepository,
     private notifier: NotificationService,
   ) {}
 
   async execute(input: Input): Promise<Output> {
     Employee.validate(input);
-    const response = await this.employeeApiService.createEmployee(input);
+    const response = await this.employeeApiService.create(input);
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         this.notifier.notify('Funcionário cadastrado com sucesso!', 'success');

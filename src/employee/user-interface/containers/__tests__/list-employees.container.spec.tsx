@@ -1,6 +1,6 @@
 import { EmployeeList } from 'employee/domain/entities/employee-list.entity';
 import { EmployeeListStorage } from 'employee/domain/interfaces/employee-list.interface';
-import { makeEmployeeService } from 'employee/infra/factories/employee-service.factory';
+import { makeEmployeeRepository } from 'employee/infra/factories/employee-repository.factory';
 import {
   DeleteEmployeeFromListUseCase,
   Output,
@@ -39,10 +39,12 @@ const employeeListServiceMock: EmployeeListStorage = {
 };
 
 const deleteEmployeeUseCase = new MockDeleteEmployeeUseCase(
-  makeEmployeeService(),
+  makeEmployeeRepository(),
   employeeListServiceMock,
 );
-const listEmployeesUseCase = new MockListEmployeeUseCase(makeEmployeeService());
+const listEmployeesUseCase = new MockListEmployeeUseCase(
+  makeEmployeeRepository(),
+);
 
 describe('ListEmployeesView', () => {
   it('should call delete employee use case', () => {

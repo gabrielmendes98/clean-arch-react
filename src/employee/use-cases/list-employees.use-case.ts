@@ -1,14 +1,14 @@
 import { EmployeeList } from 'employee/domain/entities/employee-list.entity';
-import { EmployeeApiService } from 'employee/domain/interfaces/employee-service.interface';
+import { EmployeeRepository } from 'employee/domain/interfaces/employee-repository.interface';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { HttpStatusCode } from 'shared/domain/interfaces/http-client.interface';
 import { UseCase } from 'shared/domain/interfaces/use-case.interface';
 
 export class ListEmployeesUseCase implements UseCase<Input, Output> {
-  constructor(private employeeApiService: EmployeeApiService) {}
+  constructor(private employeeApiService: EmployeeRepository) {}
 
   async execute(): Promise<Output> {
-    const response = await this.employeeApiService.listEmployees();
+    const response = await this.employeeApiService.list();
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         return {

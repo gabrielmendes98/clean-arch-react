@@ -1,5 +1,5 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
-import { EmployeeApiService } from 'employee/domain/interfaces/employee-service.interface';
+import { EmployeeRepository } from 'employee/domain/interfaces/employee-repository.interface';
 import { EmployeeFactory } from 'employee/domain/factories/employee.factory';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
@@ -7,11 +7,11 @@ import { UseCase } from 'shared/domain/interfaces/use-case.interface';
 import { HttpStatusCode } from 'shared/domain/interfaces/http-client.interface';
 
 export class GetEmployeeUseCase implements UseCase<Input, Output> {
-  constructor(private employeeApiService: EmployeeApiService) {}
+  constructor(private employeeApiService: EmployeeRepository) {}
 
   async execute(input: Input): Promise<Output> {
     UniqueEntityId.validate(input.id);
-    const response = await this.employeeApiService.getEmployee(input.id);
+    const response = await this.employeeApiService.get(input.id);
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         return {

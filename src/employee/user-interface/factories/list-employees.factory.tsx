@@ -1,5 +1,5 @@
 import { EmployeeListStorage } from 'employee/domain/interfaces/employee-list.interface';
-import { makeEmployeeService } from 'employee/infra/factories/employee-service.factory';
+import { makeEmployeeRepository } from 'employee/infra/factories/employee-repository.factory';
 import { useEmployeeList } from 'employee/infra/hooks/use-employee-list.hook';
 import { DeleteEmployeeFromListUseCase } from 'employee/use-cases/delete-employee-from-list.use-case';
 import { ListEmployeesUseCase } from 'employee/use-cases/list-employees.use-case';
@@ -10,9 +10,11 @@ import { ListEmployeesView } from '../containers/list-employees.container';
 export const MakeListEmployeesPage = () => {
   const employeeListService: EmployeeListStorage = useEmployeeList();
   const routerService: RouterService = useRouter();
-  const listEmployeesUseCase = new ListEmployeesUseCase(makeEmployeeService());
+  const listEmployeesUseCase = new ListEmployeesUseCase(
+    makeEmployeeRepository(),
+  );
   const deleteEmployeeUseCase = new DeleteEmployeeFromListUseCase(
-    makeEmployeeService(),
+    makeEmployeeRepository(),
     employeeListService,
   );
 

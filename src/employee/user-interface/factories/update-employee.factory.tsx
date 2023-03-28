@@ -1,7 +1,7 @@
 import { useEmployeeForm } from 'employee/infra/hooks/use-employee-form.hook';
 import { EmployeeFormService } from 'employee/domain/interfaces/employee-form.interface';
 import { UpdateEmployeeUseCase } from 'employee/use-cases/update-employee.use-case';
-import { makeEmployeeService } from 'employee/infra/factories/employee-service.factory';
+import { makeEmployeeRepository } from 'employee/infra/factories/employee-repository.factory';
 import { GetEmployeeUseCase } from 'employee/use-cases/get-employee.use-case';
 import { RouterService } from 'shared/domain/interfaces/router.interface';
 import { useRouter } from 'shared/infra/hooks/use-router.hook';
@@ -14,11 +14,11 @@ export const MakeUpdateEmployeePage = () => {
   const routerService: RouterService = useRouter();
   const notifier: NotificationService = useNotification();
   const updateEmployeeUseCase = new UpdateEmployeeUseCase(
-    makeEmployeeService(),
+    makeEmployeeRepository(),
     routerService,
     notifier,
   );
-  const getEmployeeUseCase = new GetEmployeeUseCase(makeEmployeeService());
+  const getEmployeeUseCase = new GetEmployeeUseCase(makeEmployeeRepository());
 
   return (
     <UpdateEmployeeView

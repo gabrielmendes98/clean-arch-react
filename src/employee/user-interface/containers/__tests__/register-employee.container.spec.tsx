@@ -2,7 +2,7 @@ import {
   RegisterEmployeeUseCase,
   Output,
 } from 'employee/use-cases/register-employee.use-case';
-import { makeEmployeeService } from 'employee/infra/factories/employee-service.factory';
+import { makeEmployeeRepository } from 'employee/infra/factories/employee-repository.factory';
 import { useEmployeeForm } from 'employee/infra/hooks/use-employee-form.hook';
 import { notificationServiceMock } from 'shared/testing/mocks/notification.mock';
 import { render, screen, userEvent, waitFor } from 'shared/testing/test-utils';
@@ -25,7 +25,7 @@ class FakeRegisterEmployeeUseCase extends RegisterEmployeeUseCase {
 }
 
 const registerEmployeeUseCase = new FakeRegisterEmployeeUseCase(
-  makeEmployeeService(),
+  makeEmployeeRepository(),
   notificationServiceMock,
 );
 

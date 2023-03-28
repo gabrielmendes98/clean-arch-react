@@ -1,4 +1,4 @@
-import { EmployeeMemoryService } from '../employee-memory.service';
+import { EmployeeMemoryService } from '../employee-memory.repository';
 
 describe('EmployeeMemoryGateway', () => {
   let gateway: EmployeeMemoryService;
@@ -8,7 +8,7 @@ describe('EmployeeMemoryGateway', () => {
   });
 
   it('should return correct payload when call deleteEmployee method', async () => {
-    expect(await gateway.deleteEmployee()).toStrictEqual({
+    expect(await gateway.delete()).toStrictEqual({
       statusCode: 200,
       body: {
         success: true,
@@ -17,7 +17,7 @@ describe('EmployeeMemoryGateway', () => {
   });
 
   it('should return correct payload when call getEmployee method', async () => {
-    expect(await gateway.getEmployee()).toStrictEqual({
+    expect(await gateway.get()).toStrictEqual({
       statusCode: 200,
       body: {
         email: 'gabriel@gmail.com',
@@ -30,7 +30,7 @@ describe('EmployeeMemoryGateway', () => {
   });
 
   it('should return correct payload when call listEmployees method', async () => {
-    expect(await gateway.listEmployees()).toStrictEqual({
+    expect(await gateway.list()).toStrictEqual({
       statusCode: 200,
       body: [
         {
@@ -52,7 +52,7 @@ describe('EmployeeMemoryGateway', () => {
   });
 
   it('should return correct payload when call createEmployee method', async () => {
-    expect(await gateway.createEmployee()).toStrictEqual({
+    expect(await gateway.create()).toStrictEqual({
       statusCode: 200,
       body: {
         success: true,
@@ -61,7 +61,7 @@ describe('EmployeeMemoryGateway', () => {
   });
 
   it('should return correct payload when call updateEmployee method', async () => {
-    expect(await gateway.updateEmployee()).toStrictEqual({
+    expect(await gateway.update()).toStrictEqual({
       statusCode: 200,
       body: {
         success: true,

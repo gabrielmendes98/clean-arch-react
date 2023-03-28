@@ -9,34 +9,32 @@ import {
   UpdateEmployeeRequestDto,
   UpdateEmployeeResponseDto,
 } from 'employee/domain/dto/update-employee.dto';
-import { EmployeeApiService } from 'employee/domain/interfaces/employee-service.interface';
+import { EmployeeRepository } from 'employee/domain/interfaces/employee-repository.interface';
 import {
   HttpClientService,
   HttpResponse,
-} from 'shared/application/http-client.port';
+} from 'shared/domain/interfaces/http-client.interface';
 
-export class EmployeeHttpService implements EmployeeApiService {
+export class EmployeeHttpService implements EmployeeRepository {
   constructor(private httpClient: HttpClientService) {}
 
-  async deleteEmployee(
-    id: string,
-  ): Promise<HttpResponse<DeleteEmployeeResponseDto>> {
+  async delete(id: string): Promise<HttpResponse<DeleteEmployeeResponseDto>> {
     return await this.httpClient.delete<DeleteEmployeeResponseDto>(
       `/employees/${id}`,
     );
   }
 
-  async getEmployee(id: string): Promise<HttpResponse<GetEmployeeResponseDto>> {
+  async get(id: string): Promise<HttpResponse<GetEmployeeResponseDto>> {
     return await this.httpClient.get<GetEmployeeResponseDto>(
       `/employees/${id}`,
     );
   }
 
-  async listEmployees(): Promise<HttpResponse<ListEmployeesResponseDto>> {
+  async list(): Promise<HttpResponse<ListEmployeesResponseDto>> {
     return await this.httpClient.get<ListEmployeesResponseDto>('/employees');
   }
 
-  async createEmployee(
+  async create(
     employee: RegisterEmployeeRequestDto,
   ): Promise<HttpResponse<RegisterEmployeeResponseDto>> {
     return await this.httpClient.post<RegisterEmployeeResponseDto>(
@@ -45,7 +43,7 @@ export class EmployeeHttpService implements EmployeeApiService {
     );
   }
 
-  async updateEmployee(
+  async update(
     employee: UpdateEmployeeRequestDto,
   ): Promise<HttpResponse<UpdateEmployeeResponseDto>> {
     return await this.httpClient.put<UpdateEmployeeResponseDto>(

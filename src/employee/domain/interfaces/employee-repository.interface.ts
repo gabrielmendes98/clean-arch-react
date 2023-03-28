@@ -11,14 +11,14 @@ import {
   UpdateEmployeeResponseDto,
 } from '../dto/update-employee.dto';
 
-export interface EmployeeApiService {
-  deleteEmployee(id: string): Promise<HttpResponse<DeleteEmployeeResponseDto>>;
-  getEmployee(id: string): Promise<HttpResponse<GetEmployeeResponseDto>>;
-  listEmployees(): Promise<HttpResponse<ListEmployeesResponseDto>>;
-  createEmployee(
+export interface EmployeeRepository {
+  delete(id: string): Promise<HttpResponse<DeleteEmployeeResponseDto>>;
+  get(id: string): Promise<HttpResponse<GetEmployeeResponseDto>>;
+  list(): Promise<HttpResponse<ListEmployeesResponseDto>>;
+  create(
     employee: RegisterEmployeeRequestDto,
   ): Promise<HttpResponse<RegisterEmployeeResponseDto>>;
-  updateEmployee(
+  update(
     employee: UpdateEmployeeRequestDto,
   ): Promise<HttpResponse<UpdateEmployeeResponseDto>>;
 }

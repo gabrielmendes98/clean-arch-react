@@ -3,14 +3,14 @@ import { GetEmployeeResponseDto } from 'employee/domain/dto/get-employee.dto';
 import { ListEmployeesResponseDto } from 'employee/domain/dto/list-employees.dto';
 import { RegisterEmployeeResponseDto } from 'employee/domain/dto/register-employee.dto';
 import { UpdateEmployeeResponseDto } from 'employee/domain/dto/update-employee.dto';
-import { EmployeeApiService } from 'employee/domain/interfaces/employee-service.interface';
+import { EmployeeRepository } from 'employee/domain/interfaces/employee-repository.interface';
 import {
   HttpResponse,
   HttpStatusCode,
 } from 'shared/domain/interfaces/http-client.interface';
 
-export class EmployeeMemoryService implements EmployeeApiService {
-  async deleteEmployee(): Promise<HttpResponse<DeleteEmployeeResponseDto>> {
+export class EmployeeMemoryService implements EmployeeRepository {
+  async delete(): Promise<HttpResponse<DeleteEmployeeResponseDto>> {
     return {
       statusCode: HttpStatusCode.ok,
       body: {
@@ -19,7 +19,7 @@ export class EmployeeMemoryService implements EmployeeApiService {
     };
   }
 
-  async getEmployee(): Promise<HttpResponse<GetEmployeeResponseDto>> {
+  async get(): Promise<HttpResponse<GetEmployeeResponseDto>> {
     return {
       statusCode: HttpStatusCode.ok,
       body: {
@@ -32,7 +32,7 @@ export class EmployeeMemoryService implements EmployeeApiService {
     };
   }
 
-  async listEmployees(): Promise<HttpResponse<ListEmployeesResponseDto>> {
+  async list(): Promise<HttpResponse<ListEmployeesResponseDto>> {
     return {
       statusCode: HttpStatusCode.ok,
       body: [
@@ -54,7 +54,7 @@ export class EmployeeMemoryService implements EmployeeApiService {
     };
   }
 
-  async createEmployee(): Promise<HttpResponse<RegisterEmployeeResponseDto>> {
+  async create(): Promise<HttpResponse<RegisterEmployeeResponseDto>> {
     return {
       statusCode: HttpStatusCode.ok,
       body: {
@@ -63,7 +63,7 @@ export class EmployeeMemoryService implements EmployeeApiService {
     };
   }
 
-  async updateEmployee(): Promise<HttpResponse<UpdateEmployeeResponseDto>> {
+  async update(): Promise<HttpResponse<UpdateEmployeeResponseDto>> {
     return {
       statusCode: HttpStatusCode.ok,
       body: {

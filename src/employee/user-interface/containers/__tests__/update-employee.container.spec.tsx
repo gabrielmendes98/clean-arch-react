@@ -4,7 +4,7 @@ import {
   Output,
 } from 'employee/use-cases/update-employee.use-case';
 import { GetEmployeeUseCase } from 'employee/use-cases/get-employee.use-case';
-import { makeEmployeeService } from 'employee/infra/factories/employee-service.factory';
+import { makeEmployeeRepository } from 'employee/infra/factories/employee-repository.factory';
 import { useEmployeeForm } from 'employee/infra/hooks/use-employee-form.hook';
 import { EmployeeFactory } from 'employee/domain/factories/employee.factory';
 import { notificationServiceMock } from 'shared/testing/mocks/notification.mock';
@@ -43,10 +43,10 @@ class FakeGetEmployeeUseCase extends GetEmployeeUseCase {
   }
 }
 
-const getEmployeeUseCase = new FakeGetEmployeeUseCase(makeEmployeeService());
+const getEmployeeUseCase = new FakeGetEmployeeUseCase(makeEmployeeRepository());
 
 const updateEmployeeUseCase = new FakeUpdateEmployeeUseCase(
-  makeEmployeeService(),
+  makeEmployeeRepository(),
   routerServiceMock,
   notificationServiceMock,
 );

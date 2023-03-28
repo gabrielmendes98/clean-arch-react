@@ -1,5 +1,5 @@
 import { httpClientMock } from 'shared/testing/mocks/http-client.mock';
-import { EmployeeHttpService } from '../employee-http.service';
+import { EmployeeHttpService } from '../employee-http.repository';
 
 describe('EmployeeHttpGateway', () => {
   let gateway: EmployeeHttpService;
@@ -9,17 +9,17 @@ describe('EmployeeHttpGateway', () => {
   });
 
   it('should call httpClient with correct params when call deleteEmployee method', async () => {
-    await gateway.deleteEmployee('some-id');
+    await gateway.delete('some-id');
     expect(httpClientMock.delete).toHaveBeenCalledWith('/employees/some-id');
   });
 
   it('should call httpClient with correct params when call getEmployee method', async () => {
-    await gateway.getEmployee('some-id');
+    await gateway.get('some-id');
     expect(httpClientMock.get).toHaveBeenCalledWith('/employees/some-id');
   });
 
   it('should call httpClient with correct params when call listEmployees method', async () => {
-    await gateway.listEmployees();
+    await gateway.list();
     expect(httpClientMock.get).toHaveBeenCalledWith('/employees');
   });
 
@@ -30,7 +30,7 @@ describe('EmployeeHttpGateway', () => {
       name: 'some name',
       salary: 123213,
     };
-    await gateway.createEmployee(data);
+    await gateway.create(data);
     expect(httpClientMock.post).toHaveBeenCalledWith('/employees', data);
   });
 
@@ -42,7 +42,7 @@ describe('EmployeeHttpGateway', () => {
       name: 'some name',
       salary: 123213,
     };
-    await gateway.updateEmployee(data);
+    await gateway.update(data);
     expect(httpClientMock.put).toHaveBeenCalledWith('/employees/some-id', data);
   });
 });
