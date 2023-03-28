@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { EmployeeListItem } from 'employee/domain/entities/employee-list.entity';
 import { ListEmployeesUseCase } from 'employee/use-cases/list-employees.use-case';
 import { DeleteEmployeeFromListUseCase } from 'employee/use-cases/delete-employee-from-list.use-case';
-import { EmployeeListService } from 'employee/domain/interfaces/employee-list.interface';
+import { EmployeeListStorage } from 'employee/domain/interfaces/employee-list.interface';
 import { pages } from 'shared/domain/config/pages';
 import { RouterService } from 'shared/domain/interfaces/router.interface';
 import { EmployeesList } from '../components/employees-list.component';
@@ -10,18 +10,18 @@ import { EmployeesList } from '../components/employees-list.component';
 type Props = {
   listEmployeesUseCase: ListEmployeesUseCase;
   deleteEmployeeUseCase: DeleteEmployeeFromListUseCase;
-  employeeListService: EmployeeListService;
+  employeeListStorage: EmployeeListStorage;
   routerService: RouterService;
 };
 
 export const ListEmployeesView = ({
   listEmployeesUseCase,
   deleteEmployeeUseCase,
-  employeeListService,
+  employeeListStorage,
   routerService,
 }: Props) => {
   const { navigate } = routerService;
-  const { list, updateList } = employeeListService;
+  const { list, updateList } = employeeListStorage;
 
   const deleteEmployee = async (item: EmployeeListItem) => {
     await deleteEmployeeUseCase.execute({ item });

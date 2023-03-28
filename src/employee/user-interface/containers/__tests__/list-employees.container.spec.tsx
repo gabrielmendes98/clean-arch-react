@@ -1,5 +1,5 @@
 import { EmployeeList } from 'employee/domain/entities/employee-list.entity';
-import { EmployeeListService } from 'employee/domain/interfaces/employee-list.interface';
+import { EmployeeListStorage } from 'employee/domain/interfaces/employee-list.interface';
 import { makeEmployeeService } from 'employee/infra/factories/employee-service.factory';
 import {
   DeleteEmployeeFromListUseCase,
@@ -33,7 +33,7 @@ class MockListEmployeeUseCase extends ListEmployeesUseCase {
   }
 }
 
-const employeeListServiceMock: EmployeeListService = {
+const employeeListServiceMock: EmployeeListStorage = {
   list: fakeEmployeeList,
   updateList: jest.fn(),
 };
@@ -50,7 +50,7 @@ describe('ListEmployeesView', () => {
     render(
       <ListEmployeesView
         deleteEmployeeUseCase={deleteEmployeeUseCase}
-        employeeListService={employeeListServiceMock}
+        employeeListStorage={employeeListServiceMock}
         listEmployeesUseCase={listEmployeesUseCase}
         routerService={routerServiceMock}
       />,
@@ -65,7 +65,7 @@ describe('ListEmployeesView', () => {
     render(
       <ListEmployeesView
         deleteEmployeeUseCase={deleteEmployeeUseCase}
-        employeeListService={employeeListServiceMock}
+        employeeListStorage={employeeListServiceMock}
         listEmployeesUseCase={listEmployeesUseCase}
         routerService={routerServiceMock}
       />,
@@ -83,7 +83,7 @@ describe('ListEmployeesView', () => {
     render(
       <ListEmployeesView
         deleteEmployeeUseCase={deleteEmployeeUseCase}
-        employeeListService={employeeListServiceMock}
+        employeeListStorage={employeeListServiceMock}
         listEmployeesUseCase={listEmployeesUseCase}
         routerService={routerServiceMock}
       />,

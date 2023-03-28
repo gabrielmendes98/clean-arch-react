@@ -2,7 +2,7 @@ import {
   EmployeeList,
   EmployeeListItem,
 } from 'employee/domain/entities/employee-list.entity';
-import { EmployeeListService } from 'employee/domain/interfaces/employee-list.interface';
+import { EmployeeListStorage } from 'employee/domain/interfaces/employee-list.interface';
 import { makeEmployeeService } from 'employee/infra/factories/employee-service.factory';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { DeleteEmployeeFromListUseCase } from '../delete-employee-from-list.use-case';
@@ -16,10 +16,10 @@ describe('DeleteEmployeeFromListUseCase', () => {
     salary: 123123,
   };
 
-  let mockEmployeeListService: EmployeeListService;
+  let mockEmployeeListStorage: EmployeeListStorage;
 
   beforeEach(() => {
-    mockEmployeeListService = {
+    mockEmployeeListStorage = {
       list: new EmployeeList([fakeItem]),
       updateList: jest.fn(),
     };
@@ -28,13 +28,13 @@ describe('DeleteEmployeeFromListUseCase', () => {
   it('should update list', async () => {
     const useCase = new DeleteEmployeeFromListUseCase(
       makeEmployeeService(),
-      mockEmployeeListService,
+      mockEmployeeListStorage,
     );
     await useCase.execute({ item: fakeItem });
-    expect(mockEmployeeListService.updateList).toHaveBeenCalledWith(
+    expect(mockEmployeeListStorage.updateList).toHaveBeenCalledWith(
       new EmployeeList([]),
     );
-    expect(mockEmployeeListService.list.employees).toStrictEqual([]);
+    expect(mockEmployeeListStorage.list.employees).toStrictEqual([]);
   });
 
   it('should call api to delete item and return success', async () => {
@@ -42,7 +42,7 @@ describe('DeleteEmployeeFromListUseCase', () => {
     const deleteMethod = jest.spyOn(apiService, 'deleteEmployee');
     const useCase = new DeleteEmployeeFromListUseCase(
       apiService,
-      mockEmployeeListService,
+      mockEmployeeListStorage,
     );
     const response = await useCase.execute({ item: fakeItem });
     expect(deleteMethod).toHaveBeenCalledWith(fakeItem.id);
@@ -61,15 +61,15 @@ describe('DeleteEmployeeFromListUseCase', () => {
       );
     const useCase = new DeleteEmployeeFromListUseCase(
       apiService,
-      mockEmployeeListService,
+      mockEmployeeListStorage,
     );
     await expect(
       async () => await useCase.execute({ item: fakeItem }),
     ).rejects.toThrow(UnexpectedError);
     expect(deleteMethod).toHaveBeenCalledWith(fakeItem.id);
-    expect(mockEmployeeListService.list.employees).toHaveLength(1);
-    expect(mockEmployeeListService.list.employees).toContain(fakeItem);
-    expect(mockEmployeeListService.updateList).toHaveBeenCalledWith(
+    expect(mockEmployeeListStorage.list.employees).toHaveLength(1);
+    expect(mockEmployeeListStorage.list.employees).toContain(fakeItem);
+    expect(mockEmployeeListStorage.updateList).toHaveBeenCalledWith(
       new EmployeeList([fakeItem]),
     );
   });

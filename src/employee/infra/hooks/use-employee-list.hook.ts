@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { EmployeeList } from 'employee/domain/entities/employee-list.entity';
-import { EmployeeListService } from 'employee/domain/interfaces/employee-list.interface';
+import { EmployeeListStorage } from 'employee/domain/interfaces/employee-list.interface';
 
-export const useEmployeeList = (): EmployeeListService => {
+export const useEmployeeList = (): EmployeeListStorage => {
   const [list, setList] = useState(new EmployeeList());
 
   return {
