@@ -1,4 +1,4 @@
-import { UserContext } from 'shared/infra/providers/user.provider';
+import { UserContext } from 'authentication/infra/providers/user.provider';
 import { render } from 'shared/testing/test-utils';
 import { MakeHome } from './home.factory';
 

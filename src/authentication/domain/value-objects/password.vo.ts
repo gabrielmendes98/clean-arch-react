@@ -1,5 +1,5 @@
 import { InvalidPasswordError } from '../errors/invalid-password.error';
-import { ValueObject } from './value-object';
+import { ValueObject } from '../../../shared/domain/value-objects/value-object';
 
 export class Password extends ValueObject<string> {
   constructor(password: string) {

@@ -1,10 +1,10 @@
-import { User } from 'shared/domain/entities/user.entity';
-import { StoragePersistor } from 'shared/domain/interfaces/storage-persistor.interface';
-import { UseCase } from 'shared/domain/interfaces/use-case.interface';
+import { User } from 'authentication/domain/entities/user.entity';
 import {
   PersistedUser,
   UserStorageService,
-} from 'shared/domain/interfaces/user-storage.interface';
+} from 'authentication/domain/interfaces/user-storage.interface';
+import { StoragePersistor } from 'shared/domain/interfaces/storage-persistor.interface';
+import { UseCase } from 'shared/domain/interfaces/use-case.interface';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 

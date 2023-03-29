@@ -1,9 +1,9 @@
+import { UserStorageService } from 'authentication/domain/interfaces/user-storage.interface';
 import {
   HttpClientOptions,
   HttpClientService,
   HttpResponse,
 } from 'shared/domain/interfaces/http-client.interface';
-import { UserStorageService } from 'shared/domain/interfaces/user-storage.interface';
 
 export class HttpClientAuthorize implements HttpClientService {
   constructor(

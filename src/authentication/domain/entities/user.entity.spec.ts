@@ -1,5 +1,5 @@
-import { Email } from '../value-objects/email.vo';
-import { UniqueEntityId } from '../value-objects/unique-entity-id.vo';
+import { Email } from 'shared/domain/value-objects/email.vo';
+import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 import { User } from './user.entity';
 
 const fakeUser = {

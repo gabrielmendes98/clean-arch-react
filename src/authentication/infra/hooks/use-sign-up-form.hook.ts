@@ -3,9 +3,9 @@ import {
   SignUpFormService,
   SignUpFormValidations,
 } from 'authentication/domain/interfaces/sign-up-form.interface';
+import { Password } from 'authentication/domain/value-objects/password.vo';
 import { validator } from 'shared/domain/validator';
 import { Email } from 'shared/domain/value-objects/email.vo';
-import { Password } from 'shared/domain/value-objects/password.vo';
 
 export const useSignUpForm = (): SignUpFormService => {
   const initialValues: SignUpFormFields = {

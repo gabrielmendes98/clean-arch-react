@@ -1,5 +1,5 @@
+import { InvalidPasswordError } from 'authentication/domain/errors/invalid-password.error';
 import { InvalidEmailError } from 'shared/domain/errors/invalid-email.error';
-import { InvalidPasswordError } from 'shared/domain/errors/invalid-password.error';
 import { useLoginForm } from '../use-login-form.hook';
 
 describe('useLoginForm', () => {

@@ -1,6 +1,6 @@
+import { makeHttpClientAutorize } from 'authentication/infra/factories/http-client-authorize.factory';
 import { EmployeeRepository } from 'employee/domain/interfaces/employee-repository.interface';
 import { personsApiConfig } from 'shared/infra/config/persons-api.config';
-import { makeHttpClientAutorize } from 'shared/infra/factories/http-client-authorize.factory';
 import { EmployeeHttpRepository } from '../repositories/employee-http.repository';
 import { EmployeeMemoryRepository } from '../repositories/employee-memory.repository';
 

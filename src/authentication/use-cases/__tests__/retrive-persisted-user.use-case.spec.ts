@@ -1,4 +1,4 @@
-import { User } from 'shared/domain/entities/user.entity';
+import { User } from 'authentication/domain/entities/user.entity';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 import { storagePersistorMock } from 'shared/testing/mocks/persistor.mock';

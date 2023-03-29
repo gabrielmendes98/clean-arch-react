@@ -1,10 +1,10 @@
 import { useContext } from 'react';
-import { User } from 'shared/domain/entities/user.entity';
+import { User } from 'authentication/domain/entities/user.entity';
 import { StoragePersistor } from 'shared/domain/interfaces/storage-persistor.interface';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 import { act, renderHook } from 'shared/testing/test-utils';
-import { UserContext, UserProvider } from '../user.provider';
+import { UserContext, UserProvider } from './user.provider';
 
 const fakeUser = {
   email: 'someemail@gmail.com',

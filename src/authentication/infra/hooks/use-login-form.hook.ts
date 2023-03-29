@@ -3,8 +3,8 @@ import {
   LoginFormService,
   LoginFormValidations,
 } from 'authentication/domain/interfaces/login-form.interface';
+import { Password } from 'authentication/domain/value-objects/password.vo';
 import { Email } from 'shared/domain/value-objects/email.vo';
-import { Password } from 'shared/domain/value-objects/password.vo';
 
 export const useLoginForm = (): LoginFormService => {
   const initialValues: LoginFormFields = {

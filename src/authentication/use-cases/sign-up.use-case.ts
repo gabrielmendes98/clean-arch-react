@@ -1,16 +1,16 @@
+import { User } from 'authentication/domain/entities/user.entity';
+import { InvalidPasswordError } from 'authentication/domain/errors/invalid-password.error';
 import { AuthenticationService } from 'authentication/domain/interfaces/authentication-service.interface';
+import { UserStorageService } from 'authentication/domain/interfaces/user-storage.interface';
+import { Password } from 'authentication/domain/value-objects/password.vo';
 import { pages } from 'shared/domain/config/pages';
-import { User } from 'shared/domain/entities/user.entity';
-import { InvalidPasswordError } from 'shared/domain/errors/invalid-password.error';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { HttpStatusCode } from 'shared/domain/interfaces/http-client.interface';
 import { NotificationService } from 'shared/domain/interfaces/notification.interface';
 import { RouterService } from 'shared/domain/interfaces/router.interface';
 import { UseCase } from 'shared/domain/interfaces/use-case.interface';
-import { UserStorageService } from 'shared/domain/interfaces/user-storage.interface';
 import { validator } from 'shared/domain/validator';
 import { Email } from 'shared/domain/value-objects/email.vo';
-import { Password } from 'shared/domain/value-objects/password.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 
 export class SignUpUseCase implements UseCase<Input, Output> {
