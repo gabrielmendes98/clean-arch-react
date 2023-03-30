@@ -1,7 +1,5 @@
-import { User } from 'authentication/domain/entities/user.entity';
+import { UserFactory } from 'authentication/domain/factories/user.factory';
 import { HttpClientService } from 'shared/domain/interfaces/http-client.interface';
-import { Email } from 'shared/domain/value-objects/email.vo';
-import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';
 import { HttpClientAuthorize } from '../http-client-authorize.decorator';
 
@@ -21,12 +19,12 @@ const fakeUser = {
     'eyJhbGciOiJIUzI1NiJ9.eyJJc3N1ZXIiOiJjbGVhbi1hcmNoLXJlYWN0IiwiaWQiOiJjZTczNGY4Mi0yZmFjLTQ4NDUtYjM5NC02NmJkNjdlNmUyNzEiLCJleHAiOjE2NzA0MTQ5MjAsImlhdCI6MTY3MDQxNDkyMCwiZW1haWwiOiJmYWtlZW1haWxAZ21haWwuY29tIn0.wBOgBI4olSa8LzovYjDhea5I_vO0HTKR2vq5K1rG3AI',
 };
 
-const user = new User(
-  new UniqueEntityId(fakeUser.id),
-  new Email(fakeUser.email),
-  fakeUser.token,
-  fakeUser.name,
-);
+const user = UserFactory.create({
+  email: fakeUser.email,
+  id: fakeUser.id,
+  name: fakeUser.name,
+  token: fakeUser.token,
+});
 
 describe('HttpClientAuthorize', () => {
   it('should call get method using auth headers and other headers', async () => {

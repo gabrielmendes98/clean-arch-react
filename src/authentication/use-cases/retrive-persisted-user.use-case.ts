@@ -1,12 +1,10 @@
-import { User } from 'authentication/domain/entities/user.entity';
+import { UserFactory } from 'authentication/domain/factories/user.factory';
 import {
   PersistedUser,
   UserStorageService,
 } from 'authentication/domain/interfaces/user-storage.interface';
 import { StoragePersistor } from 'shared/domain/interfaces/storage-persistor.interface';
 import { UseCase } from 'shared/domain/interfaces/use-case.interface';
-import { Email } from 'shared/domain/value-objects/email.vo';
-import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 
 export class RetrivePersistedUserUseCase implements UseCase<Input, Output> {
   constructor(
@@ -18,12 +16,12 @@ export class RetrivePersistedUserUseCase implements UseCase<Input, Output> {
     const persistedUser = this.persistor.get('user');
     if (persistedUser) {
       this.userService.updateUser(
-        new User(
-          new UniqueEntityId(persistedUser.id),
-          new Email(persistedUser.email),
-          persistedUser.token,
-          persistedUser.name,
-        ),
+        UserFactory.create({
+          id: persistedUser.id,
+          email: persistedUser.email,
+          token: persistedUser.token,
+          name: persistedUser.name,
+        }),
       );
     } else {
       this.userService.updateUser(null);

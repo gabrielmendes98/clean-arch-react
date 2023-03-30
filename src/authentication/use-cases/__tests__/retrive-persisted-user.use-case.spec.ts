@@ -1,6 +1,4 @@
-import { User } from 'authentication/domain/entities/user.entity';
-import { Email } from 'shared/domain/value-objects/email.vo';
-import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
+import { UserFactory } from 'authentication/domain/factories/user.factory';
 import { storagePersistorMock } from 'shared/testing/mocks/persistor.mock';
 import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';
 import { RetrivePersistedUserUseCase } from '../retrive-persisted-user.use-case';
@@ -22,12 +20,12 @@ describe('RetrivePersistedUserUseCase', () => {
     );
     useCase.execute();
     expect(userStorageServiceMock.updateUser).toHaveBeenCalledWith(
-      new User(
-        new UniqueEntityId(fakeUser.id),
-        new Email(fakeUser.email),
-        fakeUser.token,
-        fakeUser.name,
-      ),
+      UserFactory.create({
+        email: fakeUser.email,
+        id: fakeUser.id,
+        name: fakeUser.name,
+        token: fakeUser.token,
+      }),
     );
   });
 
