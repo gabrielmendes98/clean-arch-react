@@ -8,12 +8,12 @@ import {
 } from 'authentication/domain/dto/sign-up.dto';
 import { AuthenticationService } from 'authentication/domain/interfaces/authentication-service.interface';
 import {
-  HttpClientService,
+  HttpClient,
   HttpResponse,
 } from 'shared/domain/interfaces/http-client.interface';
 
 export class AuthenticationHttpService implements AuthenticationService {
-  constructor(private httpClient: HttpClientService) {}
+  constructor(private httpClient: HttpClient) {}
 
   async login(data: LoginRequestDto): Promise<HttpResponse<LoginResponseDto>> {
     return await this.httpClient.post<LoginResponseDto>('/session', data);

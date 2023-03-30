@@ -1,5 +1,8 @@
-import { HttpClientService } from 'shared/domain/interfaces/http-client.interface';
-import { AxiosAdapter } from '../adapters/axios.adapter';
+import { HttpClient } from 'shared/domain/interfaces/http-client.interface';
+import { HttpClientAxiosAdapter } from '../adapters/http-client-axios.adapter';
 
-export const makeHttpClient = (baseUrl: string): HttpClientService =>
-  new AxiosAdapter(baseUrl);
+export class HttpClientFactory {
+  static create(baseUrl: string): HttpClient {
+    return new HttpClientAxiosAdapter(baseUrl);
+  }
+}

@@ -1,7 +1,7 @@
 import { UserFactory } from 'authentication/domain/factories/user.factory';
 import {
   PersistedUser,
-  UserStorageService,
+  UserStorage,
 } from 'authentication/domain/interfaces/user-storage.interface';
 import { StoragePersistor } from 'shared/domain/interfaces/storage-persistor.interface';
 import { UseCase } from 'shared/domain/interfaces/use-case.interface';
@@ -9,7 +9,7 @@ import { UseCase } from 'shared/domain/interfaces/use-case.interface';
 export class RetrivePersistedUserUseCase implements UseCase<Input, Output> {
   constructor(
     private persistor: StoragePersistor<PersistedUser>,
-    private userService: UserStorageService,
+    private userService: UserStorage,
   ) {}
 
   execute(): Output {

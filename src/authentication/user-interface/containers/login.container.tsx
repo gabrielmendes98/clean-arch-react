@@ -12,7 +12,7 @@ type Props = {
   loginUseCase: LoginUseCase;
 };
 
-export const LoginView = ({ formService, loginUseCase }: Props) => {
+export const LoginContainer = ({ formService, loginUseCase }: Props) => {
   const { initialValues, validations } = formService;
 
   const onSubmit = async (

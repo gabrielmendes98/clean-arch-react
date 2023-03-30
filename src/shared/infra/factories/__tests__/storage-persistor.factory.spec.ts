@@ -1,8 +1,10 @@
 import { LocalStorageAdapter } from 'shared/infra/adapters/local-storage.adapter';
-import { makeStoragePersistor } from '../storage-persistor.factory';
+import { StoragePersistorFactory } from '../storage-persistor.factory';
 
-describe('makeStoragePersistor', () => {
+describe('StoragePersistorFactory', () => {
   it('should return instance of LocalStorageAdapter', () => {
-    expect(makeStoragePersistor()).toBeInstanceOf(LocalStorageAdapter);
+    expect(StoragePersistorFactory.create()).toBeInstanceOf(
+      LocalStorageAdapter,
+    );
   });
 });

@@ -1,6 +1,6 @@
 import { ErrorDto } from '../dto/error.dto';
 
-export interface HttpClientService {
+export interface HttpClient {
   baseUrl?: string;
   get<DTOResponse = any>(
     endpoint: string,

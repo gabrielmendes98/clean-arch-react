@@ -1,5 +1,5 @@
 import { SignUpFormService } from 'authentication/domain/interfaces/sign-up-form.interface';
-import { makeAuthService } from 'authentication/infra/factories/authentication-service.factory';
+import { AuthServiceFactory } from 'authentication/infra/factories/authentication-service.factory';
 import { useSignUpForm } from 'authentication/infra/hooks/use-sign-up-form.hook';
 import {
   SignUpUseCase,
@@ -9,7 +9,7 @@ import { notificationServiceMock } from 'shared/testing/mocks/notification.mock'
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
 import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';
 import { render, screen, userEvent } from 'shared/testing/test-utils';
-import { SignUpView } from '../sign-up.container';
+import { SignUpContainer } from '../sign-up.container';
 
 class StubSignUpUseCase extends SignUpUseCase {
   async execute(): Promise<Output> {
@@ -21,7 +21,7 @@ class StubSignUpUseCase extends SignUpUseCase {
 
 const makeSignUpUseCase = () =>
   new StubSignUpUseCase(
-    makeAuthService(),
+    AuthServiceFactory.create(),
     userStorageServiceMock,
     routerServiceMock,
     notificationServiceMock,
@@ -48,7 +48,10 @@ describe('SignUpView', () => {
     const execute = jest.spyOn(signUpUseCase, 'execute');
 
     render(
-      <SignUpView formService={formService} signUpUseCase={signUpUseCase} />,
+      <SignUpContainer
+        formService={formService}
+        signUpUseCase={signUpUseCase}
+      />,
     );
 
     userEvent.click(screen.getByRole('button', { name: /enviar/i }));
@@ -63,7 +66,7 @@ describe('SignUpView', () => {
   it('should validate fields on blur', () => {
     const signUpUseCase: SignUpUseCase = makeSignUpUseCase();
     render(
-      <SignUpView
+      <SignUpContainer
         formService={useSignUpForm()}
         signUpUseCase={signUpUseCase}
       />,
@@ -81,7 +84,7 @@ describe('SignUpView', () => {
   it('should validate fields on submit', () => {
     const signUpUseCase: SignUpUseCase = makeSignUpUseCase();
     render(
-      <SignUpView
+      <SignUpContainer
         formService={useSignUpForm()}
         signUpUseCase={signUpUseCase}
       />,

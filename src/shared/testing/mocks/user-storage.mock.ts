@@ -1,6 +1,6 @@
-import { UserStorageService } from 'authentication/domain/interfaces/user-storage.interface';
+import { UserStorage } from 'authentication/domain/interfaces/user-storage.interface';
 
-export const userStorageServiceMock: UserStorageService = {
+export const userStorageServiceMock: UserStorage = {
   user: null,
   updateUser: jest.fn(),
   removeUser: jest.fn(),

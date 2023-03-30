@@ -2,11 +2,11 @@ import { useState, createContext, useCallback, useEffect } from 'react';
 import { User } from 'authentication/domain/entities/user.entity';
 import {
   UserStorageProps,
-  UserStorageService,
+  UserStorage,
 } from 'authentication/domain/interfaces/user-storage.interface';
 import { RetrivePersistedUserUseCase } from 'authentication/use-cases/retrive-persisted-user.use-case';
 
-export const UserContext = createContext<UserStorageService | null>(null);
+export const UserContext = createContext<UserStorage | null>(null);
 
 export const UserProvider = ({ children, persistor }: UserStorageProps) => {
   const [user, setUser] = useState<User | null | undefined>();

@@ -1,7 +1,7 @@
 import { BrowserRouter } from 'react-router-dom';
 import { UserContext } from 'authentication/infra/providers/user.provider';
 import { render } from 'shared/testing/test-utils';
-import { MakeSignUpPage } from '../sign-up.factory';
+import { MakeSignUpContainer } from '../sign-up.factory';
 
 describe('MakeSignUpPage', () => {
   it('should render without errors', () => {
@@ -15,7 +15,7 @@ describe('MakeSignUpPage', () => {
           }}
         >
           <BrowserRouter>
-            <MakeSignUpPage />
+            <MakeSignUpContainer />
           </BrowserRouter>
         </UserContext.Provider>,
       ),

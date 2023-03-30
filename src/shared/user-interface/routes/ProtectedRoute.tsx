@@ -1,9 +1,9 @@
 import { PropsWithChildren } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { UserStorageService } from 'authentication/domain/interfaces/user-storage.interface';
+import { UserStorage } from 'authentication/domain/interfaces/user-storage.interface';
 
 type Props = {
-  userStorage: UserStorageService;
+  userStorage: UserStorage;
   redirectPath?: string;
 } & PropsWithChildren;
 

@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { AxiosAdapter } from '../axios.adapter';
+import { HttpClientAxiosAdapter } from '../http-client-axios.adapter';
 
 describe('AxiosAdapter', () => {
   describe('get method', () => {
@@ -12,7 +12,7 @@ describe('AxiosAdapter', () => {
           },
         }),
       );
-      const httpClient = new AxiosAdapter('baseurl.com');
+      const httpClient = new HttpClientAxiosAdapter('baseurl.com');
       const response = await httpClient.get('/fake');
       expect(getMethod).toHaveBeenCalledWith('/fake', undefined);
       expect(response.statusCode).toBe(200);
@@ -30,7 +30,7 @@ describe('AxiosAdapter', () => {
           },
         }),
       );
-      const httpClient = new AxiosAdapter('baseurl.com');
+      const httpClient = new HttpClientAxiosAdapter('baseurl.com');
       await httpClient.get('/fake', {
         headers: { someHeader: 'value' },
       });
@@ -50,7 +50,7 @@ describe('AxiosAdapter', () => {
           } as AxiosResponse),
         ),
       );
-      const httpClient = new AxiosAdapter('baseurl.com');
+      const httpClient = new HttpClientAxiosAdapter('baseurl.com');
       const response = await httpClient.get('/fake');
       expect(getMethod).toHaveBeenCalledWith('/fake', undefined);
       expect(response.statusCode).toBe(500);
@@ -70,7 +70,7 @@ describe('AxiosAdapter', () => {
           },
         }),
       );
-      const httpClient = new AxiosAdapter('baseurl.com');
+      const httpClient = new HttpClientAxiosAdapter('baseurl.com');
       const response = await httpClient.post('/fake', {});
       expect(postMethod).toHaveBeenCalledWith('/fake', {}, undefined);
       expect(response.statusCode).toBe(200);
@@ -88,7 +88,7 @@ describe('AxiosAdapter', () => {
           },
         }),
       );
-      const httpClient = new AxiosAdapter('baseurl.com');
+      const httpClient = new HttpClientAxiosAdapter('baseurl.com');
       await httpClient.post(
         '/fake',
         {},
@@ -116,7 +116,7 @@ describe('AxiosAdapter', () => {
           } as AxiosResponse),
         ),
       );
-      const httpClient = new AxiosAdapter('baseurl.com');
+      const httpClient = new HttpClientAxiosAdapter('baseurl.com');
       const response = await httpClient.post('/fake', {});
       expect(postMethod).toHaveBeenCalledWith('/fake', {}, undefined);
       expect(response.statusCode).toBe(500);
@@ -136,7 +136,7 @@ describe('AxiosAdapter', () => {
           },
         }),
       );
-      const httpClient = new AxiosAdapter('baseurl.com');
+      const httpClient = new HttpClientAxiosAdapter('baseurl.com');
       const response = await httpClient.put('/fake', {});
       expect(putMethod).toHaveBeenCalledWith('/fake', {}, undefined);
       expect(response.statusCode).toBe(200);
@@ -154,7 +154,7 @@ describe('AxiosAdapter', () => {
           },
         }),
       );
-      const httpClient = new AxiosAdapter('baseurl.com');
+      const httpClient = new HttpClientAxiosAdapter('baseurl.com');
       await httpClient.put(
         '/fake',
         {},
@@ -182,7 +182,7 @@ describe('AxiosAdapter', () => {
           } as AxiosResponse),
         ),
       );
-      const httpClient = new AxiosAdapter('baseurl.com');
+      const httpClient = new HttpClientAxiosAdapter('baseurl.com');
       const response = await httpClient.put('/fake', {});
       expect(putMethod).toHaveBeenCalledWith('/fake', {}, undefined);
       expect(response.statusCode).toBe(500);
@@ -202,7 +202,7 @@ describe('AxiosAdapter', () => {
           },
         }),
       );
-      const httpClient = new AxiosAdapter('baseurl.com');
+      const httpClient = new HttpClientAxiosAdapter('baseurl.com');
       const response = await httpClient.delete('/fake');
       expect(deleteMethod).toHaveBeenCalledWith('/fake', undefined);
       expect(response.statusCode).toBe(200);
@@ -220,7 +220,7 @@ describe('AxiosAdapter', () => {
           },
         }),
       );
-      const httpClient = new AxiosAdapter('baseurl.com');
+      const httpClient = new HttpClientAxiosAdapter('baseurl.com');
       await httpClient.delete('/fake', {
         headers: { someHeader: 'value' },
       });
@@ -240,7 +240,7 @@ describe('AxiosAdapter', () => {
           } as AxiosResponse),
         ),
       );
-      const httpClient = new AxiosAdapter('baseurl.com');
+      const httpClient = new HttpClientAxiosAdapter('baseurl.com');
       const response = await httpClient.delete('/fake');
       expect(deleteMethod).toHaveBeenCalledWith('/fake', undefined);
       expect(response.statusCode).toBe(500);

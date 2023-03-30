@@ -1,7 +1,7 @@
 import { InvalidPasswordError } from 'authentication/domain/errors/invalid-password.error';
 import { UserFactory } from 'authentication/domain/factories/user.factory';
 import { AuthenticationService } from 'authentication/domain/interfaces/authentication-service.interface';
-import { UserStorageService } from 'authentication/domain/interfaces/user-storage.interface';
+import { UserStorage } from 'authentication/domain/interfaces/user-storage.interface';
 import { Password } from 'authentication/domain/value-objects/password.vo';
 import { pages } from 'shared/domain/config/pages';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
@@ -15,7 +15,7 @@ import { Email } from 'shared/domain/value-objects/email.vo';
 export class SignUpUseCase implements UseCase<Input, Output> {
   constructor(
     private authApiService: AuthenticationService,
-    private storage: UserStorageService,
+    private storage: UserStorage,
     private routerService: RouterService,
     private notifier: NotificationService,
   ) {}

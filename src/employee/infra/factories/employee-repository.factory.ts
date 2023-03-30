@@ -1,4 +1,4 @@
-import { makeHttpClientAutorize } from 'authentication/infra/factories/http-client-authorize.factory';
+import { AuthHttpClientFactory } from 'authentication/infra/factories/auth-http-client.factory';
 import { EmployeeRepository } from 'employee/domain/interfaces/employee-repository.interface';
 import { personsApiConfig } from 'shared/infra/config/persons-api.config';
 import { EmployeeHttpRepository } from '../repositories/employee-http.repository';
@@ -9,7 +9,7 @@ export class EmployeeRepositoryFactory {
     return personsApiConfig.mock
       ? new EmployeeMemoryRepository()
       : new EmployeeHttpRepository(
-          makeHttpClientAutorize(personsApiConfig.baseUrl),
+          AuthHttpClientFactory.create(personsApiConfig.baseUrl),
         );
   }
 }

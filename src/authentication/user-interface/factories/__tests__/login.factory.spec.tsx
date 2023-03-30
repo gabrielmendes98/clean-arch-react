@@ -1,7 +1,7 @@
 import { BrowserRouter } from 'react-router-dom';
 import { UserContext } from 'authentication/infra/providers/user.provider';
 import { render } from 'shared/testing/test-utils';
-import { MakeLoginPage } from '../login.factory';
+import { MakeLoginContainer } from '../login.factory';
 
 describe('MakeLoginPage', () => {
   it('should render without errors', () => {
@@ -15,7 +15,7 @@ describe('MakeLoginPage', () => {
           }}
         >
           <BrowserRouter>
-            <MakeLoginPage />
+            <MakeLoginContainer />
           </BrowserRouter>
         </UserContext.Provider>,
       ),

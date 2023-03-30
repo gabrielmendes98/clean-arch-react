@@ -1,6 +1,6 @@
-import { HttpClientService } from 'shared/domain/interfaces/http-client.interface';
+import { HttpClient } from 'shared/domain/interfaces/http-client.interface';
 
-export const httpClientMock: HttpClientService = {
+export const httpClientMock: HttpClient = {
   delete: jest.fn(),
   get: jest.fn(),
   post: jest.fn(),

@@ -12,7 +12,7 @@ type Props = {
   signUpUseCase: SignUpUseCase;
 };
 
-export const SignUpView = ({ formService, signUpUseCase }: Props) => {
+export const SignUpContainer = ({ formService, signUpUseCase }: Props) => {
   const { initialValues, validations } = formService;
 
   const onSubmit = async (

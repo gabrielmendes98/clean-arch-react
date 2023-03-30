@@ -1,15 +1,15 @@
-import { UserStorageService } from 'authentication/domain/interfaces/user-storage.interface';
+import { UserStorage } from 'authentication/domain/interfaces/user-storage.interface';
 import {
   HttpClientOptions,
-  HttpClientService,
+  HttpClient,
   HttpResponse,
 } from 'shared/domain/interfaces/http-client.interface';
 
-export class HttpClientAuthorize implements HttpClientService {
+export class HttpClientAuthDecorator implements HttpClient {
   constructor(
     public baseUrl: string,
-    private userService: UserStorageService,
-    private httpClient: HttpClientService,
+    private userStorage: UserStorage,
+    private httpClient: HttpClient,
   ) {}
 
   get<Response>(
@@ -18,7 +18,7 @@ export class HttpClientAuthorize implements HttpClientService {
   ): Promise<HttpResponse<Response>> {
     const headers = {
       ...options?.headers,
-      'x-access-token': this.userService.user?.token,
+      'x-access-token': this.userStorage.user?.token,
     };
     return this.httpClient.get(endpoint, { ...options, headers });
   }
@@ -29,7 +29,7 @@ export class HttpClientAuthorize implements HttpClientService {
   ): Promise<HttpResponse<Response>> {
     const headers = {
       ...options?.headers,
-      'x-access-token': this.userService.user?.token,
+      'x-access-token': this.userStorage.user?.token,
     };
     return this.httpClient.post(endpoint, body, { ...options, headers });
   }
@@ -40,7 +40,7 @@ export class HttpClientAuthorize implements HttpClientService {
   ): Promise<HttpResponse<Response>> {
     const headers = {
       ...options?.headers,
-      'x-access-token': this.userService.user?.token,
+      'x-access-token': this.userStorage.user?.token,
     };
     return this.httpClient.put(endpoint, body, { ...options, headers });
   }
@@ -50,7 +50,7 @@ export class HttpClientAuthorize implements HttpClientService {
   ): Promise<HttpResponse<Response>> {
     const headers = {
       ...options?.headers,
-      'x-access-token': this.userService.user?.token,
+      'x-access-token': this.userStorage.user?.token,
     };
     return this.httpClient.delete(endpoint, { ...options, headers });
   }

@@ -1,9 +1,9 @@
 import { UserFactory } from 'authentication/domain/factories/user.factory';
-import { HttpClientService } from 'shared/domain/interfaces/http-client.interface';
+import { HttpClient } from 'shared/domain/interfaces/http-client.interface';
 import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';
-import { HttpClientAuthorize } from '../http-client-authorize.decorator';
+import { HttpClientAuthDecorator } from '../http-client-auth.decorator';
 
-const httpClientMock: HttpClientService = {
+const httpClientMock: HttpClient = {
   baseUrl: 'baseurl.com',
   get: jest.fn(),
   delete: jest.fn(),
@@ -29,7 +29,7 @@ const user = UserFactory.create({
 describe('HttpClientAuthorize', () => {
   it('should call get method using auth headers and other headers', async () => {
     userStorageServiceMock.user = user;
-    const httpClient = new HttpClientAuthorize(
+    const httpClient = new HttpClientAuthDecorator(
       'baseurl.com',
       userStorageServiceMock,
       httpClientMock,
@@ -45,7 +45,7 @@ describe('HttpClientAuthorize', () => {
 
   it('should call delete method using auth headers and other headers', async () => {
     userStorageServiceMock.user = user;
-    const httpClient = new HttpClientAuthorize(
+    const httpClient = new HttpClientAuthDecorator(
       'baseurl.com',
       userStorageServiceMock,
       httpClientMock,
@@ -63,7 +63,7 @@ describe('HttpClientAuthorize', () => {
 
   it('should call post method using auth headers and other headers', async () => {
     userStorageServiceMock.user = user;
-    const httpClient = new HttpClientAuthorize(
+    const httpClient = new HttpClientAuthDecorator(
       'baseurl.com',
       userStorageServiceMock,
       httpClientMock,
@@ -89,7 +89,7 @@ describe('HttpClientAuthorize', () => {
 
   it('should call put method using auth headers and other headers', async () => {
     userStorageServiceMock.user = user;
-    const httpClient = new HttpClientAuthorize(
+    const httpClient = new HttpClientAuthDecorator(
       'baseurl.com',
       userStorageServiceMock,
       httpClientMock,

@@ -1,11 +1,11 @@
 import { LoginFormService } from 'authentication/domain/interfaces/login-form.interface';
-import { makeAuthService } from 'authentication/infra/factories/authentication-service.factory';
+import { AuthServiceFactory } from 'authentication/infra/factories/authentication-service.factory';
 import { useLoginForm } from 'authentication/infra/hooks/use-login-form.hook';
 import { LoginUseCase, Output } from 'authentication/use-cases/login.use-case';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
 import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';
 import { render, screen, userEvent } from 'shared/testing/test-utils';
-import { LoginView } from '../login.container';
+import { LoginContainer } from '../login.container';
 
 class StubLoginUseCase extends LoginUseCase {
   async execute(): Promise<Output> {
@@ -17,7 +17,7 @@ class StubLoginUseCase extends LoginUseCase {
 
 const makeLoginUseCase = () =>
   new StubLoginUseCase(
-    makeAuthService(),
+    AuthServiceFactory.create(),
     userStorageServiceMock,
     routerServiceMock,
   );
@@ -38,7 +38,9 @@ describe('LoginView', () => {
 
     const execute = jest.spyOn(loginUseCase, 'execute');
 
-    render(<LoginView formService={formService} loginUseCase={loginUseCase} />);
+    render(
+      <LoginContainer formService={formService} loginUseCase={loginUseCase} />,
+    );
 
     userEvent.click(screen.getByRole('button', { name: /enviar/i }));
     expect(execute).toHaveBeenCalledWith({
@@ -50,7 +52,10 @@ describe('LoginView', () => {
   it('should validate fields on blur', () => {
     const loginUseCase: LoginUseCase = makeLoginUseCase();
     render(
-      <LoginView formService={useLoginForm()} loginUseCase={loginUseCase} />,
+      <LoginContainer
+        formService={useLoginForm()}
+        loginUseCase={loginUseCase}
+      />,
     );
     userEvent.click(screen.getByLabelText(/email/i));
     userEvent.click(screen.getByLabelText(/senha/i));
@@ -62,7 +67,10 @@ describe('LoginView', () => {
   it('should validate fields on submit', () => {
     const loginUseCase: LoginUseCase = makeLoginUseCase();
     render(
-      <LoginView formService={useLoginForm()} loginUseCase={loginUseCase} />,
+      <LoginContainer
+        formService={useLoginForm()}
+        loginUseCase={loginUseCase}
+      />,
     );
     userEvent.click(screen.getByRole('button', { name: /enviar/i }));
     expect(screen.getByText(/email inválido/i)).toBeInTheDocument();

@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from 'axios';
 import {
   HttpClientOptions,
-  HttpClientService,
+  HttpClient,
   HttpResponse,
 } from 'shared/domain/interfaces/http-client.interface';
 
-export class AxiosAdapter implements HttpClientService {
+export class HttpClientAxiosAdapter implements HttpClient {
   constructor(public baseUrl: string) {
     axios.defaults.baseURL = baseUrl;
   }

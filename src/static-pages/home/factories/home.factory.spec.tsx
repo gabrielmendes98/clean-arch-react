@@ -1,6 +1,6 @@
 import { UserContext } from 'authentication/infra/providers/user.provider';
 import { render } from 'shared/testing/test-utils';
-import { MakeHome } from './home.factory';
+import { MakeHomeContainer } from './home.factory';
 
 describe('MakeHome', () => {
   it('should render without errors', () => {
@@ -12,7 +12,7 @@ describe('MakeHome', () => {
           user: null,
         }}
       >
-        <MakeHome />
+        <MakeHomeContainer />
       </UserContext.Provider>,
     );
   });

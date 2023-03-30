@@ -11,12 +11,12 @@ import {
 } from 'employee/domain/dto/update-employee.dto';
 import { EmployeeRepository } from 'employee/domain/interfaces/employee-repository.interface';
 import {
-  HttpClientService,
+  HttpClient,
   HttpResponse,
 } from 'shared/domain/interfaces/http-client.interface';
 
 export class EmployeeHttpRepository implements EmployeeRepository {
-  constructor(private httpClient: HttpClientService) {}
+  constructor(private httpClient: HttpClient) {}
 
   async delete(id: string): Promise<HttpResponse<DeleteEmployeeResponseDto>> {
     return await this.httpClient.delete<DeleteEmployeeResponseDto>(
