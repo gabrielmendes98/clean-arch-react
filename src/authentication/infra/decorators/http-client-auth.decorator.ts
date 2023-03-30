@@ -4,13 +4,18 @@ import {
   HttpClient,
   HttpResponse,
 } from 'shared/domain/interfaces/http-client.interface';
+import { useUserStorage } from '../hooks/use-user-storage.hook';
 
 export class HttpClientAuthDecorator implements HttpClient {
+  private _token?: string;
+
   constructor(
     public baseUrl: string,
-    private userStorage: UserStorage,
     private httpClient: HttpClient,
-  ) {}
+    private userStorage: UserStorage = useUserStorage(),
+  ) {
+    this._token = this.userStorage.user?.token;
+  }
 
   get<Response>(
     endpoint: string,
@@ -18,7 +23,7 @@ export class HttpClientAuthDecorator implements HttpClient {
   ): Promise<HttpResponse<Response>> {
     const headers = {
       ...options?.headers,
-      'x-access-token': this.userStorage.user?.token,
+      'x-access-token': this._token,
     };
     return this.httpClient.get(endpoint, { ...options, headers });
   }
@@ -29,7 +34,7 @@ export class HttpClientAuthDecorator implements HttpClient {
   ): Promise<HttpResponse<Response>> {
     const headers = {
       ...options?.headers,
-      'x-access-token': this.userStorage.user?.token,
+      'x-access-token': this._token,
     };
     return this.httpClient.post(endpoint, body, { ...options, headers });
   }
@@ -40,7 +45,7 @@ export class HttpClientAuthDecorator implements HttpClient {
   ): Promise<HttpResponse<Response>> {
     const headers = {
       ...options?.headers,
-      'x-access-token': this.userStorage.user?.token,
+      'x-access-token': this._token,
     };
     return this.httpClient.put(endpoint, body, { ...options, headers });
   }
@@ -50,7 +55,7 @@ export class HttpClientAuthDecorator implements HttpClient {
   ): Promise<HttpResponse<Response>> {
     const headers = {
       ...options?.headers,
-      'x-access-token': this.userStorage.user?.token,
+      'x-access-token': this._token,
     };
     return this.httpClient.delete(endpoint, { ...options, headers });
   }

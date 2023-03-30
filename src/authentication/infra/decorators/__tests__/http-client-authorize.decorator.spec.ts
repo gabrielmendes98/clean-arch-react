@@ -26,14 +26,17 @@ const user = UserFactory.create({
   token: fakeUser.token,
 });
 
+const createDecorator = () =>
+  new HttpClientAuthDecorator(
+    'baseurl.com',
+    httpClientMock,
+    userStorageServiceMock,
+  );
+
 describe('HttpClientAuthorize', () => {
   it('should call get method using auth headers and other headers', async () => {
     userStorageServiceMock.user = user;
-    const httpClient = new HttpClientAuthDecorator(
-      'baseurl.com',
-      userStorageServiceMock,
-      httpClientMock,
-    );
+    const httpClient = createDecorator();
     await httpClient.get('/some-endpoint', { headers: { someHeader: '123' } });
     expect(httpClientMock.get).toHaveBeenCalledWith('/some-endpoint', {
       headers: {
@@ -45,11 +48,7 @@ describe('HttpClientAuthorize', () => {
 
   it('should call delete method using auth headers and other headers', async () => {
     userStorageServiceMock.user = user;
-    const httpClient = new HttpClientAuthDecorator(
-      'baseurl.com',
-      userStorageServiceMock,
-      httpClientMock,
-    );
+    const httpClient = createDecorator();
     await httpClient.delete('/some-endpoint', {
       headers: { someHeader: '123' },
     });
@@ -63,11 +62,7 @@ describe('HttpClientAuthorize', () => {
 
   it('should call post method using auth headers and other headers', async () => {
     userStorageServiceMock.user = user;
-    const httpClient = new HttpClientAuthDecorator(
-      'baseurl.com',
-      userStorageServiceMock,
-      httpClientMock,
-    );
+    const httpClient = createDecorator();
     await httpClient.post(
       '/some-endpoint',
       {},
@@ -89,11 +84,7 @@ describe('HttpClientAuthorize', () => {
 
   it('should call put method using auth headers and other headers', async () => {
     userStorageServiceMock.user = user;
-    const httpClient = new HttpClientAuthDecorator(
-      'baseurl.com',
-      userStorageServiceMock,
-      httpClientMock,
-    );
+    const httpClient = createDecorator();
     await httpClient.put(
       '/some-endpoint',
       {},
