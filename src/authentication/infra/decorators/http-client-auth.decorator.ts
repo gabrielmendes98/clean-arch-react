@@ -1,10 +1,12 @@
-import { UserStorage } from 'authentication/domain/interfaces/user-storage.interface';
+import { USER_STORAGE_KEY } from 'authentication/domain/constants/user-storage-key';
+import { PersistedUser } from 'authentication/domain/interfaces/user-storage.interface';
 import {
   HttpClientOptions,
   HttpClient,
   HttpResponse,
 } from 'shared/domain/interfaces/http-client.interface';
-import { useUserStorage } from '../hooks/use-user-storage.hook';
+import { StoragePersistor } from 'shared/domain/interfaces/storage-persistor.interface';
+import { StoragePersistorFactory } from 'shared/infra/factories/storage-persistor.factory';
 
 export class HttpClientAuthDecorator implements HttpClient {
   private _token?: string;
@@ -12,9 +14,10 @@ export class HttpClientAuthDecorator implements HttpClient {
   constructor(
     public baseUrl: string,
     private httpClient: HttpClient,
-    private userStorage: UserStorage = useUserStorage(),
+    private persistor: StoragePersistor<PersistedUser> = StoragePersistorFactory.create(),
   ) {
-    this._token = this.userStorage.user?.token;
+    const user = this.persistor.get(USER_STORAGE_KEY);
+    this._token = user?.token;
   }
 
   get<Response>(

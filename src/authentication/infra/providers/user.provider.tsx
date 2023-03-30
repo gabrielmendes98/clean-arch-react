@@ -5,6 +5,7 @@ import {
   UserStorage,
 } from 'authentication/domain/interfaces/user-storage.interface';
 import { RetrivePersistedUserUseCase } from 'authentication/use-cases/retrive-persisted-user.use-case';
+import { USER_STORAGE_KEY } from 'authentication/domain/constants/user-storage-key';
 
 export const UserContext = createContext<UserStorage | null>(null);
 
@@ -13,12 +14,12 @@ export const UserProvider = ({ children, persistor }: UserStorageProps) => {
 
   const updateUser = useCallback((user: User | null) => {
     setUser(user);
-    persistor.set('user', user?.toJSON());
+    persistor.set(USER_STORAGE_KEY, user?.toJSON());
   }, []);
 
   const removeUser = () => {
     setUser(null);
-    persistor.delete('user');
+    persistor.delete(USER_STORAGE_KEY);
   };
 
   useEffect(() => {

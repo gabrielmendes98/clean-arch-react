@@ -3,8 +3,6 @@ import { EmployeeHttpRepository } from '../repositories/employee-http.repository
 import { EmployeeMemoryRepository } from '../repositories/employee-memory.repository';
 import { EmployeeRepositoryFactory } from './employee-repository.factory';
 
-jest.mock('shared/infra/factories/http-client.factory');
-
 describe('EmployeeRepositoryFactory', () => {
   it('should return EmployeeInMemoryService when mock is on', () => {
     personsApiConfig.mock = true;

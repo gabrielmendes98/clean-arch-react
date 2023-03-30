@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { UserFactory } from 'authentication/domain/factories/user.factory';
+import { USER_STORAGE_KEY } from 'authentication/domain/constants/user-storage-key';
 import { StoragePersistor } from 'shared/domain/interfaces/storage-persistor.interface';
 import { act, renderHook } from 'shared/testing/test-utils';
 import { UserContext, UserProvider } from './user.provider';
@@ -60,7 +61,7 @@ describe('UserProvider', () => {
       result.current?.updateUser(null);
     });
     expect(result.current?.user).toBeNull();
-    expect(persistorSet).toHaveBeenCalledWith('user', undefined);
+    expect(persistorSet).toHaveBeenCalledWith(USER_STORAGE_KEY, undefined);
   });
 
   it('should remove user and persist', () => {
@@ -76,6 +77,6 @@ describe('UserProvider', () => {
       result.current?.removeUser();
     });
     expect(result.current?.user).toBeNull();
-    expect(persistorDelete).toHaveBeenCalledWith('user');
+    expect(persistorDelete).toHaveBeenCalledWith(USER_STORAGE_KEY);
   });
 });

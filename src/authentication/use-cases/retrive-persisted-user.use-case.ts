@@ -1,3 +1,4 @@
+import { USER_STORAGE_KEY } from 'authentication/domain/constants/user-storage-key';
 import { UserFactory } from 'authentication/domain/factories/user.factory';
 import {
   PersistedUser,
@@ -13,7 +14,7 @@ export class RetrivePersistedUserUseCase implements UseCase<Input, Output> {
   ) {}
 
   execute(): Output {
-    const persistedUser = this.persistor.get('user');
+    const persistedUser = this.persistor.get(USER_STORAGE_KEY);
     if (persistedUser) {
       this.userService.updateUser(
         UserFactory.create({

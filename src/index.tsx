@@ -12,10 +12,10 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
-const persistor = StoragePersistorFactory.create<PersistedUser>();
+const userPersistor = StoragePersistorFactory.create<PersistedUser>();
 
 root.render(
-  <UserProvider persistor={persistor}>
+  <UserProvider persistor={userPersistor}>
     <Router />
     <ToastContainer position="top-right" />
   </UserProvider>,

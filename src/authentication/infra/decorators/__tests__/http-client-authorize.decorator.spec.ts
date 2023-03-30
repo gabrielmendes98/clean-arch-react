@@ -1,6 +1,7 @@
 import { UserFactory } from 'authentication/domain/factories/user.factory';
 import { HttpClient } from 'shared/domain/interfaces/http-client.interface';
-import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';
+import { storagePersistorMock } from 'shared/testing/mocks/persistor.mock';
+
 import { HttpClientAuthDecorator } from '../http-client-auth.decorator';
 
 const httpClientMock: HttpClient = {
@@ -19,23 +20,21 @@ const fakeUser = {
     'eyJhbGciOiJIUzI1NiJ9.eyJJc3N1ZXIiOiJjbGVhbi1hcmNoLXJlYWN0IiwiaWQiOiJjZTczNGY4Mi0yZmFjLTQ4NDUtYjM5NC02NmJkNjdlNmUyNzEiLCJleHAiOjE2NzA0MTQ5MjAsImlhdCI6MTY3MDQxNDkyMCwiZW1haWwiOiJmYWtlZW1haWxAZ21haWwuY29tIn0.wBOgBI4olSa8LzovYjDhea5I_vO0HTKR2vq5K1rG3AI',
 };
 
-const user = UserFactory.create({
-  email: fakeUser.email,
-  id: fakeUser.id,
-  name: fakeUser.name,
-  token: fakeUser.token,
-});
+const user = UserFactory.create(fakeUser);
 
 const createDecorator = () =>
   new HttpClientAuthDecorator(
     'baseurl.com',
     httpClientMock,
-    userStorageServiceMock,
+    storagePersistorMock,
   );
 
-describe('HttpClientAuthorize', () => {
+describe('HttpClientAuthDecorator', () => {
+  beforeEach(() => {
+    storagePersistorMock.get = jest.fn().mockReturnValue(user);
+  });
+
   it('should call get method using auth headers and other headers', async () => {
-    userStorageServiceMock.user = user;
     const httpClient = createDecorator();
     await httpClient.get('/some-endpoint', { headers: { someHeader: '123' } });
     expect(httpClientMock.get).toHaveBeenCalledWith('/some-endpoint', {
@@ -47,7 +46,6 @@ describe('HttpClientAuthorize', () => {
   });
 
   it('should call delete method using auth headers and other headers', async () => {
-    userStorageServiceMock.user = user;
     const httpClient = createDecorator();
     await httpClient.delete('/some-endpoint', {
       headers: { someHeader: '123' },
@@ -61,7 +59,6 @@ describe('HttpClientAuthorize', () => {
   });
 
   it('should call post method using auth headers and other headers', async () => {
-    userStorageServiceMock.user = user;
     const httpClient = createDecorator();
     await httpClient.post(
       '/some-endpoint',
@@ -83,7 +80,6 @@ describe('HttpClientAuthorize', () => {
   });
 
   it('should call put method using auth headers and other headers', async () => {
-    userStorageServiceMock.user = user;
     const httpClient = createDecorator();
     await httpClient.put(
       '/some-endpoint',
