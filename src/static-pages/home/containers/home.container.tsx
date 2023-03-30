@@ -1,4 +1,4 @@
-import { UserStorageService } from 'shared/domain/interfaces/user-storage.interface';
+import { UserStorageService } from 'authentication/domain/interfaces/user-storage.interface';
 import styles from './home.module.scss';
 
 type Props = {

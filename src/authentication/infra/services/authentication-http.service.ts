@@ -10,7 +10,7 @@ import { AuthenticationService } from 'authentication/domain/interfaces/authenti
 import {
   HttpClientService,
   HttpResponse,
-} from 'shared/application/http-client.port';
+} from 'shared/domain/interfaces/http-client.interface';
 
 export class AuthenticationHttpService implements AuthenticationService {
   constructor(private httpClient: HttpClientService) {}

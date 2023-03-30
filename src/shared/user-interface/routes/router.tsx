@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { MakeHome } from 'static-pages/home/home.factory';
 import { MakeLoginPage } from 'authentication/user-interface/factories/login.factory';
 import { MakeSignUpPage } from 'authentication/user-interface/factories/sign-up.factory';
 import { MakeRegisterEmployeeContainer } from 'employee/user-interface/factories/register-employee.factory';
 import { MakeListEmployeesContainer } from 'employee/user-interface/factories/list-employees.factory';
 import { MakeUpdateEmployeeContainer } from 'employee/user-interface/factories/update-employee.factory';
-import { useUserStorage } from 'shared/infra/hooks/use-user-storage.hook';
+import { MakeHome } from 'static-pages/home/factories/home.factory';
+import { useUserStorage } from 'authentication/infra/hooks/use-user-storage.hook';
 import { pages } from 'shared/domain/config/pages';
 import { MainLayout } from '../components/layouts/main/main.layout';
 import { ProtectedRoute } from './ProtectedRoute';

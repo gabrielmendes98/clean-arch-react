@@ -1,4 +1,4 @@
-import { HttpResponse } from 'shared/application/http-client.port';
+import { HttpResponse } from 'shared/domain/interfaces/http-client.interface';
 import { LoginRequestDto, LoginResponseDto } from '../dto/login.dto';
 import { SignUpRequestDto, SignUpResponseDto } from '../dto/sign-up.dto';
 

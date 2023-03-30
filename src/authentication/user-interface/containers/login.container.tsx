@@ -3,7 +3,7 @@ import {
   LoginFormService,
 } from 'authentication/domain/interfaces/login-form.interface';
 import { LoginUseCase } from 'authentication/use-cases/login.use-case';
-import { FormStorageService } from 'shared/application/form-storage.port';
+import { FormStorageService } from 'shared/domain/interfaces/form-storage.interface';
 import { FormProvider } from 'shared/infra/providers/form.provider';
 import { LoginForm } from '../components/login-form.component';
 
