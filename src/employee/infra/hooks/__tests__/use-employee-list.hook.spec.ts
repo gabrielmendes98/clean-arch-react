@@ -1,15 +1,15 @@
 import { EmployeeList } from 'employee/domain/entities/employee-list.entity';
 import { act, renderHook } from 'shared/testing/test-utils';
-import { useEmployeeList } from '../use-employee-list.hook';
+import { useEmployeeListStorage } from '../use-employee-list.hook';
 
-describe('useEmployeeList', () => {
+describe('useEmployeeListStorage', () => {
   it('should return employee list entity', () => {
-    const { result } = renderHook(() => useEmployeeList());
+    const { result } = renderHook(() => useEmployeeListStorage());
     expect(result.current.list).toBeInstanceOf(EmployeeList);
   });
 
   it('should be able to update entity', () => {
-    const { result } = renderHook(() => useEmployeeList());
+    const { result } = renderHook(() => useEmployeeListStorage());
     act(() => {
       result.current.updateList(
         new EmployeeList([
