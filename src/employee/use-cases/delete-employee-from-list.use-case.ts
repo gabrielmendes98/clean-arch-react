@@ -12,17 +12,14 @@ export class DeleteEmployeeFromListUseCase implements UseCase<Input, Output> {
   ) {}
 
   async execute(input: Input): Promise<Output> {
-    const removedIndex = this.employeeListStorage.list.removeItem(input.item);
-    this.employeeListStorage.updateList(this.employeeListStorage.list);
-
+    const removedIndex = this.employeeListStorage.removeItem(input.item);
     const response = await this.employeeApiService.delete(input.item.id);
 
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         return response.body;
       default:
-        this.employeeListStorage.list.addItem(input.item, removedIndex);
-        this.employeeListStorage.updateList(this.employeeListStorage.list);
+        this.employeeListStorage.addItem(input.item, removedIndex);
         throw new UnexpectedError();
     }
   }

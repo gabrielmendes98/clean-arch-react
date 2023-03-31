@@ -22,6 +22,8 @@ describe('DeleteEmployeeFromListUseCase', () => {
     mockEmployeeListStorage = {
       list: new EmployeeList([fakeItem]),
       updateList: jest.fn(),
+      addItem: jest.fn(),
+      removeItem: jest.fn(),
     };
   });
 
@@ -31,10 +33,7 @@ describe('DeleteEmployeeFromListUseCase', () => {
       mockEmployeeListStorage,
     );
     await useCase.execute({ item: fakeItem });
-    expect(mockEmployeeListStorage.updateList).toHaveBeenCalledWith(
-      new EmployeeList([]),
-    );
-    expect(mockEmployeeListStorage.list.employees).toStrictEqual([]);
+    expect(mockEmployeeListStorage.removeItem).toHaveBeenCalledWith(fakeItem);
   });
 
   it('should call api to delete item and return success', async () => {
@@ -69,8 +68,6 @@ describe('DeleteEmployeeFromListUseCase', () => {
     expect(deleteMethod).toHaveBeenCalledWith(fakeItem.id);
     expect(mockEmployeeListStorage.list.employees).toHaveLength(1);
     expect(mockEmployeeListStorage.list.employees).toContain(fakeItem);
-    expect(mockEmployeeListStorage.updateList).toHaveBeenCalledWith(
-      new EmployeeList([fakeItem]),
-    );
+    expect(mockEmployeeListStorage.removeItem).toHaveBeenCalledWith(fakeItem);
   });
 });
