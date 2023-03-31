@@ -6,7 +6,7 @@ import {
   HttpResponse,
 } from 'shared/domain/interfaces/http-client.interface';
 import { StoragePersistor } from 'shared/domain/interfaces/storage-persistor.interface';
-import { StoragePersistorFactory } from 'shared/infra/factories/storage-persistor.factory';
+import { authConfig } from '../config/config';
 
 export class HttpClientAuthDecorator implements HttpClient {
   private _token?: string;
@@ -14,9 +14,9 @@ export class HttpClientAuthDecorator implements HttpClient {
   constructor(
     public baseUrl: string,
     private httpClient: HttpClient,
-    private persistor: StoragePersistor<PersistedUser> = StoragePersistorFactory.create(),
+    private persistor: StoragePersistor<PersistedUser> | null = authConfig.persistor,
   ) {
-    const user = this.persistor.get(USER_STORAGE_KEY);
+    const user = this.persistor?.get(USER_STORAGE_KEY);
     this._token = user?.token;
   }
 
