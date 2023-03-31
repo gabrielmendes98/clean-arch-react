@@ -186,4 +186,4 @@ yupjs lib on the domain layer to validate our entities.
 
 # TODO
 
-- ajustar http-client-authorize decorator: tirar do modulo de auth.
+- singleton http clients?
