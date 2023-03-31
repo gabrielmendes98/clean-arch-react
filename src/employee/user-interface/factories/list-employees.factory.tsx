@@ -8,21 +8,21 @@ import { useRouter } from 'shared/infra/hooks/use-router.hook';
 import { ListEmployeesContainer } from '../containers/list-employees.container';
 
 export const MakeListEmployeesContainer = () => {
-  const employeeListService: EmployeeListStorage = useEmployeeList();
+  const employeeListStorage: EmployeeListStorage = useEmployeeList();
   const routerService: RouterService = useRouter();
   const listEmployeesUseCase = new ListEmployeesUseCase(
     EmployeeRepositoryFactory.create(),
   );
   const deleteEmployeeUseCase = new DeleteEmployeeFromListUseCase(
     EmployeeRepositoryFactory.create(),
-    employeeListService,
+    employeeListStorage,
   );
 
   return (
     <ListEmployeesContainer
       listEmployeesUseCase={listEmployeesUseCase}
       deleteEmployeeUseCase={deleteEmployeeUseCase}
-      employeeListStorage={employeeListService}
+      employeeListStorage={employeeListStorage}
       routerService={routerService}
     />
   );

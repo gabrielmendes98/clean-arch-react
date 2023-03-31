@@ -186,4 +186,5 @@ yupjs lib on the domain layer to validate our entities.
 
 # TODO
 
-- singleton http clients?
+- adicionar observable à listagem de contatos ao inves de ter um storage pra ela
+  useSyncExternalStore
