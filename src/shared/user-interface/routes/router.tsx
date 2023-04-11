@@ -1,13 +1,13 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { MakeRegisterEmployeePage } from 'employee/user-interface/pages/register-employee/register-employee.factory';
-import { MakeHome } from 'static-pages/home/home.factory';
-import { MakeListEmployeesPage } from 'employee/user-interface/pages/list-employees/list-employees.factory';
-import { MakeUpdateEmployeePage } from 'employee/user-interface/pages/update-employee/update-employee.factory';
-import { MakeLoginPage } from 'authentication/user-interface/pages/login/login.factory';
-import { MakeSignUpPage } from 'authentication/user-interface/pages/sign-up/sign-up.factory';
-import { MainLayout } from 'shared/user-interface/components/layouts/main/main.layout';
-import { useUserStorage } from 'shared/infra/adapters/user-storage.adapter';
+import { MakeLoginContainer } from 'authentication/user-interface/factories/login.factory';
+import { MakeSignUpContainer } from 'authentication/user-interface/factories/sign-up.factory';
+import { MakeRegisterEmployeeContainer } from 'employee/user-interface/factories/register-employee.factory';
+import { MakeListEmployeesContainer } from 'employee/user-interface/factories/list-employees.factory';
+import { MakeUpdateEmployeeContainer } from 'employee/user-interface/factories/update-employee.factory';
+import { MakeHomeContainer } from 'static-pages/home/factories/home.factory';
+import { useUserStorage } from 'authentication/infra/hooks/use-user-storage.hook';
 import { pages } from 'shared/domain/config/pages';
+import { MainLayout } from '../components/layouts/main/main.layout';
 import { ProtectedRoute } from './ProtectedRoute';
 
 export const Router = () => {
@@ -17,21 +17,21 @@ export const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route element={<MainLayout />} path="/">
-          <Route path="" element={<MakeHome />} />
-          <Route path={pages.login} element={<MakeLoginPage />} />
-          <Route path={pages.signUp} element={<MakeSignUpPage />} />
+          <Route path="" element={<MakeHomeContainer />} />
+          <Route path={pages.login} element={<MakeLoginContainer />} />
+          <Route path={pages.signUp} element={<MakeSignUpContainer />} />
           <Route element={<ProtectedRoute userStorage={userStorage} />}>
             <Route
               path={pages.registerEmployees}
-              element={<MakeRegisterEmployeePage />}
+              element={<MakeRegisterEmployeeContainer />}
             />
             <Route
               path={pages.listEmployees}
-              element={<MakeListEmployeesPage />}
+              element={<MakeListEmployeesContainer />}
             />
             <Route
               path={pages.updateEmployee(':id')}
-              element={<MakeUpdateEmployeePage />}
+              element={<MakeUpdateEmployeeContainer />}
             />
           </Route>
         </Route>

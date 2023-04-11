@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useFormStorage } from 'shared/infra/adapters/form-storage.adapter';
+import { useFormStorage } from 'shared/infra/hooks/use-form-storage.hook';
 import styles from './input.module.scss';
 
 export type Props = {

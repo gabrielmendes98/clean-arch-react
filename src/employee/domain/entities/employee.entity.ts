@@ -3,40 +3,50 @@ import { Document } from 'shared/domain/value-objects/document.vo';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { validator } from 'shared/domain/validator';
 
-export type EmployeeProps = {
-  name: string;
-  salary: number;
-  id: UniqueEntityId;
-  document: Document;
-  email: Email;
-};
-
 export class Employee {
-  constructor(private readonly props: EmployeeProps) {
+  private _name: string;
+  private _salary: number;
+  private _document: Document;
+  private _email: Email;
+  private _id?: UniqueEntityId;
+
+  constructor(
+    name: string,
+    salary: number,
+    document: Document,
+    email: Email,
+    id?: UniqueEntityId,
+  ) {
+    this._name = name;
+    this._salary = salary;
+    this._document = document;
+    this._email = email;
+    this._id = id;
+
     Employee.validate({
-      ...props,
-      id: props.id.value,
-      document: props.document.value,
-      email: props.email.value,
+      name,
+      salary,
+      document: document.value,
+      email: email.value,
+      id: id?.value,
     });
-    Object.assign(this.props, props);
   }
 
   static validate(props: {
     name: string;
     salary: number;
-    id?: UniqueEntityId['value'];
     document: Document['value'];
     email: Email['value'];
+    id?: UniqueEntityId['value'];
   }): boolean {
     return validator
       .entityValidationSchema(
         {
           name: Employee.validateName,
           salary: Employee.validateSalary,
-          id: UniqueEntityId.validate,
           document: Document.validate,
           email: Email.validate,
+          id: UniqueEntityId.validate,
         },
         ['id'],
       )
@@ -60,23 +70,23 @@ export class Employee {
   }
 
   get id() {
-    return this.props.id.value;
+    return this._id?.value;
   }
 
   get document() {
-    return this.props.document.value;
+    return this._document.value;
   }
 
   get email() {
-    return this.props.email.value;
+    return this._email.value;
   }
 
   get name() {
-    return this.props.name;
+    return this._name;
   }
 
   get salary() {
-    return this.props.salary;
+    return this._salary;
   }
 
   toJSON() {

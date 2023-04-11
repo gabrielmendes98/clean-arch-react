@@ -1,4 +1,4 @@
-import { InvalidPasswordError } from '../invalid-password.error';
+import { InvalidPasswordError } from '../../../../authentication/domain/errors/invalid-password.error';
 
 describe('InvalidPasswordError', () => {
   test('name and default message ', () => {

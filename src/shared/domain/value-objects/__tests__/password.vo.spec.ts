@@ -1,5 +1,5 @@
-import { InvalidPasswordError } from 'shared/domain/errors/invalid-password.error';
-import { Password } from '../password.vo';
+import { InvalidPasswordError } from 'authentication/domain/errors/invalid-password.error';
+import { Password } from '../../../../authentication/domain/value-objects/password.vo';
 
 describe('Password Value Object', () => {
   test('constructor', () => {

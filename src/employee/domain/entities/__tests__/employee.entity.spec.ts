@@ -18,13 +18,13 @@ const fakeEmployee = {
 describe('Employee Entity', () => {
   it('should validate on create', () => {
     const validate = jest.spyOn(Employee, 'validate');
-    new Employee({
-      id: new UniqueEntityId(fakeEmployee.id),
-      document: new Document(fakeEmployee.document),
-      email: new Email(fakeEmployee.email),
-      name: fakeEmployee.name,
-      salary: fakeEmployee.salary,
-    });
+    new Employee(
+      fakeEmployee.name,
+      fakeEmployee.salary,
+      new Document(fakeEmployee.document),
+      new Email(fakeEmployee.email),
+      new UniqueEntityId(fakeEmployee.id),
+    );
     expect(validate).toHaveBeenCalledWith(fakeEmployee);
   });
 
@@ -53,13 +53,13 @@ describe('Employee Entity', () => {
   });
 
   it('should be able to access all properties', () => {
-    const employee = new Employee({
-      id: new UniqueEntityId(fakeEmployee.id),
-      document: new Document(fakeEmployee.document),
-      email: new Email(fakeEmployee.email),
-      name: fakeEmployee.name,
-      salary: fakeEmployee.salary,
-    });
+    const employee = new Employee(
+      fakeEmployee.name,
+      fakeEmployee.salary,
+      new Document(fakeEmployee.document),
+      new Email(fakeEmployee.email),
+      new UniqueEntityId(fakeEmployee.id),
+    );
     expect(employee.id).toEqual(fakeEmployee.id);
     expect(employee.name).toEqual(fakeEmployee.name);
     expect(employee.document).toEqual(fakeEmployee.document);
@@ -68,13 +68,13 @@ describe('Employee Entity', () => {
   });
 
   it('should be able to parse entity to json', () => {
-    const employee = new Employee({
-      id: new UniqueEntityId(fakeEmployee.id),
-      document: new Document(fakeEmployee.document),
-      email: new Email(fakeEmployee.email),
-      name: fakeEmployee.name,
-      salary: fakeEmployee.salary,
-    });
+    const employee = new Employee(
+      fakeEmployee.name,
+      fakeEmployee.salary,
+      new Document(fakeEmployee.document),
+      new Email(fakeEmployee.email),
+      new UniqueEntityId(fakeEmployee.id),
+    );
     expect(employee.toJSON()).toStrictEqual(fakeEmployee);
   });
 

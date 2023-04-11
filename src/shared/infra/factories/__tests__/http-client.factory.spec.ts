@@ -1,8 +1,10 @@
-import { AxiosAdapter } from 'shared/infra/adapters/axios.adapter';
-import { makeHttpClient } from '../http-client.factory';
+import { HttpClientAuthDecorator } from 'authentication/infra/decorators/http-client-auth.decorator';
+import { HttpClientFactory } from '../http-client.factory';
 
-describe('makeHttpClient', () => {
+describe('HttpClientFactory', () => {
   it('should return instance of AxiosAdapter', () => {
-    expect(makeHttpClient('baseurl.com')).toBeInstanceOf(AxiosAdapter);
+    expect(HttpClientFactory.create('baseurl.com')).toBeInstanceOf(
+      HttpClientAuthDecorator,
+    );
   });
 });
