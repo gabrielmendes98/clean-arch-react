@@ -1,7 +1,16 @@
 import { HttpResponse } from 'shared/domain/interfaces/http-client.interface';
-import { DeleteEmployeeResponseDto } from '../dto/delete-employee.dto';
-import { GetEmployeeResponseDto } from '../dto/get-employee.dto';
-import { ListEmployeesResponseDto } from '../dto/list-employees.dto';
+import {
+  DeleteEmployeeRequestDto,
+  DeleteEmployeeResponseDto,
+} from '../dto/delete-employee.dto';
+import {
+  GetEmployeeRequestDto,
+  GetEmployeeResponseDto,
+} from '../dto/get-employee.dto';
+import {
+  ListEmployeesRequestDto,
+  ListEmployeesResponseDto,
+} from '../dto/list-employees.dto';
 import {
   RegisterEmployeeRequestDto,
   RegisterEmployeeResponseDto,
@@ -12,9 +21,15 @@ import {
 } from '../dto/update-employee.dto';
 
 export interface EmployeeRepository {
-  delete(id: string): Promise<HttpResponse<DeleteEmployeeResponseDto>>;
-  get(id: string): Promise<HttpResponse<GetEmployeeResponseDto>>;
-  list(): Promise<HttpResponse<ListEmployeesResponseDto>>;
+  delete(
+    data: DeleteEmployeeRequestDto,
+  ): Promise<HttpResponse<DeleteEmployeeResponseDto>>;
+  get(
+    data: GetEmployeeRequestDto,
+  ): Promise<HttpResponse<GetEmployeeResponseDto>>;
+  list(
+    data: ListEmployeesRequestDto,
+  ): Promise<HttpResponse<ListEmployeesResponseDto>>;
   create(
     employee: RegisterEmployeeRequestDto,
   ): Promise<HttpResponse<RegisterEmployeeResponseDto>>;

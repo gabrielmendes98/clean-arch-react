@@ -79,6 +79,7 @@ export const FormProvider = <FormFields extends object>({
         values: Object.assign(values, fieldValues),
         ...otherValuesToProvide,
       });
+      // eslint-disable-next-line no-empty
     } catch (e) {}
   };
 

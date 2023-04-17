@@ -3,7 +3,7 @@ import { EmployeeListStorage } from 'employee/domain/interfaces/employee-list.in
 import { EmployeeRepositoryFactory } from 'employee/infra/factories/employee-repository.factory';
 import {
   DeleteEmployeeFromListUseCase,
-  Output,
+  DeleteEmployeeFromListUseCaseOutput,
 } from 'employee/use-cases/delete-employee-from-list.use-case';
 import { ListEmployeesUseCase } from 'employee/use-cases/list-employees.use-case';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
@@ -21,7 +21,7 @@ const fakeEmployeeList = new EmployeeList([
 ]);
 
 class MockDeleteEmployeeUseCase extends DeleteEmployeeFromListUseCase {
-  async execute(): Promise<Output> {
+  async execute(): Promise<DeleteEmployeeFromListUseCaseOutput> {
     jest.fn();
     return { success: true };
   }

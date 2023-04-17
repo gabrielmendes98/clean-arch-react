@@ -1,7 +1,7 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
 import {
   UpdateEmployeeUseCase,
-  Output,
+  UpdateEmployeeUseCaseOutput,
 } from 'employee/use-cases/update-employee.use-case';
 import { GetEmployeeUseCase } from 'employee/use-cases/get-employee.use-case';
 import { EmployeeRepositoryFactory } from 'employee/infra/factories/employee-repository.factory';
@@ -22,7 +22,7 @@ const fakeEmployee = {
 };
 
 class FakeUpdateEmployeeUseCase extends UpdateEmployeeUseCase {
-  async execute(): Promise<Output> {
+  async execute(): Promise<UpdateEmployeeUseCaseOutput> {
     return {
       success: true,
     };

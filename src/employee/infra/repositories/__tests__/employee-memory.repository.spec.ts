@@ -10,9 +10,7 @@ describe('EmployeeMemoryGateway', () => {
   it('should return correct payload when call deleteEmployee method', async () => {
     expect(await gateway.delete()).toStrictEqual({
       statusCode: 200,
-      body: {
-        success: true,
-      },
+      body: void 0,
     });
   });
 
@@ -55,7 +53,11 @@ describe('EmployeeMemoryGateway', () => {
     expect(await gateway.create()).toStrictEqual({
       statusCode: 200,
       body: {
-        success: true,
+        id: 'bb30888c-06cf-458b-aced-8a75187c6a67',
+        name: 'Gabriel Santiago',
+        salary: 25000,
+        document: '98536970090',
+        email: 'fake@email.com',
       },
     });
   });
@@ -63,9 +65,7 @@ describe('EmployeeMemoryGateway', () => {
   it('should return correct payload when call updateEmployee method', async () => {
     expect(await gateway.update()).toStrictEqual({
       statusCode: 200,
-      body: {
-        success: true,
-      },
+      body: void 0,
     });
   });
 });

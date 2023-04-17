@@ -9,14 +9,16 @@ import { RouterService } from 'shared/domain/interfaces/router.interface';
 import { UseCase } from 'shared/domain/interfaces/use-case.interface';
 import { Email } from 'shared/domain/value-objects/email.vo';
 
-export class LoginUseCase implements UseCase<Input, Output> {
+export class LoginUseCase
+  implements UseCase<LoginUseCaseInput, LoginUseCaseOutput>
+{
   constructor(
     private authApiService: AuthenticationService,
     private storage: UserStorage,
     private routerService: RouterService,
   ) {}
 
-  async execute(input: Input): Promise<Output> {
+  async execute(input: LoginUseCaseInput): Promise<LoginUseCaseOutput> {
     const { email, password } = input;
     Email.validate(email);
     Password.validate(password);
@@ -38,9 +40,7 @@ export class LoginUseCase implements UseCase<Input, Output> {
         });
         this.storage.updateUser(user);
         this.routerService.navigate(pages.home);
-        return {
-          success: true,
-        };
+        return;
       }
       default:
         throw new UnexpectedError();
@@ -48,11 +48,9 @@ export class LoginUseCase implements UseCase<Input, Output> {
   }
 }
 
-export type Input = {
+export type LoginUseCaseInput = {
   email: string;
   password: string;
 };
 
-export type Output = {
-  success: boolean;
-};
+export type LoginUseCaseOutput = void;

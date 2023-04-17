@@ -13,9 +13,7 @@ export class EmployeeMemoryRepository implements EmployeeRepository {
   async delete(): Promise<HttpResponse<DeleteEmployeeResponseDto>> {
     return {
       statusCode: HttpStatusCode.ok,
-      body: {
-        success: true,
-      },
+      body: void 0,
     };
   }
 
@@ -58,7 +56,11 @@ export class EmployeeMemoryRepository implements EmployeeRepository {
     return {
       statusCode: HttpStatusCode.ok,
       body: {
-        success: true,
+        id: 'bb30888c-06cf-458b-aced-8a75187c6a67',
+        name: 'Gabriel Santiago',
+        salary: 25000,
+        document: '98536970090',
+        email: 'fake@email.com',
       },
     };
   }
@@ -66,9 +68,7 @@ export class EmployeeMemoryRepository implements EmployeeRepository {
   async update(): Promise<HttpResponse<UpdateEmployeeResponseDto>> {
     return {
       statusCode: HttpStatusCode.ok,
-      body: {
-        success: true,
-      },
+      body: void 0,
     };
   }
 }

@@ -10,21 +10,25 @@ import { NotificationService } from 'shared/domain/interfaces/notification.inter
 import { RouterService } from 'shared/domain/interfaces/router.interface';
 import { HttpStatusCode } from 'shared/domain/interfaces/http-client.interface';
 
-export class UpdateEmployeeUseCase implements UseCase<Input, Output> {
+export class UpdateEmployeeUseCase
+  implements UseCase<UpdateEmployeeUseCaseInput, UpdateEmployeeUseCaseOutput>
+{
   constructor(
     private employeeApiService: EmployeeRepository,
     private routerService: RouterService,
     private notifier: NotificationService,
   ) {}
 
-  async execute(input: Input): Promise<Output> {
+  async execute(
+    input: UpdateEmployeeUseCaseInput,
+  ): Promise<UpdateEmployeeUseCaseOutput> {
     Employee.validate(input);
     const response = await this.employeeApiService.update(input);
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         this.notifier.notify('Funcionário atualizado com sucesso!', 'success');
         this.routerService.navigate(pages.listEmployees);
-        return response.body;
+        return;
       default:
         this.notifier.notify(UNEXPECTED_ERROR_MESSAGE, 'error');
         throw new UnexpectedError();
@@ -32,7 +36,7 @@ export class UpdateEmployeeUseCase implements UseCase<Input, Output> {
   }
 }
 
-export type Input = {
+export type UpdateEmployeeUseCaseInput = {
   id: string;
   name: string;
   email: string;
@@ -40,6 +44,4 @@ export type Input = {
   salary: number;
 };
 
-export type Output = {
-  success: boolean;
-};
+export type UpdateEmployeeUseCaseOutput = void;

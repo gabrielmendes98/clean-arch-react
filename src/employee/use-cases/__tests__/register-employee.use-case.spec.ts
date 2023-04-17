@@ -29,13 +29,12 @@ describe('RegisterEmployeeUseCase', () => {
       employeeRepository,
       notificationServiceMock,
     );
-    const response = await useCase.execute(fakeEmployee);
+    await useCase.execute(fakeEmployee);
     expect(registerEmployee).toHaveBeenCalledWith(fakeEmployee);
     expect(notificationServiceMock.notify).toHaveBeenCalledWith(
       'Funcionário cadastrado com sucesso!',
       'success',
     );
-    expect(response.success).toBeTruthy();
   });
 
   it('should throw unexpected error when api returns any error and notify user', async () => {
@@ -43,7 +42,12 @@ describe('RegisterEmployeeUseCase', () => {
     const registerEmployee = jest
       .spyOn(employeeRepository, 'create')
       .mockReturnValue(
-        Promise.resolve({ statusCode: 500, body: { success: false } }),
+        Promise.resolve({
+          statusCode: 500,
+          body: {
+            message: 'some error',
+          },
+        }),
       );
     const useCase = new RegisterEmployeeUseCase(
       employeeRepository,

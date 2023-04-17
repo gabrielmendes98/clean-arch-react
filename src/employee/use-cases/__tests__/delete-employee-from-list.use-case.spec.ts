@@ -43,9 +43,8 @@ describe('DeleteEmployeeFromListUseCase', () => {
       employeeRepository,
       mockEmployeeListStorage,
     );
-    const response = await useCase.execute({ item: fakeItem });
-    expect(deleteMethod).toHaveBeenCalledWith(fakeItem.id);
-    expect(response.success).toBeTruthy();
+    await useCase.execute({ item: fakeItem });
+    expect(deleteMethod).toHaveBeenCalledWith({ id: fakeItem.id });
   });
 
   it('shuold add item back to list when api throw error', async () => {
@@ -65,7 +64,7 @@ describe('DeleteEmployeeFromListUseCase', () => {
     await expect(
       async () => await useCase.execute({ item: fakeItem }),
     ).rejects.toThrow(UnexpectedError);
-    expect(deleteMethod).toHaveBeenCalledWith(fakeItem.id);
+    expect(deleteMethod).toHaveBeenCalledWith({ id: fakeItem.id });
     expect(mockEmployeeListStorage.list.employees).toHaveLength(1);
     expect(mockEmployeeListStorage.list.employees).toContain(fakeItem);
     expect(mockEmployeeListStorage.removeItem).toHaveBeenCalledWith(fakeItem);

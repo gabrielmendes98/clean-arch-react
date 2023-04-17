@@ -19,9 +19,9 @@ describe('GetEmployeeUseCase', () => {
     const response = await useCase.execute({
       id: 'ce734f82-2fac-4845-b394-66bd67e6e271',
     });
-    expect(getEmployee).toHaveBeenCalledWith(
-      'ce734f82-2fac-4845-b394-66bd67e6e271',
-    );
+    expect(getEmployee).toHaveBeenCalledWith({
+      id: 'ce734f82-2fac-4845-b394-66bd67e6e271',
+    });
     expect(response.employee).toBeInstanceOf(Employee);
   });
 

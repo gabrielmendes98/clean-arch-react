@@ -33,13 +33,12 @@ describe('UpdateEmployeeUseCase', () => {
       routerServiceMock,
       notificationServiceMock,
     );
-    const response = await useCase.execute(fakeEmployee);
+    await useCase.execute(fakeEmployee);
     expect(updateEmployee).toHaveBeenCalledWith(fakeEmployee);
     expect(notificationServiceMock.notify).toHaveBeenCalledWith(
       'Funcionário atualizado com sucesso!',
       'success',
     );
-    expect(response.success).toBeTruthy();
   });
 
   it('should throw unexpected error when api returns any error and notify user', async () => {

@@ -1,3 +1,4 @@
-export type DeleteEmployeeResponseDto = {
-  success: boolean;
+export type DeleteEmployeeRequestDto = {
+  id: string;
 };
+export type DeleteEmployeeResponseDto = void;

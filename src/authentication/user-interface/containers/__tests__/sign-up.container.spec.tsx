@@ -3,7 +3,7 @@ import { AuthServiceFactory } from 'authentication/infra/factories/authenticatio
 import { useSignUpForm } from 'authentication/infra/hooks/use-sign-up-form.hook';
 import {
   SignUpUseCase,
-  Output,
+  SignUpUseCaseOutput,
 } from 'authentication/use-cases/sign-up.use-case';
 import { notificationServiceMock } from 'shared/testing/mocks/notification.mock';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
@@ -12,10 +12,8 @@ import { render, screen, userEvent } from 'shared/testing/test-utils';
 import { SignUpContainer } from '../sign-up.container';
 
 class StubSignUpUseCase extends SignUpUseCase {
-  async execute(): Promise<Output> {
-    return {
-      success: true,
-    };
+  async execute(): Promise<SignUpUseCaseOutput> {
+    return void 0;
   }
 }
 

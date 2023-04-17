@@ -1,17 +1,18 @@
 import { LoginFormService } from 'authentication/domain/interfaces/login-form.interface';
 import { AuthServiceFactory } from 'authentication/infra/factories/authentication-service.factory';
 import { useLoginForm } from 'authentication/infra/hooks/use-login-form.hook';
-import { LoginUseCase, Output } from 'authentication/use-cases/login.use-case';
+import {
+  LoginUseCase,
+  LoginUseCaseOutput,
+} from 'authentication/use-cases/login.use-case';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
 import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';
 import { render, screen, userEvent } from 'shared/testing/test-utils';
 import { LoginContainer } from '../login.container';
 
 class StubLoginUseCase extends LoginUseCase {
-  async execute(): Promise<Output> {
-    return {
-      success: true,
-    };
+  async execute(): Promise<LoginUseCaseOutput> {
+    return void 0;
   }
 }
 

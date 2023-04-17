@@ -1,8 +1,12 @@
-export type RegisterEmployeeResponseDto = {
-  success: boolean;
+export type RegisterEmployeeRequestDto = {
+  name: string;
+  email: string;
+  document: string;
+  salary: number;
 };
 
-export type RegisterEmployeeRequestDto = {
+export type RegisterEmployeeResponseDto = {
+  id: string;
   name: string;
   email: string;
   document: string;

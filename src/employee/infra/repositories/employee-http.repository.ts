@@ -1,5 +1,11 @@
-import { DeleteEmployeeResponseDto } from 'employee/domain/dto/delete-employee.dto';
-import { GetEmployeeResponseDto } from 'employee/domain/dto/get-employee.dto';
+import {
+  DeleteEmployeeRequestDto,
+  DeleteEmployeeResponseDto,
+} from 'employee/domain/dto/delete-employee.dto';
+import {
+  GetEmployeeRequestDto,
+  GetEmployeeResponseDto,
+} from 'employee/domain/dto/get-employee.dto';
 import { ListEmployeesResponseDto } from 'employee/domain/dto/list-employees.dto';
 import {
   RegisterEmployeeRequestDto,
@@ -18,15 +24,19 @@ import {
 export class EmployeeHttpRepository implements EmployeeRepository {
   constructor(private httpClient: HttpClient) {}
 
-  async delete(id: string): Promise<HttpResponse<DeleteEmployeeResponseDto>> {
+  async delete(
+    data: DeleteEmployeeRequestDto,
+  ): Promise<HttpResponse<DeleteEmployeeResponseDto>> {
     return await this.httpClient.delete<DeleteEmployeeResponseDto>(
-      `/employees/${id}`,
+      `/employees/${data.id}`,
     );
   }
 
-  async get(id: string): Promise<HttpResponse<GetEmployeeResponseDto>> {
+  async get(
+    data: GetEmployeeRequestDto,
+  ): Promise<HttpResponse<GetEmployeeResponseDto>> {
     return await this.httpClient.get<GetEmployeeResponseDto>(
-      `/employees/${id}`,
+      `/employees/${data.id}`,
     );
   }
 

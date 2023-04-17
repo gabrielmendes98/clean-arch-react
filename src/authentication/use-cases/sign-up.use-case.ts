@@ -12,7 +12,9 @@ import { UseCase } from 'shared/domain/interfaces/use-case.interface';
 import { validator } from 'shared/domain/validator';
 import { Email } from 'shared/domain/value-objects/email.vo';
 
-export class SignUpUseCase implements UseCase<Input, Output> {
+export class SignUpUseCase
+  implements UseCase<SignUpUseCaseInput, SignUpUseCaseOutput>
+{
   constructor(
     private authApiService: AuthenticationService,
     private storage: UserStorage,
@@ -20,7 +22,7 @@ export class SignUpUseCase implements UseCase<Input, Output> {
     private notifier: NotificationService,
   ) {}
 
-  async execute(input: Input): Promise<Output> {
+  async execute(input: SignUpUseCaseInput): Promise<SignUpUseCaseOutput> {
     const { email, password, confirmPassword, name } = input;
     validator.string().required().validateAttribute(name, 'Nome');
     Email.validate(email);
@@ -49,9 +51,7 @@ export class SignUpUseCase implements UseCase<Input, Output> {
 
         this.storage.updateUser(user);
         this.routerService.navigate(pages.home);
-        return {
-          success: true,
-        };
+        return;
       }
       default:
         throw new UnexpectedError();
@@ -59,13 +59,11 @@ export class SignUpUseCase implements UseCase<Input, Output> {
   }
 }
 
-export type Input = {
+export type SignUpUseCaseInput = {
   name: string;
   email: string;
   password: string;
   confirmPassword: string;
 };
 
-export type Output = {
-  success: boolean;
-};
+export type SignUpUseCaseOutput = void;

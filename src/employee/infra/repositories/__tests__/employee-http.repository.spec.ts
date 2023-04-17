@@ -9,12 +9,12 @@ describe('EmployeeHttpGateway', () => {
   });
 
   it('should call httpClient with correct params when call deleteEmployee method', async () => {
-    await gateway.delete('some-id');
+    await gateway.delete({ id: 'some-id' });
     expect(httpClientMock.delete).toHaveBeenCalledWith('/employees/some-id');
   });
 
   it('should call httpClient with correct params when call getEmployee method', async () => {
-    await gateway.get('some-id');
+    await gateway.get({ id: 'some-id' });
     expect(httpClientMock.get).toHaveBeenCalledWith('/employees/some-id');
   });
 

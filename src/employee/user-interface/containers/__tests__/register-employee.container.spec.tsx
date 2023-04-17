@@ -1,6 +1,6 @@
 import {
   RegisterEmployeeUseCase,
-  Output,
+  RegisterEmployeeUseCaseOutput,
 } from 'employee/use-cases/register-employee.use-case';
 import { EmployeeRepositoryFactory } from 'employee/infra/factories/employee-repository.factory';
 import { useEmployeeForm } from 'employee/infra/hooks/use-employee-form.hook';
@@ -17,7 +17,7 @@ const fakeEmployee = {
 };
 
 class FakeRegisterEmployeeUseCase extends RegisterEmployeeUseCase {
-  async execute(): Promise<Output> {
+  async execute(): Promise<RegisterEmployeeUseCaseOutput> {
     return {
       success: true,
     };

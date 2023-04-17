@@ -7,13 +7,19 @@ import {
 import { StoragePersistor } from 'shared/domain/interfaces/storage-persistor.interface';
 import { UseCase } from 'shared/domain/interfaces/use-case.interface';
 
-export class RetrivePersistedUserUseCase implements UseCase<Input, Output> {
+export class RetrivePersistedUserUseCase
+  implements
+    UseCase<
+      RetrivePersistedUserUseCaseInput,
+      RetrivePersistedUserUseCaseOutput
+    >
+{
   constructor(
     private persistor: StoragePersistor<PersistedUser>,
     private userService: UserStorage,
   ) {}
 
-  execute(): Output {
+  execute(): RetrivePersistedUserUseCaseOutput {
     const persistedUser = this.persistor.get(USER_STORAGE_KEY);
     if (persistedUser) {
       this.userService.updateUser(
@@ -30,6 +36,6 @@ export class RetrivePersistedUserUseCase implements UseCase<Input, Output> {
   }
 }
 
-export type Input = void;
+export type RetrivePersistedUserUseCaseInput = void;
 
-export type Output = void;
+export type RetrivePersistedUserUseCaseOutput = void;

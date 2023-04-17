@@ -6,12 +6,16 @@ import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo'
 import { UseCase } from 'shared/domain/interfaces/use-case.interface';
 import { HttpStatusCode } from 'shared/domain/interfaces/http-client.interface';
 
-export class GetEmployeeUseCase implements UseCase<Input, Output> {
+export class GetEmployeeUseCase
+  implements UseCase<GetEmployeeUseCaseInput, GetEmployeeUseCaseOutput>
+{
   constructor(private employeeApiService: EmployeeRepository) {}
 
-  async execute(input: Input): Promise<Output> {
+  async execute(
+    input: GetEmployeeUseCaseInput,
+  ): Promise<GetEmployeeUseCaseOutput> {
     UniqueEntityId.validate(input.id);
-    const response = await this.employeeApiService.get(input.id);
+    const response = await this.employeeApiService.get({ id: input.id });
     switch (response.statusCode) {
       case HttpStatusCode.ok:
         return {
@@ -29,8 +33,8 @@ export class GetEmployeeUseCase implements UseCase<Input, Output> {
   }
 }
 
-export type Input = {
+export type GetEmployeeUseCaseInput = {
   id: string;
 };
 
-export type Output = { employee: Employee };
+export type GetEmployeeUseCaseOutput = { employee: Employee };
