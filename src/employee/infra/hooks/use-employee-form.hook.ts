@@ -6,7 +6,7 @@ import {
 } from 'employee/domain/interfaces/employee-form.interface';
 
 export const useEmployeeForm = (): EmployeeFormService => {
-  const initialValues = {
+  const initialValues: EmployeeFormFields = {
     name: '',
     email: '',
     document: '',

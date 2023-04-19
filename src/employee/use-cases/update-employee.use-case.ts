@@ -1,20 +1,15 @@
-import { Employee } from 'employee/domain/entities/employee.entity';
 import { EmployeeRepository } from 'employee/domain/interfaces/employee-repository.interface';
-import {
-  UnexpectedError,
-  UNEXPECTED_ERROR_MESSAGE,
-} from 'shared/domain/errors/unexpected.error';
+import { EmployeeFactory } from 'employee/domain/factories/employee.factory';
 import { pages } from 'shared/domain/config/pages';
 import { UseCase } from 'shared/domain/interfaces/use-case.interface';
 import { NotificationService } from 'shared/domain/interfaces/notification.interface';
 import { RouterService } from 'shared/domain/interfaces/router.interface';
-import { HttpStatusCode } from 'shared/domain/interfaces/http-client.interface';
 
 export class UpdateEmployeeUseCase
   implements UseCase<UpdateEmployeeUseCaseInput, UpdateEmployeeUseCaseOutput>
 {
   constructor(
-    private employeeApiService: EmployeeRepository,
+    private employeeRepository: EmployeeRepository,
     private routerService: RouterService,
     private notifier: NotificationService,
   ) {}
@@ -22,16 +17,14 @@ export class UpdateEmployeeUseCase
   async execute(
     input: UpdateEmployeeUseCaseInput,
   ): Promise<UpdateEmployeeUseCaseOutput> {
-    Employee.validate(input);
-    const response = await this.employeeApiService.update(input);
-    switch (response.statusCode) {
-      case HttpStatusCode.ok:
-        this.notifier.notify('Funcionário atualizado com sucesso!', 'success');
-        this.routerService.navigate(pages.listEmployees);
-        return;
-      default:
-        this.notifier.notify(UNEXPECTED_ERROR_MESSAGE, 'error');
-        throw new UnexpectedError();
+    try {
+      await this.employeeRepository.update(EmployeeFactory.create(input));
+      this.notifier.notify('Funcionário atualizado com sucesso!', 'success');
+      this.routerService.navigate(pages.listEmployees);
+    } catch (e) {
+      const error = e as Error;
+      this.notifier.notify(error.message, 'error');
+      throw e;
     }
   }
 }

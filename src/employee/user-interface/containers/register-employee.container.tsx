@@ -3,9 +3,9 @@ import {
   EmployeeFormFields,
   EmployeeFormService,
 } from 'employee/domain/interfaces/employee-form.interface';
-import { EntityValidationError } from 'shared/domain/errors/validation.error';
 import { FormProvider } from 'shared/infra/providers/form.provider';
 import { FormStorageService } from 'shared/domain/interfaces/form-storage.interface';
+import { NotificationError } from 'shared/domain/notification/notification.error';
 import { EmployeeForm } from '../components/employee-form.component';
 
 type Props = {
@@ -27,7 +27,7 @@ export const RegisterEmployeeContainer = ({
       await registerEmployeeUseCase.execute(parseValuesToInput(values));
       resetForm();
     } catch (e) {
-      if (e instanceof EntityValidationError) {
+      if (e instanceof NotificationError) {
         setErrors(e.errors);
       }
     }

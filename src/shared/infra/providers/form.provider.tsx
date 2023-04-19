@@ -11,7 +11,7 @@ import {
   FormProviderProps,
   FormStorageService,
 } from 'shared/domain/interfaces/form-storage.interface';
-import { validator } from 'shared/domain/validator';
+import { yup } from 'shared/domain/validator';
 
 export const FormContext = createContext<FormStorageService<object> | null>(
   null,
@@ -70,7 +70,7 @@ export const FormProvider = <FormFields extends object>({
       const { values, ...otherValuesToProvide } = valuesToProvide;
       const formData = new FormData(e.currentTarget);
       const fieldValues = Object.fromEntries(formData.entries());
-      validator
+      yup
         .entityValidationSchema(
           (validations || {}) as Record<string, (value: string) => boolean>,
         )

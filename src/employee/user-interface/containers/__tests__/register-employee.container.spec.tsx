@@ -6,7 +6,6 @@ import { EmployeeRepositoryFactory } from 'employee/infra/factories/employee-rep
 import { useEmployeeForm } from 'employee/infra/hooks/use-employee-form.hook';
 import { notificationServiceMock } from 'shared/testing/mocks/notification.mock';
 import { render, screen, userEvent, waitFor } from 'shared/testing/test-utils';
-import { EntityValidationError } from 'shared/domain/errors/validation.error';
 import { RegisterEmployeeContainer } from '../register-employee.container';
 
 const fakeEmployee = {
@@ -18,9 +17,7 @@ const fakeEmployee = {
 
 class FakeRegisterEmployeeUseCase extends RegisterEmployeeUseCase {
   async execute(): Promise<RegisterEmployeeUseCaseOutput> {
-    return {
-      success: true,
-    };
+    return;
   }
 }
 

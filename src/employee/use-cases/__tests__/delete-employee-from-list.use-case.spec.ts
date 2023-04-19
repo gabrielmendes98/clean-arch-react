@@ -4,6 +4,7 @@ import {
 } from 'employee/domain/entities/employee-list.entity';
 import { EmployeeListStorage } from 'employee/domain/interfaces/employee-list.interface';
 import { EmployeeRepositoryFactory } from 'employee/infra/factories/employee-repository.factory';
+import { EmployeeFactory } from 'employee/domain/factories/employee.factory';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { DeleteEmployeeFromListUseCase } from '../delete-employee-from-list.use-case';
 
@@ -36,7 +37,7 @@ describe('DeleteEmployeeFromListUseCase', () => {
     expect(mockEmployeeListStorage.removeItem).toHaveBeenCalledWith(fakeItem);
   });
 
-  it('should call api to delete item and return success', async () => {
+  it('should call repository to delete item and return success', async () => {
     const employeeRepository = EmployeeRepositoryFactory.create();
     const deleteMethod = jest.spyOn(employeeRepository, 'delete');
     const useCase = new DeleteEmployeeFromListUseCase(
@@ -44,27 +45,22 @@ describe('DeleteEmployeeFromListUseCase', () => {
       mockEmployeeListStorage,
     );
     await useCase.execute({ item: fakeItem });
-    expect(deleteMethod).toHaveBeenCalledWith({ id: fakeItem.id });
+    expect(deleteMethod).toHaveBeenCalledWith(EmployeeFactory.create(fakeItem));
   });
 
-  it('shuold add item back to list when api throw error', async () => {
+  it('shuold add item back to list when repository throw error', async () => {
     const employeeRepository = EmployeeRepositoryFactory.create();
     const deleteMethod = jest
       .spyOn(employeeRepository, 'delete')
-      .mockReturnValue(
-        Promise.resolve({
-          statusCode: 500,
-          body: { message: 'some error message' },
-        }),
-      );
+      .mockReturnValue(Promise.reject(new UnexpectedError()));
     const useCase = new DeleteEmployeeFromListUseCase(
       employeeRepository,
       mockEmployeeListStorage,
     );
     await expect(
       async () => await useCase.execute({ item: fakeItem }),
-    ).rejects.toThrow(UnexpectedError);
-    expect(deleteMethod).toHaveBeenCalledWith({ id: fakeItem.id });
+    ).rejects.toThrowError();
+    expect(deleteMethod).toHaveBeenCalledWith(EmployeeFactory.create(fakeItem));
     expect(mockEmployeeListStorage.list.employees).toHaveLength(1);
     expect(mockEmployeeListStorage.list.employees).toContain(fakeItem);
     expect(mockEmployeeListStorage.removeItem).toHaveBeenCalledWith(fakeItem);

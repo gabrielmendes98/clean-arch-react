@@ -38,7 +38,7 @@ function printSimpleValue(val: any, quoteStrings = false): string | null {
   return null;
 }
 
-export default function printValue(value: any, quoteStrings: boolean): string {
+export function printValue(value: any, quoteStrings: boolean): string {
   const result = printSimpleValue(value, quoteStrings);
   if (result !== null) return result;
 

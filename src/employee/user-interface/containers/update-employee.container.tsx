@@ -6,10 +6,10 @@ import {
   EmployeeFormFields,
   EmployeeFormService,
 } from 'employee/domain/interfaces/employee-form.interface';
-import { EntityValidationError } from 'shared/domain/errors/validation.error';
 import { FormProvider } from 'shared/infra/providers/form.provider';
 import { RouterService } from 'shared/domain/interfaces/router.interface';
 import { FormStorageService } from 'shared/domain/interfaces/form-storage.interface';
+import { NotificationError } from 'shared/domain/notification/notification.error';
 import { EmployeeForm } from '../components/employee-form.component';
 
 type Props = {
@@ -41,7 +41,7 @@ export const UpdateEmployeeContainer = ({
         ...parseValuesToInput(values),
       });
     } catch (e) {
-      if (e instanceof EntityValidationError) {
+      if (e instanceof NotificationError) {
         setErrors(e.errors);
       }
     }
@@ -54,9 +54,7 @@ export const UpdateEmployeeContainer = ({
 
   useEffect(() => {
     if (id) {
-      getEmployeeUseCase
-        .execute({ id })
-        .then(response => setEmployee(response.employee));
+      getEmployeeUseCase.execute({ id }).then(setEmployee);
     }
   }, []);
 

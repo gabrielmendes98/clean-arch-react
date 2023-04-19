@@ -1,9 +1,9 @@
 import { EmployeeListItem } from 'employee/domain/entities/employee-list.entity';
 import { EmployeeRepository } from 'employee/domain/interfaces/employee-repository.interface';
 import { EmployeeListStorage } from 'employee/domain/interfaces/employee-list.interface';
+import { EmployeeFactory } from 'employee/domain/factories/employee.factory';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { UseCase } from 'shared/domain/interfaces/use-case.interface';
-import { HttpStatusCode } from 'shared/domain/interfaces/http-client.interface';
 
 export class DeleteEmployeeFromListUseCase
   implements
@@ -13,7 +13,7 @@ export class DeleteEmployeeFromListUseCase
     >
 {
   constructor(
-    private employeeApiService: EmployeeRepository,
+    private employeeRepository: EmployeeRepository,
     private employeeListStorage: EmployeeListStorage,
   ) {}
 
@@ -21,16 +21,19 @@ export class DeleteEmployeeFromListUseCase
     input: DeleteEmployeeFromListUseCaseInput,
   ): Promise<DeleteEmployeeFromListUseCaseOutput> {
     const removedIndex = this.employeeListStorage.removeItem(input.item);
-    const response = await this.employeeApiService.delete({
-      id: input.item.id,
-    });
-
-    switch (response.statusCode) {
-      case HttpStatusCode.ok:
-        return;
-      default:
-        this.employeeListStorage.addItem(input.item, removedIndex);
-        throw new UnexpectedError();
+    try {
+      await this.employeeRepository.delete(
+        EmployeeFactory.create({
+          id: input.item.id,
+          name: input.item.name,
+          salary: input.item.salary,
+          document: input.item.document,
+          email: input.item.email,
+        }),
+      );
+    } catch (e) {
+      this.employeeListStorage.addItem(input.item, removedIndex);
+      throw e;
     }
   }
 }

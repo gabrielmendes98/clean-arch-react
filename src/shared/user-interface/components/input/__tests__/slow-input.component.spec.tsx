@@ -1,4 +1,4 @@
-import { validator } from 'shared/domain/validator';
+import { yup } from 'shared/domain/validator';
 import { FormProvider } from 'shared/infra/providers/form.provider';
 import { render, screen, userEvent } from 'shared/testing/test-utils';
 import { SlowInput, Props as InputProps } from '../slow-input.component';
@@ -52,7 +52,7 @@ describe('SlowInput', () => {
     renderInput({
       validations: {
         name: (value: any) =>
-          validator.string().required().validateAttribute(value, 'Nome'),
+          yup.string().required().validateAttribute(value, 'Nome'),
       },
     });
     userEvent.click(getSumitBtn());

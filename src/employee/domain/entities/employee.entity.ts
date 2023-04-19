@@ -1,9 +1,12 @@
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 import { Document } from 'shared/domain/value-objects/document.vo';
 import { Email } from 'shared/domain/value-objects/email.vo';
-import { validator } from 'shared/domain/validator';
+import { Notification } from 'shared/domain/notification/notification';
+import { NotificationError } from 'shared/domain/notification/notification.error';
+import { EmployeeValidatorFactory } from '../factories/employee.validator.factory';
 
 export class Employee {
+  public notification: Notification;
   private _name: string;
   private _salary: number;
   private _document: Document;
@@ -17,56 +20,20 @@ export class Employee {
     email: Email,
     id?: UniqueEntityId,
   ) {
+    this.notification = new Notification();
     this._name = name;
     this._salary = salary;
     this._document = document;
     this._email = email;
     this._id = id;
-
-    Employee.validate({
-      name,
-      salary,
-      document: document.value,
-      email: email.value,
-      id: id?.value,
-    });
+    this.validate();
+    if (this.notification.hasErrors()) {
+      throw new NotificationError(this.notification.errors);
+    }
   }
 
-  static validate(props: {
-    name: string;
-    salary: number;
-    document: Document['value'];
-    email: Email['value'];
-    id?: UniqueEntityId['value'];
-  }): boolean {
-    return validator
-      .entityValidationSchema(
-        {
-          name: Employee.validateName,
-          salary: Employee.validateSalary,
-          document: Document.validate,
-          email: Email.validate,
-          id: UniqueEntityId.validate,
-        },
-        ['id'],
-      )
-      .validate(props);
-  }
-
-  static validateSalary(value: number): boolean {
-    return validator
-      .number()
-      .positive()
-      .required()
-      .validateAttribute(value, 'Salário');
-  }
-
-  static validateName(value: string) {
-    return validator
-      .string()
-      .max(100)
-      .required()
-      .validateAttribute(value, 'Nome');
+  validate(): void {
+    EmployeeValidatorFactory.create().validate(this);
   }
 
   get id() {

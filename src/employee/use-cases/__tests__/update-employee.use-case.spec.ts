@@ -1,5 +1,6 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
 import { EmployeeRepositoryFactory } from 'employee/infra/factories/employee-repository.factory';
+import { EmployeeFactory } from 'employee/domain/factories/employee.factory';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { notificationServiceMock } from 'shared/testing/mocks/notification.mock';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
@@ -15,17 +16,18 @@ const fakeEmployee = {
 
 describe('UpdateEmployeeUseCase', () => {
   it('should validate employee', async () => {
-    const validateEmployee = jest.spyOn(Employee, 'validate');
     const useCase = new UpdateEmployeeUseCase(
       EmployeeRepositoryFactory.create(),
       routerServiceMock,
       notificationServiceMock,
     );
-    await useCase.execute(fakeEmployee);
-    expect(validateEmployee).toHaveBeenCalledWith(fakeEmployee);
+    await expect(
+      async () =>
+        await useCase.execute({ ...fakeEmployee, email: 'invalid email' }),
+    ).rejects.toThrowError();
   });
 
-  it('should call api, return success, notify user and go back to listing page', async () => {
+  it('should call repository, notify user and go back to listing page', async () => {
     const employeeRepository = EmployeeRepositoryFactory.create();
     const updateEmployee = jest.spyOn(employeeRepository, 'update');
     const useCase = new UpdateEmployeeUseCase(
@@ -34,23 +36,20 @@ describe('UpdateEmployeeUseCase', () => {
       notificationServiceMock,
     );
     await useCase.execute(fakeEmployee);
-    expect(updateEmployee).toHaveBeenCalledWith(fakeEmployee);
+    expect(updateEmployee).toHaveBeenCalledWith(
+      EmployeeFactory.create(fakeEmployee),
+    );
     expect(notificationServiceMock.notify).toHaveBeenCalledWith(
       'Funcionário atualizado com sucesso!',
       'success',
     );
   });
 
-  it('should throw unexpected error when api returns any error and notify user', async () => {
+  it('should throw unexpected error when repository returns error then notify user', async () => {
     const employeeRepository = EmployeeRepositoryFactory.create();
     const updateEmployee = jest
       .spyOn(employeeRepository, 'update')
-      .mockReturnValue(
-        Promise.resolve({
-          statusCode: 500,
-          body: { message: 'some error message' },
-        }),
-      );
+      .mockReturnValue(Promise.reject(new UnexpectedError()));
     const useCase = new UpdateEmployeeUseCase(
       employeeRepository,
       routerServiceMock,
@@ -59,7 +58,9 @@ describe('UpdateEmployeeUseCase', () => {
     await expect(
       async () => await useCase.execute(fakeEmployee),
     ).rejects.toThrow(UnexpectedError);
-    expect(updateEmployee).toHaveBeenCalledWith(fakeEmployee);
+    expect(updateEmployee).toHaveBeenCalledWith(
+      EmployeeFactory.create(fakeEmployee),
+    );
     expect(notificationServiceMock.notify).toHaveBeenCalledWith(
       new UnexpectedError().message,
       'error',

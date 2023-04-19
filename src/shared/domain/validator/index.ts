@@ -2,16 +2,23 @@
 /* eslint-disable no-template-curly-in-string */
 /* istanbul ignore file */
 import * as yup from 'yup';
-import {
-  EntityValidationError,
-  Errors,
-  ValidationError,
-} from '../errors/validation.error';
-import printValue from './util';
+import { NotificationError } from '../notification/notification.error';
+import { printValue } from './util';
+
+export class ValidationError extends Error {
+  constructor(public errors?: string[]) {
+    super('Erro de validação');
+    this.name = 'ValidationError';
+  }
+}
 
 export type Validations = {
   [key: string]: (value: any) => boolean;
 };
+
+export interface Validator<T> {
+  validate: (entityOrVO: T) => void;
+}
 
 export const validationMessages = {
   mixed: {
@@ -84,42 +91,10 @@ yup.addMethod(
       this.validateSync(value, { strict: true });
       return true;
     } catch (error) {
-      if (error instanceof validator.ValidationError)
+      if (error instanceof yup.ValidationError)
         throw new ValidationError(error.errors);
     }
   },
 );
 
-const entityValidationSchema = (
-  validations: Validations,
-  optionalAttributes?: string[],
-) => ({
-  validate: (objectToValidate: { [key: string]: any }) => {
-    const errors: Errors = {};
-
-    Object.entries(validations).forEach(([key, validateProp]) => {
-      try {
-        if (
-          !(
-            optionalAttributes?.includes(key) &&
-            objectToValidate[key] === undefined
-          )
-        ) {
-          validateProp(objectToValidate[key]);
-        }
-      } catch (e: any) {
-        errors[key] = e.errors || [e.message];
-      }
-    });
-    const hasErrors = Object.keys(errors).length !== 0;
-
-    if (!hasErrors) {
-      return true;
-    }
-
-    throw new EntityValidationError(errors);
-  },
-});
-
-const validator = { ...yup, entityValidationSchema };
-export { validator };
+export { yup };

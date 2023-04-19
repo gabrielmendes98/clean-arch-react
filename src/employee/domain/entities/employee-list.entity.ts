@@ -23,7 +23,7 @@ export class EmployeeList {
   }
 
   addItem(item: EmployeeListItem, index = 0) {
-    UniqueEntityId.validate(item.id);
+    new UniqueEntityId(item.id).validate();
     this._employees.splice(index, 0, item);
   }
 

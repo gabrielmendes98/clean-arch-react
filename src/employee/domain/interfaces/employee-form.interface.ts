@@ -1,5 +1,7 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
 
+type FormErrors = Record<string, string[]>;
+
 export interface EmployeeFormFields {
   name: string;
   email: string;

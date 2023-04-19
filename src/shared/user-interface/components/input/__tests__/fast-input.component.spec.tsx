@@ -1,6 +1,11 @@
-import { validator } from 'shared/domain/validator';
+import { yup } from 'shared/domain/validator';
 import { FormProvider } from 'shared/infra/providers/form.provider';
-import { render, screen, userEvent } from 'shared/testing/test-utils';
+import {
+  fireEvent,
+  render,
+  screen,
+  userEvent,
+} from 'shared/testing/test-utils';
 import { FastInput, Props as InputProps } from '../fast-input.component';
 
 type Props = {
@@ -52,11 +57,11 @@ describe('FastInput', () => {
     renderInput({
       validations: {
         name: (value: any) =>
-          validator.string().required().validateAttribute(value, 'Nome'),
+          yup.string().required().validateAttribute(value, 'Nome'),
       },
     });
     userEvent.click(getInput());
-    userEvent.click(window.document.body);
+    fireEvent.blur(getInput());
     expect(screen.getByText('Nome é obrigatório')).toBeInTheDocument();
   });
 
@@ -64,7 +69,7 @@ describe('FastInput', () => {
     renderInput({
       validations: {
         name: (value: any) =>
-          validator.string().required().validateAttribute(value, 'Nome'),
+          yup.string().required().validateAttribute(value, 'Nome'),
       },
     });
     userEvent.click(getSumitBtn());

@@ -23,7 +23,6 @@ const fakeEmployeeList = new EmployeeList([
 class MockDeleteEmployeeUseCase extends DeleteEmployeeFromListUseCase {
   async execute(): Promise<DeleteEmployeeFromListUseCaseOutput> {
     jest.fn();
-    return { success: true };
   }
 }
 
@@ -35,6 +34,8 @@ class MockListEmployeeUseCase extends ListEmployeesUseCase {
 
 const employeeListServiceMock: EmployeeListStorage = {
   list: fakeEmployeeList,
+  addItem: jest.fn(),
+  removeItem: jest.fn(),
   updateList: jest.fn(),
 };
 

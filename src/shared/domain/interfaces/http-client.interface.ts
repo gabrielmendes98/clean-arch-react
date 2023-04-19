@@ -6,14 +6,14 @@ export interface HttpClient {
     endpoint: string,
     options?: HttpClientOptions,
   ): Promise<HttpResponse<DTOResponse>>;
-  post<DTOResponse = any>(
+  post<DTORequest = {}, DTOResponse = any>(
     endpoint: string,
-    body: any,
+    body: DTORequest,
     options?: HttpClientOptions,
   ): Promise<HttpResponse<DTOResponse>>;
-  put<DTOResponse = any>(
+  put<DTORequest = {}, DTOResponse = any>(
     endpoint: string,
-    body: any,
+    body: DTORequest,
     options?: HttpClientOptions,
   ): Promise<HttpResponse<DTOResponse>>;
   delete<DTOResponse = any>(
@@ -30,6 +30,7 @@ export type HttpMethod = 'post' | 'get' | 'put' | 'delete';
 
 export enum HttpStatusCode {
   ok = 200,
+  created = 201,
   noContent = 204,
   badRequest = 400,
   unauthorized = 401,
@@ -40,13 +41,16 @@ export enum HttpStatusCode {
 
 export type HttpResponse<T = any> =
   | {
-      statusCode: HttpStatusCode.ok | HttpStatusCode.noContent;
+      statusCode:
+        | HttpStatusCode.ok
+        | HttpStatusCode.noContent
+        | HttpStatusCode.created;
       body: T;
     }
   | {
       statusCode: Exclude<
         HttpStatusCode,
-        HttpStatusCode.ok | HttpStatusCode.noContent
+        HttpStatusCode.ok | HttpStatusCode.noContent | HttpStatusCode.created
       >;
       body: ErrorDto;
     };

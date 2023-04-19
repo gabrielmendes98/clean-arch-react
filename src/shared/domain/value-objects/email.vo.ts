@@ -1,25 +1,21 @@
-import { InvalidEmailError } from '../errors/invalid-email.error';
+import { EmailValidatorFactory } from '../factories/email.validator.factory';
+import { Notification } from '../notification/notification';
+import { NotificationError } from '../notification/notification.error';
 import { ValueObject } from './value-object';
 
 export class Email extends ValueObject<string> {
+  public notification: Notification;
+
   constructor(email: string) {
     super(email);
-    Email.validate(email);
-  }
-
-  static validate(email: string) {
-    const isValid = Email.isValidEmail(email);
-    if (!isValid) {
-      throw new InvalidEmailError();
+    this.notification = new Notification();
+    this.validate();
+    if (this.notification.hasErrors()) {
+      throw new NotificationError(this.notification.errors);
     }
-    return true;
   }
 
-  private static isValidEmail(email: string) {
-    return email
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      );
+  validate() {
+    EmailValidatorFactory.create().validate(this);
   }
 }
