@@ -5,7 +5,6 @@ import {
 } from 'employee/domain/interfaces/employee-form.interface';
 import { FormProvider } from 'shared/infra/providers/form.provider';
 import { FormStorageService } from 'shared/domain/interfaces/form-storage.interface';
-import { NotificationError } from 'shared/domain/notification/notification.error';
 import { EmployeeForm } from '../components/employee-form.component';
 
 type Props = {
@@ -17,24 +16,22 @@ export const RegisterEmployeeContainer = ({
   registerEmployeeUseCase,
   formService,
 }: Props) => {
-  const { initialValues, parseValuesToInput } = formService;
+  const { initialValues, validations, parseValuesToInput } = formService;
 
   const onSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
-    { values, resetForm, setErrors }: FormStorageService<EmployeeFormFields>,
+    { values, resetForm }: FormStorageService<EmployeeFormFields>,
   ) => {
-    try {
-      await registerEmployeeUseCase.execute(parseValuesToInput(values));
-      resetForm();
-    } catch (e) {
-      if (e instanceof NotificationError) {
-        setErrors(e.errors);
-      }
-    }
+    await registerEmployeeUseCase.execute(parseValuesToInput(values));
+    resetForm();
   };
 
   return (
-    <FormProvider onSubmit={onSubmit} initialValues={initialValues}>
+    <FormProvider
+      onSubmit={onSubmit}
+      initialValues={initialValues}
+      validations={validations}
+    >
       <EmployeeForm />
     </FormProvider>
   );

@@ -5,7 +5,7 @@ export type FormErrors<FormFields> = Partial<{
 }>;
 
 export type FormValidations<FormFields> = Partial<{
-  [K in keyof FormFields]: (value: any) => boolean;
+  [K in keyof FormFields]: any;
 }>;
 
 export interface FormStorageService<FormFields = object> {

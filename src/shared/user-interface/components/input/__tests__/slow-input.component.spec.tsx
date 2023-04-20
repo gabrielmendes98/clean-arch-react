@@ -1,4 +1,3 @@
-import { yup } from 'shared/domain/validator';
 import { FormProvider } from 'shared/infra/providers/form.provider';
 import { render, screen, userEvent } from 'shared/testing/test-utils';
 import { SlowInput, Props as InputProps } from '../slow-input.component';
@@ -29,7 +28,6 @@ const renderInput = (
   );
 
 const getInput = () => screen.getByLabelText('name');
-const getSumitBtn = () => screen.getByRole('button', { name: 'submit' });
 
 describe('SlowInput', () => {
   it('should init value with form provider initial value', () => {
@@ -46,16 +44,5 @@ describe('SlowInput', () => {
     renderInput();
     userEvent.type(getInput(), 'some value');
     expect(getInput()).toHaveValue('some value');
-  });
-
-  it('should validate on submit', () => {
-    renderInput({
-      validations: {
-        name: (value: any) =>
-          yup.string().required().validateAttribute(value, 'Nome'),
-      },
-    });
-    userEvent.click(getSumitBtn());
-    expect(screen.getByText('Nome é obrigatório')).toBeInTheDocument();
   });
 });

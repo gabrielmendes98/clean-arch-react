@@ -26,22 +26,7 @@ export const validationMessages = {
     required: '${path} é obrigatório',
     oneOf: '${path} deve ter um dos seguintes valores: ${values}',
     notOneOf: '${path} não deve ter nenhum dos seguintes valores: ${values}',
-    notType: ({ path, type, value, originalValue }: any) => {
-      const isCast = originalValue != null && originalValue !== value;
-      let msg = `${
-        `${path} deve ser do tipo \`${type}\`, ` +
-        `mas o valor final é: \`${printValue(value, true)}\``
-      }${
-        isCast ? ` (cast do valor \`${printValue(originalValue, true)}\`)` : ''
-      }`;
-
-      if (value === null) {
-        msg +=
-          '\nse a intenção era usar "null" como um valor em branco marque o esquema como `.nullable()`';
-      }
-
-      return msg;
-    },
+    notType: ({ path, type }: any) => `${path} deve ser do tipo ${type}`,
   },
   string: {
     length: ({ path, length }: any) =>

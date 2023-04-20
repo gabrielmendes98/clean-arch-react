@@ -34,7 +34,6 @@ const renderInput = (
   );
 
 const getInput = () => screen.getByLabelText('name');
-const getSumitBtn = () => screen.getByRole('button', { name: 'submit' });
 
 describe('FastInput', () => {
   it('should init value with form provider initial value', () => {
@@ -62,17 +61,6 @@ describe('FastInput', () => {
     });
     userEvent.click(getInput());
     fireEvent.blur(getInput());
-    expect(screen.getByText('Nome é obrigatório')).toBeInTheDocument();
-  });
-
-  it('should validate on submit', () => {
-    renderInput({
-      validations: {
-        name: (value: any) =>
-          yup.string().required().validateAttribute(value, 'Nome'),
-      },
-    });
-    userEvent.click(getSumitBtn());
     expect(screen.getByText('Nome é obrigatório')).toBeInTheDocument();
   });
 

@@ -46,20 +46,12 @@ describe('RegisterEmployeeContainer', () => {
     await waitFor(() => {
       expect(registerEmployee).toHaveBeenCalledWith({
         ...fakeEmployee,
-        salary: 123123,
+        salary: Number(fakeEmployee.salary),
       });
     });
   });
 
   it('should display form errors when has validation errors', () => {
-    jest.spyOn(registerEmployeeUseCase, 'execute').mockImplementation(() => {
-      throw new EntityValidationError({
-        name: ['Nome é obrigatório'],
-        salary: ['Salário deve ser um número positivo'],
-        document: ['Documento deve ser um CPF ou CNPJ valido'],
-        email: ['Email inválido'],
-      });
-    });
     const Component = () => {
       const formService = useEmployeeForm();
       return (
@@ -73,11 +65,11 @@ describe('RegisterEmployeeContainer', () => {
     userEvent.click(screen.getByRole('button', { name: /enviar/i }));
     expect(screen.getByText(/Nome é obrigatório/i)).toBeInTheDocument();
     expect(
-      screen.getByText(/Salário deve ser um número positivo/i),
+      screen.getByText(/Salário deve ser do tipo number/i),
     ).toBeInTheDocument();
     expect(
       screen.getByText(/Documento deve ser um CPF ou CNPJ valido/i),
     ).toBeInTheDocument();
-    expect(screen.getByText(/Email inválido/i)).toBeInTheDocument();
+    expect(screen.getByText(/Email é obrigatório/i)).toBeInTheDocument();
   });
 });

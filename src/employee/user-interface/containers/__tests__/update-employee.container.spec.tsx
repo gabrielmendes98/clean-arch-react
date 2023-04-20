@@ -10,7 +10,6 @@ import { EmployeeFactory } from 'employee/domain/factories/employee.factory';
 import { notificationServiceMock } from 'shared/testing/mocks/notification.mock';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
 import { render, screen, userEvent, waitFor } from 'shared/testing/test-utils';
-import { EntityValidationError } from 'shared/domain/errors/validation.error';
 import { UpdateEmployeeContainer } from '../update-employee.container';
 
 const fakeEmployee = {
@@ -23,23 +22,19 @@ const fakeEmployee = {
 
 class FakeUpdateEmployeeUseCase extends UpdateEmployeeUseCase {
   async execute(): Promise<UpdateEmployeeUseCaseOutput> {
-    return {
-      success: true,
-    };
+    return;
   }
 }
 
 class FakeGetEmployeeUseCase extends GetEmployeeUseCase {
-  async execute(): Promise<{ employee: Employee }> {
-    return {
-      employee: EmployeeFactory.create({
-        document: fakeEmployee.document,
-        email: fakeEmployee.email,
-        id: fakeEmployee.id,
-        name: fakeEmployee.name,
-        salary: Number(fakeEmployee.salary),
-      }),
-    };
+  async execute(): Promise<Employee> {
+    return EmployeeFactory.create({
+      document: fakeEmployee.document,
+      email: fakeEmployee.email,
+      id: fakeEmployee.id,
+      name: fakeEmployee.name,
+      salary: Number(fakeEmployee.salary),
+    });
   }
 }
 
@@ -55,6 +50,9 @@ const updateEmployeeUseCase = new FakeUpdateEmployeeUseCase(
 
 describe('UpdateEmployeeContainer', () => {
   it('should call update employee use case when submit form', async () => {
+    routerServiceMock.getUrlParams.mockReturnValue({
+      id: '/ce734f82-2fac-4845-b394-66bd67e6e271',
+    });
     const updateEmployee = jest.spyOn(updateEmployeeUseCase, 'execute');
     const Component = () => {
       const formService = useEmployeeForm();
@@ -74,19 +72,12 @@ describe('UpdateEmployeeContainer', () => {
     userEvent.click(screen.getByRole('button', { name: /enviar/i }));
     expect(updateEmployee).toHaveBeenCalledWith({
       ...fakeEmployee,
-      salary: 123123,
+      salary: Number(fakeEmployee.salary),
     });
   });
 
   it('should display form errors when has validation errors', async () => {
-    jest.spyOn(updateEmployeeUseCase, 'execute').mockImplementation(() => {
-      throw new EntityValidationError({
-        name: ['Nome é obrigatório'],
-        salary: ['Salário deve ser um número positivo'],
-        document: ['Documento deve ser um CPF ou CNPJ valido'],
-        email: ['Email inválido'],
-      });
-    });
+    routerServiceMock.getUrlParams.mockReturnValue({ id: '' });
     const Component = () => {
       const formService = useEmployeeForm();
       return (
@@ -99,17 +90,14 @@ describe('UpdateEmployeeContainer', () => {
       );
     };
     render(<Component />);
-    await waitFor(() => {
-      expect(screen.getByLabelText(/nome/i)).toHaveValue(fakeEmployee.name);
-    });
     userEvent.click(screen.getByRole('button', { name: /enviar/i }));
     expect(screen.getByText(/Nome é obrigatório/i)).toBeInTheDocument();
     expect(
-      screen.getByText(/Salário deve ser um número positivo/i),
+      screen.getByText(/Salário deve ser do tipo number/i),
     ).toBeInTheDocument();
     expect(
       screen.getByText(/Documento deve ser um CPF ou CNPJ valido/i),
     ).toBeInTheDocument();
-    expect(screen.getByText(/Email inválido/i)).toBeInTheDocument();
+    expect(screen.getByText(/Email é obrigatório/i)).toBeInTheDocument();
   });
 });

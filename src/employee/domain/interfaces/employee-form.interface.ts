@@ -1,7 +1,5 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
 
-type FormErrors = Record<string, string[]>;
-
 export interface EmployeeFormFields {
   name: string;
   email: string;
@@ -18,4 +16,7 @@ export interface EmployeeFormService {
     salary: number;
   };
   parseEntityToValues(employee: Employee): EmployeeFormFields;
+  validations: {
+    [key in keyof EmployeeFormFields]: any;
+  };
 }

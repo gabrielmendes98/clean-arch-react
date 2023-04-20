@@ -9,7 +9,6 @@ import {
 import { FormProvider } from 'shared/infra/providers/form.provider';
 import { RouterService } from 'shared/domain/interfaces/router.interface';
 import { FormStorageService } from 'shared/domain/interfaces/form-storage.interface';
-import { NotificationError } from 'shared/domain/notification/notification.error';
 import { EmployeeForm } from '../components/employee-form.component';
 
 type Props = {
@@ -25,26 +24,24 @@ export const UpdateEmployeeContainer = ({
   formService,
   routerService,
 }: Props) => {
-  const { initialValues, parseValuesToInput, parseEntityToValues } =
-    formService;
+  const {
+    initialValues,
+    parseEntityToValues,
+    parseValuesToInput,
+    validations,
+  } = formService;
   const { getUrlParams } = routerService;
   const { id } = getUrlParams();
   const [employee, setEmployee] = useState<Employee>();
 
   const onSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
-    { values, setErrors }: FormStorageService<EmployeeFormFields>,
+    { values }: FormStorageService<EmployeeFormFields>,
   ) => {
-    try {
-      await updateEmployeeUseCase.execute({
-        id: employee!.id!,
-        ...parseValuesToInput(values),
-      });
-    } catch (e) {
-      if (e instanceof NotificationError) {
-        setErrors(e.errors);
-      }
-    }
+    await updateEmployeeUseCase.execute({
+      id: String(employee?.id),
+      ...parseValuesToInput(values),
+    });
   };
 
   const values = useMemo(
@@ -59,7 +56,11 @@ export const UpdateEmployeeContainer = ({
   }, []);
 
   return (
-    <FormProvider onSubmit={onSubmit} initialValues={values}>
+    <FormProvider
+      onSubmit={onSubmit}
+      initialValues={values}
+      validations={validations}
+    >
       <EmployeeForm />
     </FormProvider>
   );
