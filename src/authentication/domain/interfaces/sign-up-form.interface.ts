@@ -1,6 +1,6 @@
 export interface SignUpFormService {
   initialValues: SignUpFormFields;
-  validations: SignUpFormValidations;
+  validations: Record<keyof SignUpFormFields, any>;
 }
 
 export interface SignUpFormFields {
@@ -8,11 +8,4 @@ export interface SignUpFormFields {
   email: string;
   password: string;
   confirmPassword: string;
-}
-
-export interface SignUpFormValidations {
-  name: (value: any) => boolean;
-  email: (value: any) => boolean;
-  password: (value: any) => boolean;
-  confirmPassword: (value: any) => boolean;
 }

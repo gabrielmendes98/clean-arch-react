@@ -192,3 +192,5 @@ yupjs lib on the domain layer to validate our entities.
 - melhorar exports com index
 - refatorar dto/repository com input e output
 - refatorar pasta onde está a interface de usecases
+- melhorar organização do form provider
+- verificar se nao estou fazendo overengineering

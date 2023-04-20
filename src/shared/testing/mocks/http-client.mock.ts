@@ -1,6 +1,6 @@
 export const httpClientMock = {
-  delete: jest.fn(),
-  get: jest.fn(),
-  post: jest.fn(),
-  put: jest.fn(),
+  delete: jest.fn().mockReturnValue({ statusCode: 200, body: {} }),
+  get: jest.fn().mockReturnValue({ statusCode: 200, body: {} }),
+  post: jest.fn().mockReturnValue({ statusCode: 200, body: {} }),
+  put: jest.fn().mockReturnValue({ statusCode: 200, body: {} }),
 };

@@ -1,5 +1,5 @@
 import { SignUpFormService } from 'authentication/domain/interfaces/sign-up-form.interface';
-import { AuthServiceFactory } from 'authentication/infra/factories/authentication-service.factory';
+import { AuthRepositoryFactory } from 'authentication/infra/factories/authentication-repository.factory';
 import { useSignUpForm } from 'authentication/infra/hooks/use-sign-up-form.hook';
 import {
   SignUpUseCase,
@@ -19,7 +19,7 @@ class StubSignUpUseCase extends SignUpUseCase {
 
 const makeSignUpUseCase = () =>
   new StubSignUpUseCase(
-    AuthServiceFactory.create(),
+    AuthRepositoryFactory.create(),
     userStorageServiceMock,
     routerServiceMock,
     notificationServiceMock,

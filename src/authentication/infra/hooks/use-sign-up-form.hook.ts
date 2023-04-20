@@ -1,11 +1,10 @@
 import {
   SignUpFormFields,
   SignUpFormService,
-  SignUpFormValidations,
 } from 'authentication/domain/interfaces/sign-up-form.interface';
-import { Password } from 'authentication/domain/value-objects/password.vo';
-import { validator } from 'shared/domain/validator';
-import { Email } from 'shared/domain/value-objects/email.vo';
+import { passwordYupValidations } from 'authentication/domain/validator/password.yup.validator';
+import { yup } from 'shared/domain/validator';
+import { emailYupValidations } from 'shared/domain/validator/value-object-validators/email.yup.validator';
 
 export const useSignUpForm = (): SignUpFormService => {
   const initialValues: SignUpFormFields = {
@@ -15,12 +14,11 @@ export const useSignUpForm = (): SignUpFormService => {
     confirmPassword: '',
   };
 
-  const validations: SignUpFormValidations = {
-    name: (value: string) =>
-      validator.string().required().validateAttribute(value, 'Nome'),
-    email: Email.validate,
-    password: Password.validate,
-    confirmPassword: Password.validate,
+  const validations: SignUpFormService['validations'] = {
+    name: yup.string().required(),
+    email: emailYupValidations.email,
+    password: passwordYupValidations.password,
+    confirmPassword: passwordYupValidations.password,
   };
 
   return {

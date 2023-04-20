@@ -1,5 +1,4 @@
-import { InvalidPasswordError } from 'authentication/domain/errors/invalid-password.error';
-import { InvalidEmailError } from 'shared/domain/errors/invalid-email.error';
+import { yup } from 'shared/domain/validator';
 import { useLoginForm } from '../use-login-form.hook';
 
 describe('useLoginForm', () => {
@@ -10,19 +9,23 @@ describe('useLoginForm', () => {
     });
   });
 
-  test('email validation ', async () => {
-    expect(
-      useLoginForm().validations.email('someemail@gmail.com'),
-    ).toBeTruthy();
-    expect(() => useLoginForm().validations.email('invalid-email')).toThrow(
-      InvalidEmailError,
-    );
-  });
-
-  test('password validation ', async () => {
-    expect(useLoginForm().validations.password('123123')).toBeTruthy();
-    expect(() => useLoginForm().validations.password('1')).toThrow(
-      InvalidPasswordError,
-    );
+  test('yup validations', async () => {
+    expect(() => {
+      yup
+        .object()
+        .shape({
+          ...useLoginForm().validations,
+        })
+        .validateSync(
+          {
+            email: '',
+            password: '',
+          },
+          {
+            abortEarly: false,
+            strict: true,
+          },
+        );
+    }).toThrowError();
   });
 });

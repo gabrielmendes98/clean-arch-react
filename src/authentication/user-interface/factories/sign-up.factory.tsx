@@ -1,6 +1,6 @@
 import { SignUpFormService } from 'authentication/domain/interfaces/sign-up-form.interface';
 import { UserStorage } from 'authentication/domain/interfaces/user-storage.interface';
-import { AuthServiceFactory } from 'authentication/infra/factories/authentication-service.factory';
+import { AuthRepositoryFactory } from 'authentication/infra/factories/authentication-repository.factory';
 import { useSignUpForm } from 'authentication/infra/hooks/use-sign-up-form.hook';
 import { useUserStorage } from 'authentication/infra/hooks/use-user-storage.hook';
 import { SignUpUseCase } from 'authentication/use-cases/sign-up.use-case';
@@ -17,7 +17,7 @@ export const MakeSignUpContainer = () => {
   const routerService: RouterService = useRouter();
   const notifier: NotificationService = useNotification();
   const signUpUseCase: SignUpUseCase = new SignUpUseCase(
-    AuthServiceFactory.create(),
+    AuthRepositoryFactory.create(),
     userStorage,
     routerService,
     notifier,

@@ -1,5 +1,5 @@
 import { UserFactory } from 'authentication/domain/factories/user.factory';
-import { AuthenticationService } from 'authentication/domain/interfaces/authentication-service.interface';
+import { AuthenticationRepository } from 'authentication/domain/interfaces/authentication-repository.interface';
 import { UserStorage } from 'authentication/domain/interfaces/user-storage.interface';
 import { Password } from 'authentication/domain/value-objects/password.vo';
 import { pages } from 'shared/domain/config/pages';
@@ -13,7 +13,7 @@ export class LoginUseCase
   implements UseCase<LoginUseCaseInput, LoginUseCaseOutput>
 {
   constructor(
-    private authApiService: AuthenticationService,
+    private authApiService: AuthenticationRepository,
     private storage: UserStorage,
     private routerService: RouterService,
   ) {}

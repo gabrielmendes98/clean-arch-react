@@ -1,5 +1,5 @@
 import { LoginFormService } from 'authentication/domain/interfaces/login-form.interface';
-import { AuthServiceFactory } from 'authentication/infra/factories/authentication-service.factory';
+import { AuthRepositoryFactory } from 'authentication/infra/factories/authentication-repository.factory';
 import { useLoginForm } from 'authentication/infra/hooks/use-login-form.hook';
 import {
   LoginUseCase,
@@ -18,7 +18,7 @@ class StubLoginUseCase extends LoginUseCase {
 
 const makeLoginUseCase = () =>
   new StubLoginUseCase(
-    AuthServiceFactory.create(),
+    AuthRepositoryFactory.create(),
     userStorageServiceMock,
     routerServiceMock,
   );

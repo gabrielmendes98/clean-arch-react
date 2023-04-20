@@ -16,7 +16,5 @@ export interface EmployeeFormService {
     salary: number;
   };
   parseEntityToValues(employee: Employee): EmployeeFormFields;
-  validations: {
-    [key in keyof EmployeeFormFields]: any;
-  };
+  validations: Record<keyof EmployeeFormFields, any>;
 }

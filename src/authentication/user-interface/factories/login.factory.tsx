@@ -1,6 +1,6 @@
 import { LoginFormService } from 'authentication/domain/interfaces/login-form.interface';
 import { UserStorage } from 'authentication/domain/interfaces/user-storage.interface';
-import { AuthServiceFactory } from 'authentication/infra/factories/authentication-service.factory';
+import { AuthRepositoryFactory } from 'authentication/infra/factories/authentication-repository.factory';
 import { useLoginForm } from 'authentication/infra/hooks/use-login-form.hook';
 import { useUserStorage } from 'authentication/infra/hooks/use-user-storage.hook';
 import { LoginUseCase } from 'authentication/use-cases/login.use-case';
@@ -14,7 +14,7 @@ export const MakeLoginContainer = () => {
   const userStorage: UserStorage = useUserStorage();
   const routerService: RouterService = useRouter();
   const loginUseCase: LoginUseCase = new LoginUseCase(
-    AuthServiceFactory.create(),
+    AuthRepositoryFactory.create(),
     userStorage,
     routerService,
   );
