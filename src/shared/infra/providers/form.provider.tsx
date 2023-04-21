@@ -29,7 +29,6 @@ const yupValidation = (
   } catch (errors) {
     const formErrors: Record<symbol, yup.AnySchema> = {};
     const e = errors as yup.ValidationError;
-    console.log(e);
     e.inner.forEach(error => {
       const path = String(error.path);
       if (!formErrors[path]) {
