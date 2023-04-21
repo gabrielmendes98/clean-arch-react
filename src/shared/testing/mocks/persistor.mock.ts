@@ -1,4 +1,4 @@
-import { StoragePersistor } from 'shared/application/storage-persistor.port';
+import { StoragePersistor } from 'shared/domain/interfaces/storage-persistor.interface';
 
 export const storagePersistorMock: StoragePersistor<any> = {
   delete: jest.fn(),

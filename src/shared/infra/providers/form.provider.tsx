@@ -10,12 +10,35 @@ import {
   FormErrors,
   FormProviderProps,
   FormStorageService,
-} from 'shared/application/form-storage.port';
-import { validator } from 'shared/domain/validator';
+} from 'shared/domain/interfaces/form-storage.interface';
+import { yup } from 'shared/domain/validator';
 
 export const FormContext = createContext<FormStorageService<object> | null>(
   null,
 );
+
+const yupValidation = (
+  values: Record<string, any>,
+  validations: Record<symbol, yup.AnySchema>,
+) => {
+  try {
+    yup.object().shape(validations).validateSync(values, {
+      abortEarly: false,
+    });
+    return null;
+  } catch (errors) {
+    const formErrors: Record<symbol, yup.AnySchema> = {};
+    const e = errors as yup.ValidationError;
+    e.inner.forEach(error => {
+      const path = String(error.path);
+      if (!formErrors[path]) {
+        formErrors[path] = [];
+      }
+      formErrors[path].push(error.message);
+    });
+    return formErrors;
+  }
+};
 
 export const FormProvider = <FormFields extends object>({
   initialValues,
@@ -66,20 +89,20 @@ export const FormProvider = <FormFields extends object>({
   const _onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setWasSubmitted(true);
-    try {
-      const { values, ...otherValuesToProvide } = valuesToProvide;
-      const formData = new FormData(e.currentTarget);
-      const fieldValues = Object.fromEntries(formData.entries());
-      validator
-        .entityValidationSchema(
-          (validations || {}) as Record<string, (value: string) => boolean>,
-        )
-        .validate(fieldValues);
-      onSubmit(e, {
-        values: Object.assign(values, fieldValues),
-        ...otherValuesToProvide,
-      });
-    } catch (e) {}
+    const { values, ...otherValuesToProvide } = valuesToProvide;
+    const formData = new FormData(e.currentTarget);
+    const fieldValues = Object.fromEntries(formData.entries());
+    if (validations) {
+      const errors = yupValidation(fieldValues, validations);
+      if (errors) {
+        setErrors(errors as FormErrors<FormFields>);
+        return;
+      }
+    }
+    onSubmit(e, {
+      values: Object.assign(values, fieldValues),
+      ...otherValuesToProvide,
+    });
   };
 
   useEffect(() => {

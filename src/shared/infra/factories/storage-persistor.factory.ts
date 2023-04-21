@@ -1,5 +1,8 @@
-import { StoragePersistor } from 'shared/application/storage-persistor.port';
+import { StoragePersistor } from 'shared/domain/interfaces/storage-persistor.interface';
 import { LocalStorageAdapter } from '../adapters/local-storage.adapter';
 
-export const makeStoragePersistor = <T = any>(): StoragePersistor<T> =>
-  new LocalStorageAdapter();
+export class StoragePersistorFactory {
+  static create<T = any>(): StoragePersistor<T> {
+    return new LocalStorageAdapter();
+  }
+}

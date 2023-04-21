@@ -1,14 +1,17 @@
-import { validator } from 'shared/domain/validator';
+import { yup } from 'shared/domain/validator';
 import { FormProvider } from 'shared/infra/providers/form.provider';
-import { render, screen, userEvent } from 'shared/testing/test-utils';
+import {
+  fireEvent,
+  render,
+  screen,
+  userEvent,
+} from 'shared/testing/test-utils';
 import { FastInput, Props as InputProps } from '../fast-input.component';
 
 type Props = {
   inputProps?: InputProps | {};
   nameValue?: string;
-  validations?: Partial<{
-    name: (value: any) => boolean;
-  }>;
+  validations?: Record<string, yup.AnySchema>;
 };
 
 const renderInput = (
@@ -29,7 +32,6 @@ const renderInput = (
   );
 
 const getInput = () => screen.getByLabelText('name');
-const getSumitBtn = () => screen.getByRole('button', { name: 'submit' });
 
 describe('FastInput', () => {
   it('should init value with form provider initial value', () => {
@@ -51,23 +53,11 @@ describe('FastInput', () => {
   it('should validate on blur', () => {
     renderInput({
       validations: {
-        name: (value: any) =>
-          validator.string().required().validateAttribute(value, 'Nome'),
+        name: yup.string().required().label('Nome'),
       },
     });
     userEvent.click(getInput());
-    userEvent.click(window.document.body);
-    expect(screen.getByText('Nome é obrigatório')).toBeInTheDocument();
-  });
-
-  it('should validate on submit', () => {
-    renderInput({
-      validations: {
-        name: (value: any) =>
-          validator.string().required().validateAttribute(value, 'Nome'),
-      },
-    });
-    userEvent.click(getSumitBtn());
+    fireEvent.blur(getInput());
     expect(screen.getByText('Nome é obrigatório')).toBeInTheDocument();
   });
 

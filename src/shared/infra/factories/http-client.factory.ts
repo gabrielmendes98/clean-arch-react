@@ -1,5 +1,12 @@
-import { HttpClientService } from 'shared/application/http-client.port';
-import { AxiosAdapter } from '../adapters/axios.adapter';
+import { HttpClientAuthDecorator } from 'authentication/infra/decorators/http-client-auth.decorator';
+import { HttpClient } from 'shared/domain/interfaces/http-client.interface';
+import { HttpClientAxiosAdapter } from '../adapters/http-client-axios.adapter';
 
-export const makeHttpClient = (baseUrl: string): HttpClientService =>
-  new AxiosAdapter(baseUrl);
+export class HttpClientFactory {
+  static create(baseUrl: string): HttpClient {
+    return new HttpClientAuthDecorator(
+      baseUrl,
+      new HttpClientAxiosAdapter(baseUrl),
+    );
+  }
+}

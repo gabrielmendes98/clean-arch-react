@@ -8,28 +8,28 @@ export interface EmployeeListItem {
   email: string;
 }
 
-export type EmployeeListProps = {
-  items: EmployeeListItem[];
-};
-
 export class EmployeeList {
-  items: EmployeeListItem[];
+  private _employees: EmployeeListItem[];
 
-  constructor(items?: EmployeeListItem[]) {
-    this.items = [];
-    if (items) {
-      this.items = items;
+  constructor(employees?: EmployeeListItem[]) {
+    this._employees = [];
+    if (employees) {
+      this._employees = employees;
     }
   }
 
+  get employees() {
+    return this._employees;
+  }
+
   addItem(item: EmployeeListItem, index = 0) {
-    UniqueEntityId.validate(item.id);
-    this.items.splice(index, 0, item);
+    new UniqueEntityId(item.id).validate();
+    this._employees.splice(index, 0, item);
   }
 
   removeItem(item: EmployeeListItem) {
-    const index = this.items.indexOf(item);
-    this.items.splice(index, 1);
+    const index = this._employees.indexOf(item);
+    this._employees.splice(index, 1);
     return index;
   }
 }

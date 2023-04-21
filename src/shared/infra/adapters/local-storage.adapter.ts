@@ -1,4 +1,4 @@
-import { StoragePersistor } from 'shared/application/storage-persistor.port';
+import { StoragePersistor } from 'shared/domain/interfaces/storage-persistor.interface';
 
 export class LocalStorageAdapter<T = any> implements StoragePersistor<T> {
   set(key: string, value: T): void {

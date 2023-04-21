@@ -1,19 +1,20 @@
-import { InvalidEmailError } from 'shared/domain/errors/invalid-email.error';
+import { NotificationError } from 'shared/domain/notification/notification.error';
 import { Email } from '../email.vo';
 
 describe('Email Value Object', () => {
-  test('constructor', () => {
-    const validator = jest.spyOn(Email, 'validate');
-    const email = new Email('valid@email.com');
-    expect(validator).toHaveBeenCalledWith('valid@email.com');
-    expect(email.value).toBe('valid@email.com');
+  it('should validate email on constructor', () => {
+    expect(() => new Email('123')).toThrow(NotificationError);
+    expect(() => new Email('')).toThrow(NotificationError);
   });
 
-  test('validator success', () => {
-    expect(Email.validate('valid@email.com')).toBeTruthy();
+  it('should not throw error on valid email', () => {
+    expect(() => new Email('validemail@gmail.com')).not.toThrow(
+      NotificationError,
+    );
   });
 
-  test('validator error', () => {
-    expect(() => Email.validate('123')).toThrow(InvalidEmailError);
+  it('should set value on constructor', () => {
+    const email = new Email('someemail@gmail.com');
+    expect(email.value).toBe('someemail@gmail.com');
   });
 });

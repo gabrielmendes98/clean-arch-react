@@ -1,28 +1,21 @@
-import { InvalidDocumentError } from '../errors/invalid-document.error';
+import { DocumentValidatorFactory } from '../factories/document.validator.factory';
+import { Notification } from '../notification/notification';
+import { NotificationError } from '../notification/notification.error';
 import { ValueObject } from './value-object';
-import { validateCnpj } from './utils/cnpj';
-import { validateCpf } from './utils/cpf';
 
 export class Document extends ValueObject<string> {
+  public notification: Notification;
+
   constructor(document: string) {
     super(document);
-    Document.validate(document);
-  }
-
-  static validate(document: string) {
-    const isValid =
-      Document.isValidCpf(document) || Document.isValidCnpj(document);
-    if (!isValid) {
-      throw new InvalidDocumentError();
+    this.notification = new Notification();
+    this.validate();
+    if (this.notification.hasErrors()) {
+      throw new NotificationError(this.notification.errors);
     }
-    return true;
   }
 
-  private static isValidCpf(cpf: string) {
-    return validateCpf(cpf);
-  }
-
-  private static isValidCnpj(cnpj: string) {
-    return validateCnpj(cnpj);
+  validate() {
+    DocumentValidatorFactory.create().validate(this);
   }
 }

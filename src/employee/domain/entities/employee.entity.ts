@@ -1,82 +1,59 @@
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 import { Document } from 'shared/domain/value-objects/document.vo';
 import { Email } from 'shared/domain/value-objects/email.vo';
-import { validator } from 'shared/domain/validator';
-
-export type EmployeeProps = {
-  name: string;
-  salary: number;
-  id: UniqueEntityId;
-  document: Document;
-  email: Email;
-};
+import { Notification } from 'shared/domain/notification/notification';
+import { NotificationError } from 'shared/domain/notification/notification.error';
+import { EmployeeValidatorFactory } from '../factories/employee.validator.factory';
 
 export class Employee {
-  constructor(private readonly props: EmployeeProps) {
-    Employee.validate({
-      ...props,
-      id: props.id.value,
-      document: props.document.value,
-      email: props.email.value,
-    });
-    Object.assign(this.props, props);
+  public notification: Notification;
+  private _name: string;
+  private _salary: number;
+  private _document: Document;
+  private _email: Email;
+  private _id?: UniqueEntityId;
+
+  constructor(
+    name: string,
+    salary: number,
+    document: Document,
+    email: Email,
+    id?: UniqueEntityId,
+  ) {
+    this.notification = new Notification();
+    this._name = name;
+    this._salary = salary;
+    this._document = document;
+    this._email = email;
+    this._id = id;
+    this.validate();
+    if (this.notification.hasErrors()) {
+      throw new NotificationError(this.notification.errors);
+    }
   }
 
-  static validate(props: {
-    name: string;
-    salary: number;
-    id?: UniqueEntityId['value'];
-    document: Document['value'];
-    email: Email['value'];
-  }): boolean {
-    return validator
-      .entityValidationSchema(
-        {
-          name: Employee.validateName,
-          salary: Employee.validateSalary,
-          id: UniqueEntityId.validate,
-          document: Document.validate,
-          email: Email.validate,
-        },
-        ['id'],
-      )
-      .validate(props);
-  }
-
-  static validateSalary(value: number): boolean {
-    return validator
-      .number()
-      .positive()
-      .required()
-      .validateAttribute(value, 'Salário');
-  }
-
-  static validateName(value: string) {
-    return validator
-      .string()
-      .max(100)
-      .required()
-      .validateAttribute(value, 'Nome');
+  validate(): void {
+    EmployeeValidatorFactory.create().validate(this);
   }
 
   get id() {
-    return this.props.id.value;
+    return this._id?.value;
   }
 
   get document() {
-    return this.props.document.value;
+    return this._document.value;
   }
 
   get email() {
-    return this.props.email.value;
+    return this._email.value;
   }
 
   get name() {
-    return this.props.name;
+    return this._name;
   }
 
   get salary() {
-    return this.props.salary;
+    return this._salary;
   }
 
   toJSON() {

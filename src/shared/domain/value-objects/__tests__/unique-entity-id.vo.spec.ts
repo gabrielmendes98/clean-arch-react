@@ -1,23 +1,20 @@
-import { InvalidUuidError } from 'shared/domain/errors/invalid-uuid.error';
+import { NotificationError } from 'shared/domain/notification/notification.error';
 import { UniqueEntityId } from '../unique-entity-id.vo';
 
 describe('UniqueEntityId Value Object', () => {
-  test('constructor', () => {
-    const validator = jest.spyOn(UniqueEntityId, 'validate');
-    const uuid = new UniqueEntityId('b4167d0c-b441-425e-817c-0a702f2c9a01');
-    expect(validator).toHaveBeenCalledWith(
-      'b4167d0c-b441-425e-817c-0a702f2c9a01',
-    );
-    expect(uuid.value).toBe('b4167d0c-b441-425e-817c-0a702f2c9a01');
+  it('should validate uuid on constructor', () => {
+    expect(() => new UniqueEntityId('123')).toThrow(NotificationError);
+    expect(() => new UniqueEntityId('')).toThrow(NotificationError);
   });
 
-  test('validator success', () => {
+  it('should not throw error on valid uuid', () => {
     expect(
-      UniqueEntityId.validate('b4167d0c-b441-425e-817c-0a702f2c9a01'),
-    ).toBeTruthy();
+      () => new UniqueEntityId('b2e4d4d0-4b9c-4d4b-9f4c-0c4d4d4d4d4d'),
+    ).not.toThrow(NotificationError);
   });
 
-  test('validator error', () => {
-    expect(() => UniqueEntityId.validate('123')).toThrow(InvalidUuidError);
+  it('should set value on constructor', () => {
+    const uuid = new UniqueEntityId('b2e4d4d0-4b9c-4d4b-9f4c-0c4d4d4d4d4d');
+    expect(uuid.value).toBe('b2e4d4d0-4b9c-4d4b-9f4c-0c4d4d4d4d4d');
   });
 });

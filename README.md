@@ -183,3 +183,11 @@ yupjs lib on the domain layer to validate our entities.
 - http://wiki.c2.com/?FourLayerArchitecture
 - https://alistair.cockburn.us/hexagonal-architecture/
 - https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+
+# TODO
+
+- adicionar observable à listagem de contatos ao inves de ter um storage pra ela
+  useSyncExternalStore
+- melhorar exports com index
+- melhorar organização do form provider
+- verificar se nao estou fazendo overengineering
