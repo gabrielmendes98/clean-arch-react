@@ -5,7 +5,7 @@ import {
   UserStorage,
 } from 'authentication/domain/interfaces/user-storage.interface';
 import { StoragePersistor } from 'shared/domain/interfaces/storage-persistor.interface';
-import { UseCase } from 'shared/domain/interfaces/use-case.interface';
+import { UseCase } from 'shared/use-cases/use-case.interface';
 
 export class RetrivePersistedUserUseCase
   implements

@@ -3,8 +3,8 @@ import { UserStorage } from 'authentication/domain/interfaces/user-storage.inter
 import { Password } from 'authentication/domain/value-objects/password.vo';
 import { pages } from 'shared/domain/config/pages';
 import { RouterService } from 'shared/domain/interfaces/router.interface';
-import { UseCase } from 'shared/domain/interfaces/use-case.interface';
 import { Email } from 'shared/domain/value-objects/email.vo';
+import { UseCase } from 'shared/use-cases/use-case.interface';
 
 export class LoginUseCase
   implements UseCase<LoginUseCaseInput, LoginUseCaseOutput>

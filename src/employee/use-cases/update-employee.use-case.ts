@@ -1,9 +1,9 @@
 import { EmployeeRepository } from 'employee/domain/interfaces/employee-repository.interface';
 import { EmployeeFactory } from 'employee/domain/factories/employee.factory';
 import { pages } from 'shared/domain/config/pages';
-import { UseCase } from 'shared/domain/interfaces/use-case.interface';
 import { NotificationService } from 'shared/domain/interfaces/notification.interface';
 import { RouterService } from 'shared/domain/interfaces/router.interface';
+import { UseCase } from 'shared/use-cases/use-case.interface';
 
 export class UpdateEmployeeUseCase
   implements UseCase<UpdateEmployeeUseCaseInput, UpdateEmployeeUseCaseOutput>

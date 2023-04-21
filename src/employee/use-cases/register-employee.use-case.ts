@@ -1,7 +1,7 @@
 import { EmployeeFactory } from 'employee/domain/factories/employee.factory';
 import { EmployeeRepository } from 'employee/domain/interfaces/employee-repository.interface';
 import { NotificationService } from 'shared/domain/interfaces/notification.interface';
-import { UseCase } from 'shared/domain/interfaces/use-case.interface';
+import { UseCase } from 'shared/use-cases/use-case.interface';
 
 export class RegisterEmployeeUseCase
   implements

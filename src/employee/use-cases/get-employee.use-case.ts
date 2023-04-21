@@ -1,7 +1,7 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
 import { EmployeeRepository } from 'employee/domain/interfaces/employee-repository.interface';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
-import { UseCase } from 'shared/domain/interfaces/use-case.interface';
+import { UseCase } from 'shared/use-cases/use-case.interface';
 
 export class GetEmployeeUseCase
   implements UseCase<GetEmployeeUseCaseInput, GetEmployeeUseCaseOutput>

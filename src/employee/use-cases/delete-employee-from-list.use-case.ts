@@ -2,7 +2,7 @@ import { EmployeeListItem } from 'employee/domain/entities/employee-list.entity'
 import { EmployeeRepository } from 'employee/domain/interfaces/employee-repository.interface';
 import { EmployeeListStorage } from 'employee/domain/interfaces/employee-list.interface';
 import { EmployeeFactory } from 'employee/domain/factories/employee.factory';
-import { UseCase } from 'shared/domain/interfaces/use-case.interface';
+import { UseCase } from 'shared/use-cases/use-case.interface';
 
 export class DeleteEmployeeFromListUseCase
   implements

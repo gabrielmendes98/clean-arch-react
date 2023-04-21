@@ -1,6 +1,6 @@
 import { EmployeeList } from 'employee/domain/entities/employee-list.entity';
 import { EmployeeRepository } from 'employee/domain/interfaces/employee-repository.interface';
-import { UseCase } from 'shared/domain/interfaces/use-case.interface';
+import { UseCase } from 'shared/use-cases/use-case.interface';
 
 export class ListEmployeesUseCase
   implements UseCase<ListEmployeesUseCaseInput, ListEmployeesUseCaseOutput>
