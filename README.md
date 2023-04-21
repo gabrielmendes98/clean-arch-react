@@ -189,6 +189,5 @@ yupjs lib on the domain layer to validate our entities.
 - adicionar observable à listagem de contatos ao inves de ter um storage pra ela
   useSyncExternalStore
 - melhorar exports com index
-- refatorar pasta onde está a interface de usecases
 - melhorar organização do form provider
 - verificar se nao estou fazendo overengineering
