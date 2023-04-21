@@ -1,14 +1,16 @@
+import { Email } from 'shared/domain/value-objects/email.vo';
 import { User } from '../entities/user.entity';
+import { Password } from '../value-objects/password.vo';
 
 export interface AuthenticationRepositoryLoginInput {
-  email: string;
-  password: string;
+  email: Email;
+  password: Password;
 }
 export interface AuthenticationRepositorySignUpInput {
   name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
+  email: Email;
+  password: Password;
+  confirmPassword: Password;
 }
 
 export interface AuthenticationRepository {

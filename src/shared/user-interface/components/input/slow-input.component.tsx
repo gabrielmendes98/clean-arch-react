@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useFormStorage } from 'shared/infra/hooks/use-form-storage.hook';
 import styles from './input.module.scss';
 

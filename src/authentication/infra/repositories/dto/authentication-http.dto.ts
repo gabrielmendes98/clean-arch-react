@@ -18,6 +18,7 @@ export interface SignUpHttpResponseDto {
 }
 
 export interface SignUpHttpRequestDto {
+  name: string;
   email: string;
   password: string;
   confirmPassword: string;

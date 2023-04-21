@@ -27,13 +27,10 @@ describe('LoginView', () => {
   it('should call login use case with form values', async () => {
     const loginUseCase: LoginUseCase = makeLoginUseCase();
     const formService: LoginFormService = {
+      ...useLoginForm(),
       initialValues: {
         email: 'valid@email.com',
         password: 'validPassword',
-      },
-      validations: {
-        email: jest.fn(),
-        password: jest.fn(),
       },
     };
 
@@ -61,8 +58,10 @@ describe('LoginView', () => {
     userEvent.click(screen.getByLabelText(/email/i));
     userEvent.click(screen.getByLabelText(/senha/i));
     userEvent.click(document.body);
-    expect(screen.getByText(/email inválido/i)).toBeInTheDocument();
-    expect(screen.getByText(/senha inválida/i)).toBeInTheDocument();
+    expect(screen.getByText(/email é obrigatório/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/senha deve ter pelo menos 6 caracteres/i),
+    ).toBeInTheDocument();
   });
 
   it('should validate fields on submit', () => {
@@ -74,7 +73,9 @@ describe('LoginView', () => {
       />,
     );
     userEvent.click(screen.getByRole('button', { name: /enviar/i }));
-    expect(screen.getByText(/email inválido/i)).toBeInTheDocument();
-    expect(screen.getByText(/senha inválida/i)).toBeInTheDocument();
+    expect(screen.getByText(/email é obrigatório/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/senha deve ter pelo menos 6 caracteres/i),
+    ).toBeInTheDocument();
   });
 });

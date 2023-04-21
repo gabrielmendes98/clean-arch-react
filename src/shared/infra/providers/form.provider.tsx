@@ -29,6 +29,7 @@ const yupValidation = (
   } catch (errors) {
     const formErrors: Record<symbol, yup.AnySchema> = {};
     const e = errors as yup.ValidationError;
+    console.log(e);
     e.inner.forEach(error => {
       const path = String(error.path);
       if (!formErrors[path]) {
@@ -36,7 +37,6 @@ const yupValidation = (
       }
       formErrors[path].push(error.message);
     });
-    console.log(formErrors);
     return formErrors;
   }
 };
@@ -94,7 +94,6 @@ export const FormProvider = <FormFields extends object>({
     const formData = new FormData(e.currentTarget);
     const fieldValues = Object.fromEntries(formData.entries());
     if (validations) {
-      console.log(validations);
       const errors = yupValidation(fieldValues, validations);
       if (errors) {
         setErrors(errors as FormErrors<FormFields>);

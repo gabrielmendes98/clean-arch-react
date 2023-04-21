@@ -15,7 +15,7 @@ export const useSignUpForm = (): SignUpFormService => {
   };
 
   const validations: SignUpFormService['validations'] = {
-    name: yup.string().required(),
+    name: yup.string().required().label('Nome'),
     email: emailYupValidations.email,
     password: passwordYupValidations.password,
     confirmPassword: passwordYupValidations.password,

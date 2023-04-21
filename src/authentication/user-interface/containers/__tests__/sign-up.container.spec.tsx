@@ -29,17 +29,12 @@ describe('SignUpView', () => {
   it('should call sign up use case with form values', async () => {
     const signUpUseCase: SignUpUseCase = makeSignUpUseCase();
     const formService: SignUpFormService = {
+      ...useSignUpForm(),
       initialValues: {
         name: 'valid name',
         email: 'valid@email.com',
         password: 'validPassword',
         confirmPassword: 'validPassword',
-      },
-      validations: {
-        name: jest.fn(),
-        email: jest.fn(),
-        password: jest.fn(),
-        confirmPassword: jest.fn(),
       },
     };
 
@@ -75,8 +70,10 @@ describe('SignUpView', () => {
     userEvent.click(screen.getByLabelText(/confirmar senha/i));
     userEvent.click(document.body);
     expect(screen.getByText(/nome é obrigatório/i)).toBeInTheDocument();
-    expect(screen.getByText(/email inválido/i)).toBeInTheDocument();
-    expect(screen.getAllByText(/senha inválida/i)).toHaveLength(2);
+    expect(screen.getByText(/email é obrigatório/i)).toBeInTheDocument();
+    expect(
+      screen.getAllByText(/senha deve ter pelo menos 6 caracteres/i),
+    ).toHaveLength(2);
   });
 
   it('should validate fields on submit', () => {
@@ -89,7 +86,9 @@ describe('SignUpView', () => {
     );
     userEvent.click(screen.getByRole('button', { name: /enviar/i }));
     expect(screen.getByText(/nome é obrigatório/i)).toBeInTheDocument();
-    expect(screen.getByText(/email inválido/i)).toBeInTheDocument();
-    expect(screen.getAllByText(/senha inválida/i)).toHaveLength(2);
+    expect(screen.getByText(/email é obrigatório/i)).toBeInTheDocument();
+    expect(
+      screen.getAllByText(/senha deve ter pelo menos 6 caracteres/i),
+    ).toHaveLength(2);
   });
 });

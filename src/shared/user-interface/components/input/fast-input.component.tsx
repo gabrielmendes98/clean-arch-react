@@ -32,7 +32,7 @@ export const FastInput = ({
   const validate = () => {
     try {
       if (validations) {
-        validations[name](value);
+        validations[name].validateSync(value);
       }
     } catch (e: any) {
       const error = e.errors?.[0] || e.message || 'Campo inválido';

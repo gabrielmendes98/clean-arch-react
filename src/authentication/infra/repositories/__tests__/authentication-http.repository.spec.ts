@@ -1,4 +1,6 @@
+import { Password } from 'authentication/domain/value-objects/password.vo';
 import { httpClientMock } from 'shared/testing/mocks/http-client.mock';
+import { Email } from 'shared/domain/value-objects/email.vo';
 import { AuthenticationHttpRepository } from '../authentication-http.repository';
 
 const body = {
@@ -20,7 +22,10 @@ describe('AuthenticationHttpRepository', () => {
       password: '123213',
     };
     const repository = new AuthenticationHttpRepository(httpClientMock);
-    await repository.login(data);
+    await repository.login({
+      email: new Email(data.email),
+      password: new Password(data.password),
+    });
     expect(httpClientMock.post).toHaveBeenCalledWith('/session', data);
   });
 
@@ -36,7 +41,12 @@ describe('AuthenticationHttpRepository', () => {
       name: 'some name',
     };
     const repository = new AuthenticationHttpRepository(httpClientMock);
-    await repository.signUp(data);
+    await repository.signUp({
+      email: new Email(data.email),
+      password: new Password(data.password),
+      confirmPassword: new Password(data.confirmPassword),
+      name: data.name,
+    });
     expect(httpClientMock.post).toHaveBeenCalledWith('/users', data);
   });
 });

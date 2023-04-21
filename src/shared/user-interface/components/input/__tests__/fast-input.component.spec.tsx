@@ -11,9 +11,7 @@ import { FastInput, Props as InputProps } from '../fast-input.component';
 type Props = {
   inputProps?: InputProps | {};
   nameValue?: string;
-  validations?: Partial<{
-    name: (value: any) => boolean;
-  }>;
+  validations?: Record<string, yup.AnySchema>;
 };
 
 const renderInput = (
@@ -55,8 +53,7 @@ describe('FastInput', () => {
   it('should validate on blur', () => {
     renderInput({
       validations: {
-        name: (value: any) =>
-          yup.string().required().validateAttribute(value, 'Nome'),
+        name: yup.string().required().label('Nome'),
       },
     });
     userEvent.click(getInput());

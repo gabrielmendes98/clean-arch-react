@@ -1,4 +1,3 @@
-import { Employee } from 'employee/domain/entities/employee.entity';
 import { EmployeeRepositoryFactory } from 'employee/infra/factories/employee-repository.factory';
 import { EmployeeFactory } from 'employee/domain/factories/employee.factory';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';

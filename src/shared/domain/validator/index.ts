@@ -1,9 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable no-template-curly-in-string */
-/* istanbul ignore file */
 import * as yup from 'yup';
-import { NotificationError } from '../notification/notification.error';
-import { printValue } from './util';
 
 export class ValidationError extends Error {
   constructor(public errors?: string[]) {
@@ -61,25 +56,5 @@ export const validationMessages = {
 };
 
 yup.setLocale(validationMessages);
-
-// TODO fix add method ts error
-yup.addMethod(
-  // @ts-ignore
-  yup.BaseSchema,
-  'validateAttribute',
-  function (value: any, label?: string) {
-    try {
-      if (label) {
-        this.label(label).validateSync(value, { strict: true });
-        return true;
-      }
-      this.validateSync(value, { strict: true });
-      return true;
-    } catch (error) {
-      if (error instanceof yup.ValidationError)
-        throw new ValidationError(error.errors);
-    }
-  },
-);
 
 export { yup };
