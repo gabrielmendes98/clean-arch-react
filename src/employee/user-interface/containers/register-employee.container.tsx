@@ -3,8 +3,8 @@ import {
   EmployeeFormFields,
   EmployeeFormService,
 } from 'employee/domain/interfaces/employee-form.interface';
-import { FormProvider } from 'shared/infra/providers/form.provider';
 import { FormStorageService } from 'shared/domain/interfaces/form-storage.interface';
+import { FormProvider } from 'shared/infra/providers/form/form.provider';
 import { EmployeeForm } from '../components/employee-form.component';
 
 type Props = {

@@ -1,5 +1,5 @@
-import { FormProvider } from 'shared/infra/providers/form.provider';
 import { render, screen, userEvent } from 'shared/testing/test-utils';
+import { FormProvider } from 'shared/infra/providers/form/form.provider';
 import { SlowInput, Props as InputProps } from '../slow-input.component';
 
 type Props = {

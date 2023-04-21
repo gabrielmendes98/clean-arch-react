@@ -1,11 +1,12 @@
 import { FormEvent, PropsWithChildren } from 'react';
+import { yup } from '../validator';
 
 export type FormErrors<FormFields> = Partial<{
   [K in keyof FormFields]: string[];
 }>;
 
 export type FormValidations<FormFields> = Partial<{
-  [K in keyof FormFields]: any;
+  [K in keyof FormFields]: yup.AnySchema;
 }>;
 
 export interface FormStorageService<FormFields = object> {

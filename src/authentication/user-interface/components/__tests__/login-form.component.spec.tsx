@@ -1,6 +1,6 @@
 import { useLoginForm } from 'authentication/infra/hooks/use-login-form.hook';
-import { FormProvider } from 'shared/infra/providers/form.provider';
 import { render, screen } from 'shared/testing/test-utils';
+import { FormProvider } from 'shared/infra/providers/form/form.provider';
 import { LoginForm } from '../login-form.component';
 
 describe('LoginForm', () => {

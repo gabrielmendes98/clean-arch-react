@@ -1,5 +1,5 @@
-import { FormProvider } from 'shared/infra/providers/form.provider';
 import { renderHook } from 'shared/testing/test-utils';
+import { FormProvider } from 'shared/infra/providers/form/form.provider';
 import { useFormStorage } from '../use-form-storage.hook';
 
 describe('useFormStorage', () => {

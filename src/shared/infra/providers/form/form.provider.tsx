@@ -1,44 +1,11 @@
-import {
-  createContext,
-  useState,
-  FormEvent,
-  useCallback,
-  useMemo,
-  useEffect,
-} from 'react';
+import { useState, FormEvent, useCallback, useMemo, useEffect } from 'react';
+
 import {
   FormErrors,
   FormProviderProps,
-  FormStorageService,
 } from 'shared/domain/interfaces/form-storage.interface';
-import { yup } from 'shared/domain/validator';
-
-export const FormContext = createContext<FormStorageService<object> | null>(
-  null,
-);
-
-const yupValidation = (
-  values: Record<string, any>,
-  validations: Record<symbol, yup.AnySchema>,
-) => {
-  try {
-    yup.object().shape(validations).validateSync(values, {
-      abortEarly: false,
-    });
-    return null;
-  } catch (errors) {
-    const formErrors: Record<symbol, yup.AnySchema> = {};
-    const e = errors as yup.ValidationError;
-    e.inner.forEach(error => {
-      const path = String(error.path);
-      if (!formErrors[path]) {
-        formErrors[path] = [];
-      }
-      formErrors[path].push(error.message);
-    });
-    return formErrors;
-  }
-};
+import { FormContext } from './form.context';
+import { yupValidation } from './utils';
 
 export const FormProvider = <FormFields extends object>({
   initialValues,
@@ -72,20 +39,6 @@ export const FormProvider = <FormFields extends object>({
     setErrors({});
   }, []);
 
-  const valuesToProvide = useMemo(
-    () => ({
-      values,
-      onChangeField,
-      resetForm,
-      errors,
-      setErrors,
-      setFieldErrors,
-      validations,
-      wasSubmitted,
-    }),
-    [errors, onChangeField, resetForm, setFieldErrors, values, wasSubmitted],
-  );
-
   const _onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setWasSubmitted(true);
@@ -108,6 +61,20 @@ export const FormProvider = <FormFields extends object>({
   useEffect(() => {
     setValues(initialValues);
   }, [initialValues]);
+
+  const valuesToProvide = useMemo(
+    () => ({
+      values,
+      onChangeField,
+      resetForm,
+      errors,
+      setErrors,
+      setFieldErrors,
+      validations,
+      wasSubmitted,
+    }),
+    [errors, onChangeField, resetForm, setFieldErrors, values, wasSubmitted],
+  );
 
   return (
     <FormContext.Provider value={valuesToProvide}>

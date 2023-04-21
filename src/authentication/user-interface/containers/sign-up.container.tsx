@@ -4,7 +4,7 @@ import {
 } from 'authentication/domain/interfaces/sign-up-form.interface';
 import { SignUpUseCase } from 'authentication/use-cases/sign-up.use-case';
 import { FormStorageService } from 'shared/domain/interfaces/form-storage.interface';
-import { FormProvider } from 'shared/infra/providers/form.provider';
+import { FormProvider } from 'shared/infra/providers/form/form.provider';
 import { SignUpForm } from '../components/sign-up-form.component';
 
 type Props = {

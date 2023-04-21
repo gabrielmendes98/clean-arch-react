@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { act, renderHook } from 'shared/testing/test-utils';
-import { FormContext, FormProvider } from '../form.provider';
+import { FormProvider } from './form.provider';
+import { FormContext } from './form.context';
 
 const useHook = () => {
   const wrapper = ({ children }) => (

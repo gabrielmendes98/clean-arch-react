@@ -1,11 +1,11 @@
 import { yup } from 'shared/domain/validator';
-import { FormProvider } from 'shared/infra/providers/form.provider';
 import {
   fireEvent,
   render,
   screen,
   userEvent,
 } from 'shared/testing/test-utils';
+import { FormProvider } from 'shared/infra/providers/form/form.provider';
 import { FastInput, Props as InputProps } from '../fast-input.component';
 
 type Props = {

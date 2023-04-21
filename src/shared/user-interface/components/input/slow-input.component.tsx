@@ -17,7 +17,8 @@ export const SlowInput = ({
   type = 'text',
   onChange,
 }: Props) => {
-  const { values, onChangeField, errors, setFieldErrors } = useFormStorage();
+  const { values, onChangeField, errors, setFieldErrors, validations } =
+    useFormStorage();
 
   const _id = useMemo(() => id || name, [id, name]);
 
@@ -34,6 +35,16 @@ export const SlowInput = ({
     onChange && onChange(e);
   };
 
+  const validate = () => {
+    try {
+      if (validations) {
+        validations[name].validateSync(values[name]);
+      }
+    } catch (e: any) {
+      setFieldErrors(name, e.errors);
+    }
+  };
+
   return (
     <div className={styles.box}>
       <label htmlFor={_id}>{label}</label>
@@ -43,6 +54,7 @@ export const SlowInput = ({
         name={name}
         value={values[name]}
         onChange={handleChange}
+        onBlur={validate}
       />
       <span className={styles.error}>{errorMessage}</span>
     </div>
