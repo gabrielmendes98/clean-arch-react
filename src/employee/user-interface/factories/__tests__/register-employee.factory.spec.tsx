@@ -1,5 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
-import { UserContext } from 'authentication/infra/providers/user.provider';
+import { UserContext } from 'user/infra/providers/user.provider';
 import { render } from 'shared/testing/test-utils';
 import { MakeRegisterEmployeeContainer } from '../register-employee.factory';
 

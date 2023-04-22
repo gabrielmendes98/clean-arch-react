@@ -1,5 +1,5 @@
-import { UserStorage } from 'authentication/domain/interfaces/user-storage.interface';
-import { useUserStorage } from 'authentication/infra/hooks/use-user-storage.hook';
+import { UserStorage } from 'user/domain/interfaces/user-storage.interface';
+import { useUserStorage } from 'user/infra/hooks/use-user-storage.hook';
 import { Home } from '../containers/home.container';
 
 export const MakeHomeContainer = () => {

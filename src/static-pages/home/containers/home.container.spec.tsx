@@ -1,4 +1,4 @@
-import { UserFactory } from 'authentication/domain/factories/user.factory';
+import { UserFactory } from 'user/domain/factories/user.factory';
 import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';
 import { render, screen } from 'shared/testing/test-utils';
 import { Home } from './home.container';

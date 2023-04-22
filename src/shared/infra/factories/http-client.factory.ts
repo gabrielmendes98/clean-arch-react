@@ -1,4 +1,4 @@
-import { HttpClientAuthDecorator } from 'authentication/infra/decorators/http-client-auth.decorator';
+import { HttpClientAuthDecorator } from 'user/infra/decorators/http-client-auth.decorator';
 import { HttpClient } from 'shared/domain/interfaces/http-client.interface';
 import { HttpClientAxiosAdapter } from '../adapters/http-client-axios.adapter';
 
