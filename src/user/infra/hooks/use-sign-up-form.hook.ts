@@ -3,7 +3,7 @@ import {
   SignUpFormService,
 } from 'user/domain/interfaces/sign-up-form.interface';
 import { passwordYupValidations } from 'user/domain/validator/password.yup.validator';
-import { yup } from 'shared/domain/validator';
+import { userYupValidations } from 'user/domain/validator/user.yup.validator';
 import { emailYupValidations } from 'shared/domain/validator/value-object-validators/email.yup.validator';
 
 export const useSignUpForm = (): SignUpFormService => {
@@ -15,7 +15,7 @@ export const useSignUpForm = (): SignUpFormService => {
   };
 
   const validations: SignUpFormService['validations'] = {
-    name: yup.string().required().label('Nome'),
+    name: userYupValidations.name,
     email: emailYupValidations.email,
     password: passwordYupValidations.password,
     confirmPassword: passwordYupValidations.password,
