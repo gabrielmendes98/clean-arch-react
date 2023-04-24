@@ -1,10 +1,10 @@
 # Clean Architecture + Ports and Adapters with Reactjs
 
 This is a project made with the intention of applying the concepts of Clean
-Architecture and Ports and Adapters in a front-end application, as in most cases
-we see these concepts being applied only on the backend. Furthermore, some
-programming principles and design patterns were used to make the code more
-readable, flexible and resilient.
+Architecture in a front-end application, as in most cases we see these concepts
+being applied only on the backend. Furthermore, some programming principles and
+design patterns were used to make the code more readable, flexible and
+resilient.
 
 Summary:
 
@@ -63,11 +63,11 @@ Summary:
 
 ## [Layers](#layers)
 
-- User Interface -> react files, components, views, pages.
-- Infrastructure -> drivers, adapters, repository implementation, libs,
+- **User Interface**: react files, components, containers, pages.
+- **Infrastructure**: drivers, adapters, repository implementation, libs,
   formatters, implementations in general.
-- Application -> use cases, models, dtos, services, repository/ports interfaces.
-- Domain -> business rules interfaces, validations, entities, value objects.
+- **UseCase**: use cases
+- **Domain**: business rules interfaces, validations, entities, value objects.
 
 <img src='./resources/ca-diagram.png' width="350" />
 
@@ -84,19 +84,10 @@ The data structure of domain entities and the essence of their transformations
 are independent from the outer world. External events trigger domain
 transformations, but do not determine how they will occur.
 
-## [Application Layer](#application-layer)
+## [Use Case Layer](#application-layer)
 
-Around the domain is the application layer. This layer describes use cases, i.e.
+Around the domain is the use case layer. This layer describes use cases, i.e.
 user scenarios. They are responsible for what happens after some event occurs.
-
-Also, in the application layer there are ports, the specifications of how our
-application wants the outside world to communicate with it. Usually a port is an
-interface, a behavior contract.
-
-Ports serve as a “buffer zone” between our application's wishes and the reality.
-Input Ports tell us how the application wants to be contacted by the outside
-world. Output Ports say how the application is going to communicate with the
-outside world to make it ready.
 
 ## [Infrastructure Layer](#infrastructure-layer)
 
@@ -135,7 +126,7 @@ module should belong to.
 Only the outer layers can depend on the inner layers.
 
 - the domain must be independent.
-- the application layer can depend on the domain.
+- the use case layer can depend on the domain.
 - the infrastructure layer can depend on anything except on ui layer.
 - the user interface layer can depend on anything.
 
@@ -163,6 +154,8 @@ yupjs lib on the domain layer to validate our entities.
 - Adapter
 - Decorator
 - Composite
+- Repository
+- Notification
 
 ## [Git, CI, CD](#git-ci-cd)
 
@@ -186,6 +179,5 @@ yupjs lib on the domain layer to validate our entities.
 
 # TODO
 
-- adicionar observable à listagem de contatos ao inves de ter um storage pra ela
-  useSyncExternalStore
-- verificar se nao estou fazendo overengineering
+- melhorar README.
+- montar apresentação
