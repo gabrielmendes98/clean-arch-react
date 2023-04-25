@@ -22,14 +22,16 @@ export class RetrivePersistedUserUseCase
   execute(): RetrivePersistedUserUseCaseOutput {
     const persistedUser = this.persistor.get(USER_STORAGE_KEY);
     if (persistedUser) {
-      this.userService.updateUser(
-        UserFactory.create({
-          id: persistedUser.id,
-          email: persistedUser.email,
-          token: persistedUser.token,
-          name: persistedUser.name,
-        }),
-      );
+      const user = UserFactory.create({
+        id: persistedUser.id,
+        email: persistedUser.email,
+        token: persistedUser.token,
+        name: persistedUser.name,
+      });
+      if (!user.isValid()) {
+        throw new Error('Invalid persisted user');
+      }
+      this.userService.updateUser(user);
     } else {
       this.userService.updateUser(null);
     }

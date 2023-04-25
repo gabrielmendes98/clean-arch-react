@@ -16,7 +16,12 @@ export class RegisterEmployeeUseCase
     input: RegisterEmployeeUseCaseInput,
   ): Promise<RegisterEmployeeUseCaseOutput> {
     try {
-      await this.employeeRepository.create(EmployeeFactory.create(input));
+      const employee = EmployeeFactory.create(input);
+      if (!employee.isValid()) {
+        this.notifier.notify(employee.notification.messages(), 'error');
+        return;
+      }
+      await this.employeeRepository.create(employee);
       this.notifier.notify('Funcionário cadastrado com sucesso!', 'success');
     } catch (e) {
       const error = e as Error;

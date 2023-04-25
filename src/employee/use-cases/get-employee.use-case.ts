@@ -1,5 +1,6 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
 import { EmployeeRepository } from 'employee/domain/interfaces/employee-repository.interface';
+import { NotificationError } from 'shared/domain/notification/notification.error';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 import { UseCase } from 'shared/use-cases/use-case.interface';
 
@@ -11,8 +12,11 @@ export class GetEmployeeUseCase
   async execute(
     input: GetEmployeeUseCaseInput,
   ): Promise<GetEmployeeUseCaseOutput> {
-    new UniqueEntityId(input.id).validate();
-    const employee = await this.employeeRepository.get(input.id);
+    const id = new UniqueEntityId(input.id);
+    if (!id.isValid()) {
+      throw new NotificationError(id.notification.errors);
+    }
+    const employee = await this.employeeRepository.get(id.value);
     return employee;
   }
 }
