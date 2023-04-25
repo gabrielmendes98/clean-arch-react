@@ -5,13 +5,12 @@ import {
   FormProviderProps,
 } from 'shared/domain/interfaces/form-storage.interface';
 import { FormContext } from './form.context';
-import { yupValidation } from './utils';
 
 export const FormProvider = <FormFields extends object>({
   initialValues,
   children,
   onSubmit,
-  validations,
+  validator,
 }: FormProviderProps<FormFields>) => {
   const [values, setValues] = useState<FormFields>(initialValues);
   const [errors, setErrors] = useState<FormErrors<FormFields>>({});
@@ -44,9 +43,10 @@ export const FormProvider = <FormFields extends object>({
     setWasSubmitted(true);
     const { values, ...otherValuesToProvide } = valuesToProvide;
     const formData = new FormData(e.currentTarget);
-    const fieldValues = Object.fromEntries(formData.entries());
-    if (validations) {
-      const errors = yupValidation(fieldValues, validations);
+    const fieldValues = Object.fromEntries(formData.entries()) as FormFields;
+    if (validator) {
+      const errors = validator(fieldValues);
+      console.log('submit', errors);
       if (errors) {
         setErrors(errors as FormErrors<FormFields>);
         return;
@@ -70,8 +70,9 @@ export const FormProvider = <FormFields extends object>({
       errors,
       setErrors,
       setFieldErrors,
-      validations,
       wasSubmitted,
+      validator: validator as (values: object) => FormErrors<FormFields>,
+      setValues: setValues as (values: object) => void,
     }),
     [errors, onChangeField, resetForm, setFieldErrors, values, wasSubmitted],
   );

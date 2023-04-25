@@ -16,7 +16,7 @@ export const RegisterEmployeeContainer = ({
   registerEmployeeUseCase,
   formService,
 }: Props) => {
-  const { initialValues, validations, parseValuesToInput } = formService;
+  const { initialValues, parseValuesToInput, validator } = formService;
 
   const onSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
@@ -30,7 +30,7 @@ export const RegisterEmployeeContainer = ({
     <FormProvider
       onSubmit={onSubmit}
       initialValues={initialValues}
-      validations={validations}
+      validator={validator}
     >
       <EmployeeForm />
     </FormProvider>

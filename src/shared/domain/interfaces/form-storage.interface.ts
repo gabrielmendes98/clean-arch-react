@@ -18,6 +18,8 @@ export interface FormStorageService<FormFields = object> {
   setFieldErrors: (field: string, errors: string[] | null) => void;
   validations?: FormValidations<FormFields>;
   wasSubmitted: boolean;
+  validator?: (fieldValues: FormFields) => FormErrors<FormFields> | null;
+  setValues: (values: FormFields) => void;
 }
 
 export interface FormProviderProps<FormFields = object>
@@ -28,4 +30,5 @@ export interface FormProviderProps<FormFields = object>
     formBag: FormStorageService<FormFields>,
   ) => void;
   validations?: FormValidations<FormFields>;
+  validator?: (fieldValues: FormFields) => FormErrors<FormFields> | null;
 }

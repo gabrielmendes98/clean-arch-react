@@ -1,6 +1,8 @@
+import { Errors } from 'shared/domain/interfaces/errors.interface';
+
 export interface SignUpFormService {
   initialValues: SignUpFormFields;
-  validations: Record<keyof SignUpFormFields, any>;
+  validator: (values: SignUpFormFields) => Errors | null;
 }
 
 export interface SignUpFormFields {

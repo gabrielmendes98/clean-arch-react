@@ -1,26 +1,21 @@
-import { Notification } from 'shared/domain/notification/notification';
-import { NotificationError } from 'shared/domain/notification/notification.error';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
+import Entity from 'shared/domain/entity/entity.abstract';
 import { UserValidatorFactory } from '../factories/user.validator.factory';
 
-export class User {
-  public notification: Notification;
+export class User extends Entity {
   private _id: UniqueEntityId;
   private _email: Email;
   private _name: string;
   private _token: string;
 
   constructor(id: UniqueEntityId, email: Email, token: string, name: string) {
-    this.notification = new Notification();
+    super();
     this._id = id;
     this._email = email;
     this._token = token;
     this._name = name;
     this.validate();
-    if (this.notification.hasErrors()) {
-      throw new NotificationError(this.notification.errors);
-    }
   }
 
   get id() {
@@ -41,6 +36,24 @@ export class User {
 
   validate(): void {
     UserValidatorFactory.create().validate(this);
+  }
+
+  isValid() {
+    return (
+      !this.notification.hasErrors() &&
+      this._email.isValid() &&
+      this._id.isValid()
+    );
+  }
+
+  get errors() {
+    return this.isValid()
+      ? null
+      : {
+          ...this.notification.errors,
+          ...this._email.errors,
+          ...this._id.errors,
+        };
   }
 
   toJSON() {

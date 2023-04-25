@@ -1,4 +1,4 @@
-import { Errors } from './notification';
+import { Errors } from '../interfaces/errors.interface';
 
 export class NotificationError extends Error {
   constructor(public errors: Errors) {

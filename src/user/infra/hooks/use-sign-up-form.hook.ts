@@ -1,10 +1,11 @@
+import { useCallback } from 'react';
 import {
   SignUpFormFields,
   SignUpFormService,
 } from 'user/domain/interfaces/sign-up-form.interface';
-import { passwordYupValidations } from 'user/domain/validator/password.yup.validator';
-import { userYupValidations } from 'user/domain/validator/user.yup.validator';
-import { emailYupValidations } from 'shared/domain/validator/value-object-validators/email.yup.validator';
+import { UserFactory } from 'user/domain/factories/user.factory';
+import { Password } from 'user/domain/value-objects/password.vo';
+import { isObjectEmpty } from 'shared/infra/utils';
 
 export const useSignUpForm = (): SignUpFormService => {
   const initialValues: SignUpFormFields = {
@@ -14,15 +15,39 @@ export const useSignUpForm = (): SignUpFormService => {
     confirmPassword: '',
   };
 
-  const validations: SignUpFormService['validations'] = {
-    name: userYupValidations.name,
-    email: emailYupValidations.email,
-    password: passwordYupValidations.password,
-    confirmPassword: passwordYupValidations.password,
-  };
+  const validator = useCallback((values: SignUpFormFields) => {
+    const errors: {
+      [key in keyof SignUpFormFields]?: string[];
+    } = {};
+    const user = UserFactory.create({
+      id: '',
+      name: values.name,
+      email: values.email,
+      token: '',
+    });
+
+    Object.assign(errors, user.errors);
+
+    const password = new Password(values.password);
+    const confirmPassword = new Password(values.confirmPassword);
+
+    Object.assign(errors, password.errors);
+    Object.assign(errors, {
+      confirmPassword: confirmPassword.errors?.password,
+    });
+
+    if (values.password !== values.confirmPassword) {
+      if (!errors.confirmPassword) {
+        errors.confirmPassword = [];
+      }
+      errors.confirmPassword.push('As senhas devem ser iguais');
+    }
+
+    return isObjectEmpty(errors) ? null : errors;
+  }, []);
 
   return {
     initialValues,
-    validations,
+    validator,
   };
 };

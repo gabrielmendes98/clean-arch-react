@@ -1,17 +1,13 @@
 import { Validator, yup } from 'shared/domain/validator';
 import { Password } from '../value-objects/password.vo';
 
-export const passwordYupValidations = {
-  password: yup.string().min(6).required().label('Senha'),
-};
-
 export class PasswordYupValidator implements Validator<Password> {
   validate(valueObject: Password): void {
     try {
       yup
         .object()
         .shape({
-          password: passwordYupValidations.password,
+          password: yup.string().min(6).required().label('Senha'),
         })
         .validateSync(
           {

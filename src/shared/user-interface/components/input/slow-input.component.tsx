@@ -17,7 +17,7 @@ export const SlowInput = ({
   type = 'text',
   onChange,
 }: Props) => {
-  const { values, onChangeField, errors, setFieldErrors, validations } =
+  const { values, onChangeField, errors, setFieldErrors, validator } =
     useFormStorage();
 
   const _id = useMemo(() => id || name, [id, name]);
@@ -36,12 +36,11 @@ export const SlowInput = ({
   };
 
   const validate = () => {
-    try {
-      if (validations) {
-        validations[name].validateSync(values[name]);
+    if (validator) {
+      const errors = validator(values);
+      if (errors && errors[name]) {
+        setFieldErrors(name, errors[name]);
       }
-    } catch (e: any) {
-      setFieldErrors(name, e.errors);
     }
   };
 

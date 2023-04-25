@@ -13,7 +13,7 @@ type Props = {
 };
 
 export const SignUpContainer = ({ formService, signUpUseCase }: Props) => {
-  const { initialValues, validations } = formService;
+  const { initialValues, validator } = formService;
 
   const onSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
@@ -25,7 +25,7 @@ export const SignUpContainer = ({ formService, signUpUseCase }: Props) => {
   return (
     <FormProvider
       initialValues={initialValues}
-      validations={validations}
+      validator={validator}
       onSubmit={onSubmit}
     >
       <SignUpForm />

@@ -1,4 +1,4 @@
-export type Errors = Record<string, string[]>;
+import { Errors } from '../interfaces/errors.interface';
 
 export class Notification {
   private _errors: Errors = {};

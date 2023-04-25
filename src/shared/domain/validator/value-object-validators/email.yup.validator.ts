@@ -1,17 +1,13 @@
 import { Validator, yup } from 'shared/domain/validator';
 import { Email } from 'shared/domain/value-objects/email.vo';
 
-export const emailYupValidations = {
-  email: yup.string().email().required().label('Email'),
-};
-
 export class EmailYupValidator implements Validator<Email> {
   validate(valueObject: Email): void {
     try {
       yup
         .object()
         .shape({
-          email: emailYupValidations.email,
+          email: yup.string().email().required().label('Email'),
         })
         .validateSync(
           {

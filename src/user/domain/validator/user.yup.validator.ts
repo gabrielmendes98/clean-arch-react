@@ -1,17 +1,13 @@
 import { Validator, yup } from 'shared/domain/validator';
 import { User } from '../entities/user.entity';
 
-export const userYupValidations = {
-  name: yup.string().trim().min(3).required().label('Nome'),
-};
-
 export class UserYupValidator implements Validator<User> {
   validate(entity: User): void {
     try {
       yup
         .object()
         .shape({
-          name: userYupValidations.name,
+          name: yup.string().trim().min(3).required().label('Nome'),
         })
         .validateSync(
           {

@@ -17,7 +17,7 @@ export const FastInput = ({
   type = 'text',
   onChange,
 }: Props) => {
-  const { validations, wasSubmitted, values } = useFormStorage();
+  const { wasSubmitted, values, validator, setValues } = useFormStorage();
   const [value, setValue] = useState(values[name]);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -30,14 +30,24 @@ export const FastInput = ({
   };
 
   const validate = () => {
-    try {
-      if (validations) {
-        validations[name].validateSync(value);
+    if (validator) {
+      const errors = validator({
+        ...values,
+        [name]: value,
+      });
+      if (errors && errors[name]) {
+        const error = errors[name][0];
+        setErrorMessage(error);
       }
-    } catch (e: any) {
-      const error = e.errors?.[0] || e.message || 'Campo inválido';
-      setErrorMessage(error);
     }
+  };
+
+  const onBlur = () => {
+    validate();
+    setValues({
+      ...values,
+      [name]: value,
+    });
   };
 
   useEffect(() => {
@@ -55,7 +65,7 @@ export const FastInput = ({
         name={name}
         value={value}
         onChange={handleChange}
-        onBlur={validate}
+        onBlur={onBlur}
       />
       <span className={styles.error}>{errorMessage}</span>
     </div>

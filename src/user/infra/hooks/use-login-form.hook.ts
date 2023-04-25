@@ -1,9 +1,11 @@
+import { useCallback } from 'react';
 import {
   LoginFormFields,
   LoginFormService,
 } from 'user/domain/interfaces/login-form.interface';
-import { passwordYupValidations } from 'user/domain/validator/password.yup.validator';
-import { emailYupValidations } from 'shared/domain/validator/value-object-validators/email.yup.validator';
+import { Password } from 'user/domain/value-objects/password.vo';
+import { Email } from 'shared/domain/value-objects/email.vo';
+import { isObjectEmpty } from 'shared/infra/utils';
 
 export const useLoginForm = (): LoginFormService => {
   const initialValues: LoginFormFields = {
@@ -11,13 +13,20 @@ export const useLoginForm = (): LoginFormService => {
     password: '',
   };
 
-  const validations: LoginFormService['validations'] = {
-    email: emailYupValidations.email,
-    password: passwordYupValidations.password,
-  };
+  const validator = useCallback((values: LoginFormFields) => {
+    const errors = {};
+
+    const email = new Email(values.email);
+    const password = new Password(values.password);
+
+    Object.assign(errors, email.errors);
+    Object.assign(errors, password.errors);
+
+    return isObjectEmpty(errors) ? null : errors;
+  }, []);
 
   return {
     initialValues,
-    validations,
+    validator,
   };
 };

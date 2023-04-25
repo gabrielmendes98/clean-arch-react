@@ -2,22 +2,22 @@ import { validate as uuidValidate } from 'uuid';
 import { Validator, yup } from 'shared/domain/validator';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 
-export const uniqueEntityIdYupValidations = {
-  id: yup
-    .string()
-    .test('test-unique-entity-id', 'ID deve ser um UUID válido', value => {
-      const isValid = uuidValidate(String(value));
-      return isValid;
-    }),
-};
-
 export class UniqueEntityIdYupValidator implements Validator<UniqueEntityId> {
   validate(valueObject: UniqueEntityId): void {
     try {
       yup
         .object()
         .shape({
-          id: uniqueEntityIdYupValidations.id,
+          id: yup
+            .string()
+            .test(
+              'test-unique-entity-id',
+              'ID deve ser um UUID válido',
+              value => {
+                const isValid = uuidValidate(String(value));
+                return isValid;
+              },
+            ),
         })
         .validateSync(
           {
