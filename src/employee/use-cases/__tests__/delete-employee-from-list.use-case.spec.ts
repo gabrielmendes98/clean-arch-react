@@ -4,7 +4,6 @@ import {
 } from 'employee/domain/entities/employee-list.entity';
 import { EmployeeListStorage } from 'employee/domain/interfaces/employee-list.interface';
 import { EmployeeRepositoryFactory } from 'employee/infra/factories/employee-repository.factory';
-import { EmployeeFactory } from 'employee/domain/factories/employee.factory';
 import { UnexpectedError } from 'shared/domain/errors/unexpected.error';
 import { DeleteEmployeeFromListUseCase } from '../delete-employee-from-list.use-case';
 
@@ -45,7 +44,7 @@ describe('DeleteEmployeeFromListUseCase', () => {
       mockEmployeeListStorage,
     );
     await useCase.execute({ item: fakeItem });
-    expect(deleteMethod).toHaveBeenCalledWith(EmployeeFactory.create(fakeItem));
+    expect(deleteMethod).toHaveBeenCalledWith(fakeItem.id!);
   });
 
   it('shuold add item back to list when repository throw error', async () => {
@@ -60,7 +59,7 @@ describe('DeleteEmployeeFromListUseCase', () => {
     await expect(
       async () => await useCase.execute({ item: fakeItem }),
     ).rejects.toThrowError();
-    expect(deleteMethod).toHaveBeenCalledWith(EmployeeFactory.create(fakeItem));
+    expect(deleteMethod).toHaveBeenCalledWith(fakeItem.id!);
     expect(mockEmployeeListStorage.list.employees).toHaveLength(1);
     expect(mockEmployeeListStorage.list.employees).toContain(fakeItem);
     expect(mockEmployeeListStorage.removeItem).toHaveBeenCalledWith(fakeItem);

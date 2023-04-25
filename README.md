@@ -179,5 +179,5 @@ yupjs lib on the domain layer to validate our entities.
 
 # TODO
 
-- melhorar README.
+- melhorar employee list
 - montar apresentação

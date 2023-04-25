@@ -16,10 +16,8 @@ import {
 export class EmployeeHttpRepository implements EmployeeRepository {
   constructor(private httpClient: HttpClient) {}
 
-  async delete(entity: Employee): Promise<void> {
-    const response = await this.httpClient.delete<void>(
-      `/employees/${entity.id}`,
-    );
+  async delete(id: string): Promise<void> {
+    const response = await this.httpClient.delete<void>(`/employees/${id}`);
     if (response.statusCode !== HttpStatusCode.ok) {
       throw new Error('Não foi possível deletar o funcionário.');
     }

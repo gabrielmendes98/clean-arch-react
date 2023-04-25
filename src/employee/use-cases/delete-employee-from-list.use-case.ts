@@ -1,8 +1,8 @@
 import { EmployeeListItem } from 'employee/domain/entities/employee-list.entity';
 import { EmployeeRepository } from 'employee/domain/interfaces/employee-repository.interface';
 import { EmployeeListStorage } from 'employee/domain/interfaces/employee-list.interface';
-import { EmployeeFactory } from 'employee/domain/factories/employee.factory';
 import { UseCase } from 'shared/use-cases/use-case.interface';
+import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
 
 export class DeleteEmployeeFromListUseCase
   implements
@@ -19,17 +19,15 @@ export class DeleteEmployeeFromListUseCase
   async execute(
     input: DeleteEmployeeFromListUseCaseInput,
   ): Promise<DeleteEmployeeFromListUseCaseOutput> {
+    const id = new UniqueEntityId(input.item.id);
+
+    if (!id.isValid()) {
+      throw new Error('ID inválido.');
+    }
+
     const removedIndex = this.employeeListStorage.removeItem(input.item);
     try {
-      await this.employeeRepository.delete(
-        EmployeeFactory.create({
-          id: input.item.id,
-          name: input.item.name,
-          salary: input.item.salary,
-          document: input.item.document,
-          email: input.item.email,
-        }),
-      );
+      await this.employeeRepository.delete(id.value);
     } catch (e) {
       this.employeeListStorage.addItem(input.item, removedIndex);
       throw e;
