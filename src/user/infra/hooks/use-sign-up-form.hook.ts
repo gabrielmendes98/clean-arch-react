@@ -26,7 +26,10 @@ export const useSignUpForm = (): SignUpFormService => {
       token: '',
     });
 
-    Object.assign(errors, user.errors);
+    Object.assign(errors, {
+      name: user.errors?.name,
+      email: user.errors?.email,
+    });
 
     const password = new Password(values.password);
     const confirmPassword = new Password(values.confirmPassword);
@@ -42,6 +45,10 @@ export const useSignUpForm = (): SignUpFormService => {
       }
       errors.confirmPassword.push('As senhas devem ser iguais');
     }
+
+    Object.keys(errors).forEach(key =>
+      errors[key] === undefined ? delete errors[key] : {},
+    );
 
     return isObjectEmpty(errors) ? null : errors;
   }, []);

@@ -20,7 +20,6 @@ export class UpdateEmployeeUseCase
     try {
       const employee = EmployeeFactory.create(input);
       if (!employee.isValid()) {
-        console.log(employee);
         this.notifier.notify(employee.messages(), 'error');
         return;
       }

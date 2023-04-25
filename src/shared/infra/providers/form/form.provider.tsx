@@ -46,7 +46,6 @@ export const FormProvider = <FormFields extends object>({
     const fieldValues = Object.fromEntries(formData.entries()) as FormFields;
     if (validator) {
       const errors = validator(fieldValues);
-      console.log('submit', errors);
       if (errors) {
         setErrors(errors as FormErrors<FormFields>);
         return;

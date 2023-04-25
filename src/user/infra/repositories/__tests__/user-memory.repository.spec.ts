@@ -12,11 +12,11 @@ const user = UserFactory.create({
 describe('userMemoryRepository', () => {
   it('should return correct response when call login method', async () => {
     const repository = new UserMemoryRepository();
-    expect(await repository.login()).toStrictEqual(user);
+    expect(await repository.get()).toStrictEqual(user);
   });
 
   it('should return correct response when call signUp method', async () => {
     const repository = new UserMemoryRepository();
-    expect(await repository.signUp()).toStrictEqual(user);
+    expect(await repository.create()).toStrictEqual(user);
   });
 });

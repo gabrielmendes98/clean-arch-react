@@ -7,7 +7,12 @@ import {
 import { UserRepositoryFactory } from 'user/infra/factories/user-repository.factory';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
 import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';
-import { render, screen, userEvent } from 'shared/testing/test-utils';
+import {
+  render,
+  renderHook,
+  screen,
+  userEvent,
+} from 'shared/testing/test-utils';
 import { LoginContainer } from '../login.container';
 
 class StubLoginUseCase extends LoginUseCase {
@@ -25,9 +30,10 @@ const makeLoginUseCase = () =>
 
 describe('LoginView', () => {
   it('should call login use case with form values', async () => {
+    const { result } = renderHook(() => useLoginForm());
     const loginUseCase: LoginUseCase = makeLoginUseCase();
     const formService: LoginFormService = {
-      ...useLoginForm(),
+      ...result.current,
       initialValues: {
         email: 'valid@email.com',
         password: 'validPassword',
@@ -48,10 +54,11 @@ describe('LoginView', () => {
   });
 
   it('should validate fields on blur', () => {
+    const { result } = renderHook(() => useLoginForm());
     const loginUseCase: LoginUseCase = makeLoginUseCase();
     render(
       <LoginContainer
-        formService={useLoginForm()}
+        formService={result.current}
         loginUseCase={loginUseCase}
       />,
     );
@@ -65,10 +72,11 @@ describe('LoginView', () => {
   });
 
   it('should validate fields on submit', () => {
+    const { result } = renderHook(() => useLoginForm());
     const loginUseCase: LoginUseCase = makeLoginUseCase();
     render(
       <LoginContainer
-        formService={useLoginForm()}
+        formService={result.current}
         loginUseCase={loginUseCase}
       />,
     );

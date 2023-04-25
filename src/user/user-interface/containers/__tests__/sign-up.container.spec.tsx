@@ -8,7 +8,12 @@ import { UserRepositoryFactory } from 'user/infra/factories/user-repository.fact
 import { notificationServiceMock } from 'shared/testing/mocks/notification.mock';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
 import { userStorageServiceMock } from 'shared/testing/mocks/user-storage.mock';
-import { render, screen, userEvent } from 'shared/testing/test-utils';
+import {
+  render,
+  renderHook,
+  screen,
+  userEvent,
+} from 'shared/testing/test-utils';
 import { SignUpContainer } from '../sign-up.container';
 
 class StubSignUpUseCase extends SignUpUseCase {
@@ -27,9 +32,10 @@ const makeSignUpUseCase = () =>
 
 describe('SignUpView', () => {
   it('should call sign up use case with form values', async () => {
+    const { result } = renderHook(() => useSignUpForm());
     const signUpUseCase: SignUpUseCase = makeSignUpUseCase();
     const formService: SignUpFormService = {
-      ...useSignUpForm(),
+      ...result.current,
       initialValues: {
         name: 'valid name',
         email: 'valid@email.com',
@@ -58,9 +64,10 @@ describe('SignUpView', () => {
 
   it('should validate fields on blur', () => {
     const signUpUseCase: SignUpUseCase = makeSignUpUseCase();
+    const { result } = renderHook(() => useSignUpForm());
     render(
       <SignUpContainer
-        formService={useSignUpForm()}
+        formService={result.current}
         signUpUseCase={signUpUseCase}
       />,
     );
@@ -69,7 +76,9 @@ describe('SignUpView', () => {
     userEvent.click(screen.getByLabelText(/Senha:/));
     userEvent.click(screen.getByLabelText(/confirmar senha/i));
     userEvent.click(document.body);
-    expect(screen.getByText(/nome é obrigatório/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Nome deve ter pelo menos 3 caracteres/i),
+    ).toBeInTheDocument();
     expect(screen.getByText(/email é obrigatório/i)).toBeInTheDocument();
     expect(
       screen.getAllByText(/senha deve ter pelo menos 6 caracteres/i),
@@ -78,14 +87,17 @@ describe('SignUpView', () => {
 
   it('should validate fields on submit', () => {
     const signUpUseCase: SignUpUseCase = makeSignUpUseCase();
+    const { result } = renderHook(() => useSignUpForm());
     render(
       <SignUpContainer
-        formService={useSignUpForm()}
+        formService={result.current}
         signUpUseCase={signUpUseCase}
       />,
     );
     userEvent.click(screen.getByRole('button', { name: /enviar/i }));
-    expect(screen.getByText(/nome é obrigatório/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Nome deve ter pelo menos 3 caracteres/i),
+    ).toBeInTheDocument();
     expect(screen.getByText(/email é obrigatório/i)).toBeInTheDocument();
     expect(
       screen.getAllByText(/senha deve ter pelo menos 6 caracteres/i),

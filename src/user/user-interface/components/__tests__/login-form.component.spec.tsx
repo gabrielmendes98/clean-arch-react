@@ -1,15 +1,16 @@
 import { useLoginForm } from 'user/infra/hooks/use-login-form.hook';
-import { render, screen } from 'shared/testing/test-utils';
+import { render, renderHook, screen } from 'shared/testing/test-utils';
 import { FormProvider } from 'shared/infra/providers/form/form.provider';
 import { LoginForm } from '../login-form.component';
 
 describe('LoginForm', () => {
   it('should display inputs and submit button', () => {
-    const { initialValues, validations } = useLoginForm();
+    const { result } = renderHook(() => useLoginForm());
+    const { initialValues, validator } = result.current;
     render(
       <FormProvider
         initialValues={initialValues}
-        validations={validations}
+        validator={validator}
         onSubmit={jest.fn()}
       >
         <LoginForm />

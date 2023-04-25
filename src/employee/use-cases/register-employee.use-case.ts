@@ -18,7 +18,6 @@ export class RegisterEmployeeUseCase
     try {
       const employee = EmployeeFactory.create(input);
       if (!employee.isValid()) {
-        console.log('dejwd', employee.messages());
         this.notifier.notify(employee.messages(), 'error');
         return;
       }
