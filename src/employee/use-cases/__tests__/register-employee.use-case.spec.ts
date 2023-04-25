@@ -18,10 +18,12 @@ describe('RegisterEmployeeUseCase', () => {
       employeeRepository,
       notificationServiceMock,
     );
-    await expect(
-      async () =>
-        await useCase.execute({ ...fakeEmployee, email: 'invalid email' }),
-    ).rejects.toThrowError();
+    await useCase.execute({ ...fakeEmployee, email: 'invalid email' });
+
+    expect(notificationServiceMock.notify).toHaveBeenCalledWith(
+      'Email deve ser um e-mail válido',
+      'error',
+    );
   });
 
   it('should call repository and notify user on success', async () => {

@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { UserStorage } from 'authentication/domain/interfaces/user-storage.interface';
+import { UserStorage } from 'user/domain/interfaces/user-storage.interface';
 
 type Props = {
   userStorage: UserStorage;

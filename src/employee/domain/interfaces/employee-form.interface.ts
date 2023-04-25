@@ -1,4 +1,5 @@
 import { Employee } from 'employee/domain/entities/employee.entity';
+import { Errors } from 'shared/domain/interfaces/errors.interface';
 
 export interface EmployeeFormFields {
   name: string;
@@ -16,5 +17,5 @@ export interface EmployeeFormService {
     salary: number;
   };
   parseEntityToValues(employee: Employee): EmployeeFormFields;
-  validations: Record<keyof EmployeeFormFields, any>;
+  validator: (values: EmployeeFormFields) => Errors | null;
 }

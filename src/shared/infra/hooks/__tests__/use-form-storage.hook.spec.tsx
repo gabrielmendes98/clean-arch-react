@@ -1,5 +1,5 @@
-import { FormProvider } from 'shared/infra/providers/form.provider';
 import { renderHook } from 'shared/testing/test-utils';
+import { FormProvider } from 'shared/infra/providers/form/form.provider';
 import { useFormStorage } from '../use-form-storage.hook';
 
 describe('useFormStorage', () => {
@@ -8,7 +8,7 @@ describe('useFormStorage', () => {
       <FormProvider
         initialValues={{ name: '' }}
         onSubmit={jest.fn()}
-        validations={{}}
+        validator={jest.fn()}
       >
         {children}
       </FormProvider>
@@ -19,7 +19,7 @@ describe('useFormStorage', () => {
     expect(result.current.resetForm).toBeDefined();
     expect(result.current.setErrors).toBeDefined();
     expect(result.current.setFieldErrors).toBeDefined();
-    expect(result.current.validations).toBeDefined();
+    expect(result.current.validator).toBeDefined();
     expect(result.current.values).toBeDefined();
     expect(result.current.wasSubmitted).toBeDefined();
   });

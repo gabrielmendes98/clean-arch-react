@@ -1,11 +1,12 @@
 import { FormEvent, PropsWithChildren } from 'react';
+import { yup } from '../validator';
 
 export type FormErrors<FormFields> = Partial<{
   [K in keyof FormFields]: string[];
 }>;
 
 export type FormValidations<FormFields> = Partial<{
-  [K in keyof FormFields]: any;
+  [K in keyof FormFields]: yup.AnySchema;
 }>;
 
 export interface FormStorageService<FormFields = object> {
@@ -17,6 +18,8 @@ export interface FormStorageService<FormFields = object> {
   setFieldErrors: (field: string, errors: string[] | null) => void;
   validations?: FormValidations<FormFields>;
   wasSubmitted: boolean;
+  validator?: (fieldValues: FormFields) => FormErrors<FormFields> | null;
+  setValues: (values: FormFields) => void;
 }
 
 export interface FormProviderProps<FormFields = object>
@@ -27,4 +30,5 @@ export interface FormProviderProps<FormFields = object>
     formBag: FormStorageService<FormFields>,
   ) => void;
   validations?: FormValidations<FormFields>;
+  validator?: (fieldValues: FormFields) => FormErrors<FormFields> | null;
 }

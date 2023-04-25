@@ -18,7 +18,12 @@ export class UpdateEmployeeUseCase
     input: UpdateEmployeeUseCaseInput,
   ): Promise<UpdateEmployeeUseCaseOutput> {
     try {
-      await this.employeeRepository.update(EmployeeFactory.create(input));
+      const employee = EmployeeFactory.create(input);
+      if (!employee.isValid()) {
+        this.notifier.notify(employee.messages(), 'error');
+        return;
+      }
+      await this.employeeRepository.update(employee);
       this.notifier.notify('Funcionário atualizado com sucesso!', 'success');
       this.routerService.navigate(pages.listEmployees);
     } catch (e) {

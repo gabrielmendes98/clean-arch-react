@@ -65,7 +65,7 @@ describe('RegisterEmployeeContainer', () => {
     userEvent.click(screen.getByRole('button', { name: /enviar/i }));
     expect(screen.getByText(/Nome é obrigatório/i)).toBeInTheDocument();
     expect(
-      screen.getByText(/Salário deve ser do tipo number/i),
+      screen.getByText(/Salário deve ser um número positivo/i),
     ).toBeInTheDocument();
     expect(
       screen.getByText(/Documento deve ser um CPF ou CNPJ valido/i),

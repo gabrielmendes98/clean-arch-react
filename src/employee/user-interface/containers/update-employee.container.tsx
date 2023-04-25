@@ -6,9 +6,9 @@ import {
   EmployeeFormFields,
   EmployeeFormService,
 } from 'employee/domain/interfaces/employee-form.interface';
-import { FormProvider } from 'shared/infra/providers/form.provider';
 import { RouterService } from 'shared/domain/interfaces/router.interface';
 import { FormStorageService } from 'shared/domain/interfaces/form-storage.interface';
+import { FormProvider } from 'shared/infra/providers/form/form.provider';
 import { EmployeeForm } from '../components/employee-form.component';
 
 type Props = {
@@ -24,12 +24,8 @@ export const UpdateEmployeeContainer = ({
   formService,
   routerService,
 }: Props) => {
-  const {
-    initialValues,
-    parseEntityToValues,
-    parseValuesToInput,
-    validations,
-  } = formService;
+  const { initialValues, parseEntityToValues, parseValuesToInput, validator } =
+    formService;
   const { getUrlParams } = routerService;
   const { id } = getUrlParams();
   const [employee, setEmployee] = useState<Employee>();
@@ -59,7 +55,7 @@ export const UpdateEmployeeContainer = ({
     <FormProvider
       onSubmit={onSubmit}
       initialValues={values}
-      validations={validations}
+      validator={validator}
     >
       <EmployeeForm />
     </FormProvider>

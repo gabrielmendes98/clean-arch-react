@@ -1,21 +1,21 @@
 import { yup } from 'shared/domain/validator';
-import { FormProvider } from 'shared/infra/providers/form.provider';
 import {
   fireEvent,
   render,
   screen,
   userEvent,
 } from 'shared/testing/test-utils';
+import { FormProvider } from 'shared/infra/providers/form/form.provider';
 import { FastInput, Props as InputProps } from '../fast-input.component';
 
 type Props = {
   inputProps?: InputProps | {};
   nameValue?: string;
-  validations?: Record<string, yup.AnySchema>;
+  validator?: () => any;
 };
 
 const renderInput = (
-  { inputProps = {}, nameValue = '', validations }: Props = {
+  { inputProps = {}, nameValue = '', validator }: Props = {
     inputProps: {},
     nameValue: '',
   },
@@ -24,7 +24,7 @@ const renderInput = (
     <FormProvider
       initialValues={{ name: nameValue }}
       onSubmit={jest.fn()}
-      validations={validations}
+      validator={validator}
     >
       <FastInput label="name" name="name" {...inputProps} />
       <button type="submit">submit</button>
@@ -52,8 +52,10 @@ describe('FastInput', () => {
 
   it('should validate on blur', () => {
     renderInput({
-      validations: {
-        name: yup.string().required().label('Nome'),
+      validator: () => {
+        return {
+          name: ['Nome é obrigatório'],
+        };
       },
     });
     userEvent.click(getInput());

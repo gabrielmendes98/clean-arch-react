@@ -1,6 +1,6 @@
 import { useEmployeeForm } from 'employee/infra/hooks/use-employee-form.hook';
-import { FormProvider } from 'shared/infra/providers/form.provider';
 import { render, screen } from 'shared/testing/test-utils';
+import { FormProvider } from 'shared/infra/providers/form/form.provider';
 import { EmployeeForm } from '../employee-form.component';
 
 describe('EmployeeForm', () => {

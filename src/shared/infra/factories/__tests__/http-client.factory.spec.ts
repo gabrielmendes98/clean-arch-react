@@ -1,4 +1,4 @@
-import { HttpClientAuthDecorator } from 'authentication/infra/decorators/http-client-auth.decorator';
+import { HttpClientAuthDecorator } from 'user/infra/decorators/http-client-auth.decorator';
 import { HttpClientFactory } from '../http-client.factory';
 
 describe('HttpClientFactory', () => {
