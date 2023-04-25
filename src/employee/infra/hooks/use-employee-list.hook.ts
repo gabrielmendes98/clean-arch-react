@@ -6,6 +6,10 @@ import {
 import { EmployeeListStorage } from 'employee/domain/interfaces/employee-list.interface';
 import { DeleteEmployeeUseCase } from 'employee/use-cases/delete-employee.use-case';
 
+const createNewInstance = (list: EmployeeList) => {
+  return new EmployeeList([...list.employees]);
+};
+
 export const useEmployeeListStorage = (
   deleteEmployeeUseCase: DeleteEmployeeUseCase,
 ): EmployeeListStorage => {
@@ -13,7 +17,7 @@ export const useEmployeeListStorage = (
 
   const removeItem = async (item: EmployeeListItem) => {
     const index = list.removeItem(item);
-    setList(new EmployeeList([...list.employees]));
+    setList(createNewInstance(list));
     try {
       await deleteEmployeeUseCase.execute({ item });
     } catch (e) {
@@ -23,7 +27,7 @@ export const useEmployeeListStorage = (
 
   const addItem = (item: EmployeeListItem, index = 0) => {
     list.addItem(item, index);
-    setList(new EmployeeList([...list.employees]));
+    setList(createNewInstance(list));
   };
 
   return {
