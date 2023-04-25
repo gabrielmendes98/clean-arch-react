@@ -1,26 +1,30 @@
-import { render, screen, userEvent } from 'shared/testing/test-utils';
+import {
+  fireEvent,
+  render,
+  screen,
+  userEvent,
+} from 'shared/testing/test-utils';
 import { FormProvider } from 'shared/infra/providers/form/form.provider';
 import { SlowInput, Props as InputProps } from '../slow-input.component';
 
 type Props = {
   inputProps?: InputProps | {};
   nameValue?: string;
-  validations?: Partial<{
-    name: (value: any) => boolean;
-  }>;
+  validator?: () => any;
 };
 
 const renderInput = (
-  { inputProps = {}, nameValue = '', validations }: Props = {
+  { inputProps = {}, nameValue = '', validator }: Props = {
     inputProps: {},
     nameValue: '',
+    validator: () => void 0,
   },
 ) =>
   render(
     <FormProvider
       initialValues={{ name: nameValue }}
       onSubmit={jest.fn()}
-      validations={validations}
+      validator={validator}
     >
       <SlowInput label="name" name="name" {...inputProps} />
       <button type="submit">submit</button>
@@ -44,5 +48,18 @@ describe('SlowInput', () => {
     renderInput();
     userEvent.type(getInput(), 'some value');
     expect(getInput()).toHaveValue('some value');
+  });
+
+  it('should validate on blur', () => {
+    renderInput({
+      validator: () => {
+        return {
+          name: ['Nome é obrigatório'],
+        };
+      },
+    });
+    userEvent.click(getInput());
+    fireEvent.blur(getInput());
+    expect(screen.getByText('Nome é obrigatório')).toBeInTheDocument();
   });
 });

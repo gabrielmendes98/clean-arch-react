@@ -10,6 +10,7 @@ export class UniqueEntityIdYupValidator implements Validator<UniqueEntityId> {
         .shape({
           id: yup
             .string()
+            .required()
             .test(
               'test-unique-entity-id',
               'ID deve ser um UUID válido',

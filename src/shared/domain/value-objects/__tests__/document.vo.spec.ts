@@ -1,26 +1,38 @@
-import { NotificationError } from 'shared/domain/notification/notification.error';
 import { Document } from '../document.vo';
 
 describe('Document Value Object', () => {
-  it('should validate email on constructor', () => {
-    expect(() => new Document('123')).toThrow(NotificationError);
-    expect(() => new Document('')).toThrow(NotificationError);
-    expect(() => new Document('00000000000')).toThrow(NotificationError);
-    expect(() => new Document('00000000000000')).toThrow(NotificationError);
-  });
-
-  it('should accept different document formats on constructor', () => {
-    expect(() => new Document('61524210048')).not.toThrow(NotificationError);
-    expect(() => new Document('085.679.886-08')).not.toThrow(NotificationError);
-    expect(() => new Document('085.679.886.08')).not.toThrow(NotificationError);
-    expect(() => new Document('14.588.843/0001-65')).not.toThrow(
-      NotificationError,
+  describe('should validate document on constructor', () => {
+    test.each([['123'], [''], ['00000000000'], ['00000000000000']])(
+      'when value is %s',
+      value => {
+        const document = new Document(value);
+        expect(document.notification.hasErrors()).toBe(true);
+        expect(document.notification.errors).toEqual({
+          document: ['Documento deve ser um CPF ou CNPJ valido'],
+        });
+        expect(document.isValid()).toBe(false);
+        expect(document.value).toBe(value);
+        expect(document.notification.errors).toEqual({
+          document: ['Documento deve ser um CPF ou CNPJ valido'],
+        });
+      },
     );
-    expect(() => new Document('14588843000165')).not.toThrow(NotificationError);
   });
 
-  it('should set value on constructor', () => {
-    const document = new Document('61524210048');
-    expect(document.value).toBe('61524210048');
+  describe('should accept different document formats on constructor', () => {
+    test.each([
+      ['61524210048'],
+      ['085.679.886-08'],
+      ['085.679.886.08'],
+      ['14.588.843/0001-65'],
+      ['14588843000165'],
+    ])('when value is %s', value => {
+      const document = new Document(value);
+      expect(document.value).toBe(value);
+      expect(document.isValid()).toBe(true);
+      expect(document.notification.hasErrors()).toBe(false);
+      expect(document.notification.errors).toEqual({});
+      expect(document.errors).toBeNull();
+    });
   });
 });
