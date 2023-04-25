@@ -53,11 +53,12 @@ export class Employee extends Entity {
   }
 
   isValid() {
-    return Boolean(
+    const isValidId = this._id ? this._id.isValid() : true;
+    return (
       !this.notification.hasErrors() &&
-        this._document.isValid() &&
-        this._email.isValid() &&
-        this._id?.isValid(),
+      this._document.isValid() &&
+      this._email.isValid() &&
+      isValidId
     );
   }
 
@@ -70,6 +71,12 @@ export class Employee extends Entity {
           ...this._email.errors,
           ...this._id?.errors,
         };
+  }
+
+  messages(): string {
+    return Object.values(this.errors || {})
+      .map(error => error.join(', '))
+      .join(', ');
   }
 
   toJSON() {

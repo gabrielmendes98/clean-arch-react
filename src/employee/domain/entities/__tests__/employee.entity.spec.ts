@@ -13,23 +13,24 @@ const fakeEmployee = {
 };
 
 describe('Employee Entity', () => {
-  test('Employee validation should throw NotificationError', () => {
-    expect.assertions(2);
-    try {
-      new Employee(
-        '',
-        0,
-        new Document(fakeEmployee.document),
-        new Email(fakeEmployee.email),
-        new UniqueEntityId(fakeEmployee.id),
-      );
-    } catch (e: any) {
-      expect(e).toBeInstanceOf(NotificationError);
-      expect(e.errors).toStrictEqual({
-        name: ['Nome é obrigatório'],
-        salary: ['Salário deve ser um número positivo'],
-      });
-    }
+  it('should validate employee correctly', () => {
+    const employee = new Employee(
+      '',
+      0,
+      new Document(fakeEmployee.document),
+      new Email(fakeEmployee.email),
+      new UniqueEntityId(fakeEmployee.id),
+    );
+    expect(employee.isValid()).toBeFalsy();
+    expect(employee.errors).toStrictEqual({
+      name: ['Nome é obrigatório'],
+      salary: ['Salário deve ser um número positivo'],
+    });
+    expect(employee.notification.hasErrors()).toBeTruthy();
+    expect(employee.notification.errors).toStrictEqual({
+      name: ['Nome é obrigatório'],
+      salary: ['Salário deve ser um número positivo'],
+    });
   });
 
   it('should be able to access all properties', () => {
