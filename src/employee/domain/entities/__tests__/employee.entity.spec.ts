@@ -20,14 +20,21 @@ describe('Employee Entity', () => {
       new Email(fakeEmployee.email),
       new UniqueEntityId(fakeEmployee.id),
     );
+
     expect(employee.isValid()).toBeFalsy();
     expect(employee.errors).toStrictEqual({
-      name: ['Nome é obrigatório'],
+      name: expect.arrayContaining([
+        'Nome é obrigatório',
+        'Nome deve ter pelo menos 3 caracteres',
+      ]),
       salary: ['Salário deve ser um número positivo'],
     });
     expect(employee.notification.hasErrors()).toBeTruthy();
     expect(employee.notification.errors).toStrictEqual({
-      name: ['Nome é obrigatório'],
+      name: expect.arrayContaining([
+        'Nome é obrigatório',
+        'Nome deve ter pelo menos 3 caracteres',
+      ]),
       salary: ['Salário deve ser um número positivo'],
     });
   });

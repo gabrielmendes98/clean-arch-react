@@ -29,7 +29,6 @@ Summary:
   - should show a welcome message with the name of the logged in user
 - employee registration
   - must contain the fields: name, salary, document (cpf/cnpj) and email
-  - the form must be validated only when it is sent
   - field error messages should appear below each field
   - when registering an employee, it should show a success message and reset all
     the fields
@@ -38,7 +37,6 @@ Summary:
 - employee update
   - the fields must initially be filled in with the selected employee's data
   - must contain the fields: name, salary, document (cpf/cnpj) and email
-  - the form must be validated only when it is sent
   - field error messages should appear below each field
   - when updating employee, it should notify user and redirect to list page
   - if a connection error occurs, it should show an error message
