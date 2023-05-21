@@ -1,21 +1,23 @@
 import { USER_STORAGE_KEY } from 'user/domain/constants/user-storage-key';
 import { PersistedUser } from 'user/domain/interfaces/user-storage.interface';
 import {
-  HttpClientOptions,
   HttpClient,
+  HttpClientOptions,
   HttpResponse,
 } from 'shared/domain/interfaces/http-client.interface';
 import { StoragePersistor } from 'shared/domain/interfaces/storage-persistor.interface';
+import { HttpClientDecorator } from 'shared/infra/decorators/http-client.decorator';
 import { authConfig } from '../config/config';
 
-export class HttpClientAuthDecorator implements HttpClient {
+export class HttpClientAuthDecorator extends HttpClientDecorator {
   private _token?: string;
 
   constructor(
-    public baseUrl: string,
-    private httpClient: HttpClient,
+    baseUrl: string,
+    httpClient: HttpClient,
     private persistor: StoragePersistor<PersistedUser> | null = authConfig.persistor,
   ) {
+    super(baseUrl, httpClient);
     const user = this.persistor?.get(USER_STORAGE_KEY);
     this._token = user?.token;
   }
