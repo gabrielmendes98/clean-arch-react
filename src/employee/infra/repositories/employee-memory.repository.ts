@@ -39,7 +39,13 @@ export class EmployeeMemoryRepository implements EmployeeRepository {
     return employeeList;
   }
 
-  async create(): Promise<void> {
+  async create(employee: Employee): Promise<void> {
+    if (employee.email === 'tqi_gmsouza@uolinc.com') {
+      return Promise.reject({
+        message: 'Funcionário já está cadastrado no sistema',
+      });
+    }
+
     return;
   }
 
