@@ -6,7 +6,7 @@ import {
   HttpResponse,
 } from 'shared/domain/interfaces/http-client.interface';
 import { StoragePersistor } from 'shared/domain/interfaces/storage-persistor.interface';
-import { HttpClientDecorator } from 'shared/infra/decorators/http-client.decorator';
+import { HttpClientDecorator } from 'shared/domain/decorators/http-client.decorator';
 import { authConfig } from '../config/config';
 
 export class HttpClientAuthDecorator extends HttpClientDecorator {
