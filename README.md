@@ -18,6 +18,11 @@ Summary:
 - [Principles](#principles)
 - [Design Patterns](#design-patterns)
 - [Git, CI, CD](#git-ci-cd)
+- [Register User responsibilities by layer](#register-user-responsibilities-by-layer)
+- [Register User Architecture](#register-user-architecture)
+- [Company modules example architecture](#company-modules-example-architecture)
+- [Http Repository Architecture](#http-repository-architecture)
+
 - [References](#references)
 
 ## [System Requirements Specification](#system-requirements-specification)
@@ -163,6 +168,22 @@ yupjs lib on the domain layer to validate our entities.
 - Conventional Commits
 - Github Actions
 - SonarQube and SonarCloud
+
+## [Register User responsibilities by layer](#register-user-responsibilities-by-layer)
+
+<img src='./resources/register-user-layers.jpg' width="500" />
+
+## [Register User Architecture](#register-user-architecture)
+
+<img src='./resources/register-user-architecture.jpg' width="500" />
+
+## [Http Repository Architecture](#http-repository-architecture)
+
+<img src='./resources/http-repository-architecture.jpg' width="500" />
+
+## [Company modules example architecture](#company-modules-example-architecture)
+
+<img src='./resources/company-modules-architecture.png' width="1000" />
 
 ## [References](#references)
 
