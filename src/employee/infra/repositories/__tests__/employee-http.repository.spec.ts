@@ -24,7 +24,7 @@ describe('EmployeeHttpRepository', () => {
         statusCode: 200,
       }),
     );
-    await repository.delete(fakeEmployee);
+    await repository.delete(fakeEmployee.id!);
     expect(httpClientMock.delete).toHaveBeenCalledWith(
       `/employees/${fakeEmployee.id}`,
     );

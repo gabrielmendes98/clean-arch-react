@@ -1,4 +1,3 @@
-import { NotificationError } from 'shared/domain/notification/notification.error';
 import { UniqueEntityId } from '../unique-entity-id.vo';
 
 describe('UniqueEntityId Value Object', () => {

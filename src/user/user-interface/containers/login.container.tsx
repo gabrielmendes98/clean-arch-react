@@ -15,12 +15,10 @@ type Props = {
 export const LoginContainer = ({ formService, loginUseCase }: Props) => {
   const { initialValues, validator } = formService;
 
-  const onSubmit = async (
+  const onSubmit = (
     e: React.FormEvent<HTMLFormElement>,
     { values }: FormStorageService<LoginFormFields>,
-  ) => {
-    await loginUseCase.execute(values);
-  };
+  ) => loginUseCase.execute(values);
 
   return (
     <FormProvider

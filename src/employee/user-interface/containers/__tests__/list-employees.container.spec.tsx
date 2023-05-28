@@ -1,10 +1,6 @@
 import { EmployeeList } from 'employee/domain/entities/employee-list.entity';
 import { EmployeeListStorage } from 'employee/domain/interfaces/employee-list.interface';
 import { EmployeeRepositoryFactory } from 'employee/infra/factories/employee-repository.factory';
-import {
-  DeleteEmployeeFromListUseCase,
-  DeleteEmployeeFromListUseCaseOutput,
-} from 'employee/use-cases/delete-employee-from-list.use-case';
 import { ListEmployeesUseCase } from 'employee/use-cases/list-employees.use-case';
 import { routerServiceMock } from 'shared/testing/mocks/router.mock';
 import { render, screen, userEvent, waitFor } from 'shared/testing/test-utils';
@@ -20,12 +16,6 @@ const fakeEmployeeList = new EmployeeList([
   },
 ]);
 
-class MockDeleteEmployeeUseCase extends DeleteEmployeeFromListUseCase {
-  async execute(): Promise<DeleteEmployeeFromListUseCaseOutput> {
-    jest.fn();
-  }
-}
-
 class MockListEmployeeUseCase extends ListEmployeesUseCase {
   async execute(): Promise<{ list: EmployeeList }> {
     return { list: fakeEmployeeList };
@@ -39,35 +29,28 @@ const employeeListServiceMock: EmployeeListStorage = {
   updateList: jest.fn(),
 };
 
-const deleteEmployeeUseCase = new MockDeleteEmployeeUseCase(
-  EmployeeRepositoryFactory.create(),
-  employeeListServiceMock,
-);
 const listEmployeesUseCase = new MockListEmployeeUseCase(
   EmployeeRepositoryFactory.create(),
 );
 
 describe('ListEmployeesContainer', () => {
-  it('should call delete employee use case', () => {
-    const deleteEmployee = jest.spyOn(deleteEmployeeUseCase, 'execute');
+  it('should call removeItem from storage', () => {
     render(
       <ListEmployeesContainer
-        deleteEmployeeUseCase={deleteEmployeeUseCase}
         employeeListStorage={employeeListServiceMock}
         listEmployeesUseCase={listEmployeesUseCase}
         routerService={routerServiceMock}
       />,
     );
     userEvent.click(screen.getByRole('button', { name: /deletar/i }));
-    expect(deleteEmployee).toHaveBeenCalledWith({
-      item: fakeEmployeeList.employees[0],
-    });
+    expect(employeeListServiceMock.removeItem).toHaveBeenCalledWith(
+      fakeEmployeeList.employees[0],
+    );
   });
 
   it('should navigate to employee edit page when click on edit button', () => {
     render(
       <ListEmployeesContainer
-        deleteEmployeeUseCase={deleteEmployeeUseCase}
         employeeListStorage={employeeListServiceMock}
         listEmployeesUseCase={listEmployeesUseCase}
         routerService={routerServiceMock}
@@ -85,7 +68,6 @@ describe('ListEmployeesContainer', () => {
       .mockReturnValue(Promise.resolve({ list: fakeEmployeeList }));
     render(
       <ListEmployeesContainer
-        deleteEmployeeUseCase={deleteEmployeeUseCase}
         employeeListStorage={employeeListServiceMock}
         listEmployeesUseCase={listEmployeesUseCase}
         routerService={routerServiceMock}

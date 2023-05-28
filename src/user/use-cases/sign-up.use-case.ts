@@ -1,9 +1,6 @@
-import { InvalidPasswordError } from 'user/domain/errors/invalid-password.error';
 import { UserRepository } from 'user/domain/interfaces/user-repository.interface';
 import { UserStorage } from 'user/domain/interfaces/user-storage.interface';
 import { Password } from 'user/domain/value-objects/password.vo';
-import { User } from 'user/domain/entities/user.entity';
-import { UserFactory } from 'user/domain/factories/user.factory';
 import { pages } from 'shared/domain/config/pages';
 import { NotificationService } from 'shared/domain/interfaces/notification.interface';
 import { RouterService } from 'shared/domain/interfaces/router.interface';

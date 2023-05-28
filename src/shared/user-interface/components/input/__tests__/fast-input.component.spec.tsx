@@ -1,4 +1,3 @@
-import { yup } from 'shared/domain/validator';
 import {
   fireEvent,
   render,

@@ -91,7 +91,9 @@ describe('UpdateEmployeeContainer', () => {
     };
     render(<Component />);
     userEvent.click(screen.getByRole('button', { name: /enviar/i }));
-    expect(screen.getByText(/Nome é obrigatório/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Nome deve ter pelo menos 3 caracteres/i),
+    ).toBeInTheDocument();
     expect(
       screen.getByText(/Salário deve ser um número positivo/i),
     ).toBeInTheDocument();

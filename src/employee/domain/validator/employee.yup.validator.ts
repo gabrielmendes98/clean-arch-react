@@ -7,7 +7,7 @@ export class EmployeeYupValidator implements Validator<Employee> {
       yup
         .object()
         .shape({
-          name: yup.string().max(100).required().label('Nome'),
+          name: yup.string().min(3).max(100).required().label('Nome'),
           salary: yup.number().positive().required().label('Salário'),
         })
         .validateSync(

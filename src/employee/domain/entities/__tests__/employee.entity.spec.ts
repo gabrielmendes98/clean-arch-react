@@ -1,7 +1,6 @@
 import { Document } from 'shared/domain/value-objects/document.vo';
 import { Email } from 'shared/domain/value-objects/email.vo';
 import { UniqueEntityId } from 'shared/domain/value-objects/unique-entity-id.vo';
-import { NotificationError } from 'shared/domain/notification/notification.error';
 import { Employee } from '../employee.entity';
 
 const fakeEmployee = {
@@ -21,14 +20,21 @@ describe('Employee Entity', () => {
       new Email(fakeEmployee.email),
       new UniqueEntityId(fakeEmployee.id),
     );
+
     expect(employee.isValid()).toBeFalsy();
     expect(employee.errors).toStrictEqual({
-      name: ['Nome é obrigatório'],
+      name: expect.arrayContaining([
+        'Nome é obrigatório',
+        'Nome deve ter pelo menos 3 caracteres',
+      ]),
       salary: ['Salário deve ser um número positivo'],
     });
     expect(employee.notification.hasErrors()).toBeTruthy();
     expect(employee.notification.errors).toStrictEqual({
-      name: ['Nome é obrigatório'],
+      name: expect.arrayContaining([
+        'Nome é obrigatório',
+        'Nome deve ter pelo menos 3 caracteres',
+      ]),
       salary: ['Salário deve ser um número positivo'],
     });
   });

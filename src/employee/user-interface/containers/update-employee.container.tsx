@@ -30,15 +30,14 @@ export const UpdateEmployeeContainer = ({
   const { id } = getUrlParams();
   const [employee, setEmployee] = useState<Employee>();
 
-  const onSubmit = async (
+  const onSubmit = (
     e: React.FormEvent<HTMLFormElement>,
     { values }: FormStorageService<EmployeeFormFields>,
-  ) => {
-    await updateEmployeeUseCase.execute({
+  ) =>
+    updateEmployeeUseCase.execute({
       id: String(employee?.id),
       ...parseValuesToInput(values),
     });
-  };
 
   const values = useMemo(
     () => (employee ? parseEntityToValues(employee) : initialValues),

@@ -18,6 +18,11 @@ Summary:
 - [Principles](#principles)
 - [Design Patterns](#design-patterns)
 - [Git, CI, CD](#git-ci-cd)
+- [Register User responsibilities by layer](#register-user-responsibilities-by-layer)
+- [Register User Architecture](#register-user-architecture)
+- [Company modules example architecture](#company-modules-example-architecture)
+- [Http Repository Architecture](#http-repository-architecture)
+
 - [References](#references)
 
 ## [System Requirements Specification](#system-requirements-specification)
@@ -29,7 +34,6 @@ Summary:
   - should show a welcome message with the name of the logged in user
 - employee registration
   - must contain the fields: name, salary, document (cpf/cnpj) and email
-  - the form must be validated only when it is sent
   - field error messages should appear below each field
   - when registering an employee, it should show a success message and reset all
     the fields
@@ -38,7 +42,6 @@ Summary:
 - employee update
   - the fields must initially be filled in with the selected employee's data
   - must contain the fields: name, salary, document (cpf/cnpj) and email
-  - the form must be validated only when it is sent
   - field error messages should appear below each field
   - when updating employee, it should notify user and redirect to list page
   - if a connection error occurs, it should show an error message
@@ -166,6 +169,22 @@ yupjs lib on the domain layer to validate our entities.
 - Github Actions
 - SonarQube and SonarCloud
 
+## [Register User responsibilities by layer](#register-user-responsibilities-by-layer)
+
+<img src='./resources/register-user-layers.jpg' width="500" />
+
+## [Register User Architecture](#register-user-architecture)
+
+<img src='./resources/register-user-architecture.jpg' width="500" />
+
+## [Http Repository Architecture](#http-repository-architecture)
+
+<img src='./resources/http-repository-architecture.jpg' width="500" />
+
+## [Company modules example architecture](#company-modules-example-architecture)
+
+<img src='./resources/company-modules-architecture.png' width="1000" />
+
 ## [References](#references)
 
 - https://bespoyasov.me/blog/clean-architecture-on-frontend/
@@ -176,8 +195,3 @@ yupjs lib on the domain layer to validate our entities.
 - http://wiki.c2.com/?FourLayerArchitecture
 - https://alistair.cockburn.us/hexagonal-architecture/
 - https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
-
-# TODO
-
-- melhorar README.
-- montar apresentação

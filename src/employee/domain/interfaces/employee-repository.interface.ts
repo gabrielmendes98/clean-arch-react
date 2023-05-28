@@ -2,7 +2,7 @@ import { EmployeeList } from '../entities/employee-list.entity';
 import { Employee } from '../entities/employee.entity';
 
 export interface EmployeeRepository {
-  delete(employee: Employee): Promise<void>;
+  delete(id: string): Promise<void>;
   get(id: string): Promise<Employee>;
   list(): Promise<EmployeeList>;
   create(employee: Employee): Promise<void>;
