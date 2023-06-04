@@ -33,7 +33,8 @@ export class SignUpUseCase
       this.notifier.notify(error.message, 'error');
       return;
     }
-    if (password !== confirmPassword) {
+    if (password.value !== confirmPassword.value) {
+      console.log(password, confirmPassword);
       this.notifier.notify('As senhas devem ser iguais.', 'error');
       return;
     }

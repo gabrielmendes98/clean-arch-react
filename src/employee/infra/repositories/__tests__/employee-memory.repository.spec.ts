@@ -46,7 +46,14 @@ describe('EmployeeMemoryGateway', () => {
   });
 
   it('should return correct payload when call createEmployee method', async () => {
-    expect(await gateway.create()).toBeUndefined();
+    const employee = EmployeeFactory.create({
+      email: 'validemail@gmail.com',
+      id: 'bb30888c-06cf-458b-aced-8a75187c6a67',
+      name: 'Gabriel Santiago',
+      salary: 25000,
+      document: '98536970090',
+    });
+    expect(await gateway.create(employee)).toBeUndefined();
   });
 
   it('should return correct payload when call updateEmployee method', async () => {
