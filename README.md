@@ -168,6 +168,7 @@ yupjs lib on the domain layer to validate our entities.
 - Conventional Commits
 - Github Actions
 - SonarQube and SonarCloud
+- Error monitoring with Sentry
 
 ## [Register User responsibilities by layer](#register-user-responsibilities-by-layer)
 
