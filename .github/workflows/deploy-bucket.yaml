@@ -81,6 +81,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.CLEAN_ARCH_CI }}
+      - name: Setup git user
+        uses: fregante/setup-git-user@v2
       # - name: Setup node
       #   uses: actions/setup-node@v3
       #   with:
