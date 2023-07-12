@@ -94,7 +94,7 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile
       - name: Upgrade version
-        run: yarn version --$VERSION_TYPE
+        run: yarn version --$(VERSION_TYPE)
         env:
           VERSION_TYPE: ${{ inputs.version-type }}
       - name: Build
