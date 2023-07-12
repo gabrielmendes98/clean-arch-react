@@ -102,4 +102,6 @@ jobs:
       - name: Build
         run: yarn build
       - name: Push version upgrade
-        run: git push origin --tags
+        run: |
+          git push
+          git push origin --tags
