@@ -197,4 +197,4 @@ yupjs lib on the domain layer to validate our entities.
 - https://alistair.cockburn.us/hexagonal-architecture/
 - https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
 
-test ci
+test ci cache
