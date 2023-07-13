@@ -98,13 +98,13 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Upgrade prerelease version
         if: ${{ github.ref != 'refs/heads/master' }}
-        run: yarn version --pre$VERSION_TYPE --preid $(git branch --show-current)
+        run: yarn version --pre$VERSION_TYPE --preid "${$(git branch --show-current)//\//-}"
       - name: Upgrade release version
         if: ${{ github.ref == 'refs/heads/master' }}
         run: yarn version --$VERSION_TYPE        
       - name: Set bucket name
-        run: |
-          echo S3_BUCKET_NAME=$(git branch --show-current)-$(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }') >> $GITHUB_ENV
+        run: | # rename release/xxx to release-xxx and set bucket name as release-xxx0.1.0-release-xxx.0
+          echo S3_BUCKET_NAME="${$(git branch --show-current)//\//-}"-$(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }') >> $GITHUB_ENV
       - name: Build
         run: yarn build
       - name: Set AWS credentials
