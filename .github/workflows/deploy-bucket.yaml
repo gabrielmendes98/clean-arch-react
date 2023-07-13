@@ -125,7 +125,7 @@ jobs:
       #     git push
       #     git push origin --tags
       - name: Notify slack
-        run: echo "Deployed version $(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }') to S3 bucket ${{ env.S3_BUCKET_NAME }}"
+        run: echo "${{ github.actor }} deployed version $(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }') to S3 bucket ${{ env.S3_BUCKET_NAME }}"
         # uses: rtCamp/action-slack-notify@v2.1.0
         # env:
         #   SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
