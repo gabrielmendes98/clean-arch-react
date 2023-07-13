@@ -76,8 +76,8 @@ jobs:
   deploy-s3:
     runs-on: ubuntu-latest
     # needs: [test-coverage, lint, sonar-scan]
-    # env:
-    #   S3_BUCKET_NAME: $(git branch --show-current)-$(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }')
+    env:
+      S3_BUCKET_REGION: us-east-1
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -113,10 +113,10 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          aws-region: ${{ env.S3_BUCKET_REGION }}
       - name: Create and configure S3 bucket
         run: |
-          aws s3api create-bucket --bucket ${{ env.S3_BUCKET_NAME }} --region us-east-1
+          aws s3api create-bucket --bucket ${{ env.S3_BUCKET_NAME }} --region ${{ env.S3_BUCKET_REGION }}
           aws s3api put-public-access-block \
             --bucket ${{ env.S3_BUCKET_NAME }} \
             --public-access-block-configuration "BlockPublicAcls=false,IgnorePublicAcls=false,BlockPublicPolicy=false,RestrictPublicBuckets=false"
@@ -141,7 +141,7 @@ jobs:
           git push
           git push origin --tags
       - name: Notify slack
-        run: echo "${{ github.actor }} deployed version $(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }') to S3 bucket ${{ env.S3_BUCKET_NAME }}"
+        run: echo "${{ github.actor }} deployed version $(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }') to S3 bucket http://${{ env.S3_BUCKET_NAME }}.s3-website-${{ env.S3_BUCKET_REGION }}.amazonaws.com"
         # uses: rtCamp/action-slack-notify@v2.1.0
         # env:
         #   SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
