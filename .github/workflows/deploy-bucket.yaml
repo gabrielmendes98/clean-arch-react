@@ -118,9 +118,9 @@ jobs:
         run: |
           aws s3api create-bucket --bucket ${{ env.S3_BUCKET_NAME }} --region us-east-1
           aws s3api put-public-access-block \
-            --bucket your-bucket-name \
+            --bucket ${{ env.S3_BUCKET_NAME }} \
             --public-access-block-configuration "BlockPublicAcls=false,IgnorePublicAcls=false,BlockPublicPolicy=false,RestrictPublicBuckets=false"
-          aws s3api put-bucket-policy --bucket your-bucket-name --policy "{
+          aws s3api put-bucket-policy --bucket ${{ env.S3_BUCKET_NAME }} --policy "{
               \"Version\": \"2012-10-17\",
               \"Statement\": [
                   {
@@ -132,7 +132,7 @@ jobs:
                   }
               ]
             }"
-          aws s3 website "s3://your-bucket-name" --index-document index.html --error-document index.html
+          aws s3 website "s3://${{ env.S3_BUCKET_NAME }}" --index-document index.html --error-document index.html
       - name: Upload files to S3
         run: |
           aws s3 sync ./build s3://${{ env.S3_BUCKET_NAME }}
