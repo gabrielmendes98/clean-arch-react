@@ -106,24 +106,24 @@ jobs:
       - name: Set bucket name
         run: |
           echo S3_BUCKET_NAME=$(git branch --show-current)-$(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }') >> $GITHUB_ENV
-      # - name: Build
-      #   run: yarn build
-      # - name: Set AWS credentials
-      #   uses: aws-actions/configure-aws-credentials@v2
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     aws-region: us-east-1
-      # - name: Create S3 bucket
-      #   run: |
-      #     aws s3api create-bucket --bucket ${{ env.S3_BUCKET_NAME }} --region us-east-1
-      # - name: Upload files to S3
-      #   run: |
-      #     aws s3 sync ./build s3://${{ env.S3_BUCKET_NAME }}
-      # - name: Push version upgrade
-      #   run: |
-      #     git push
-      #     git push origin --tags
+      - name: Build
+        run: yarn build
+      - name: Set AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Create S3 bucket
+        run: |
+          aws s3api create-bucket --bucket ${{ env.S3_BUCKET_NAME }} --region us-east-1
+      - name: Upload files to S3
+        run: |
+          aws s3 sync ./build s3://${{ env.S3_BUCKET_NAME }}
+      - name: Push version upgrade
+        run: |
+          git push
+          git push origin --tags
       - name: Notify slack
         run: echo "${{ github.actor }} deployed version $(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }') to S3 bucket ${{ env.S3_BUCKET_NAME }}"
         # uses: rtCamp/action-slack-notify@v2.1.0
