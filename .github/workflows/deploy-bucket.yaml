@@ -73,9 +73,11 @@ jobs:
   #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
   #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-  deploy-bucket:
+  deploy-s3:
     runs-on: ubuntu-latest
     # needs: [test-coverage, lint, sonar-scan]
+    # env:
+    #   S3_BUCKET_NAME: $(git branch --show-current)-$(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }')
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -83,27 +85,51 @@ jobs:
           token: ${{ secrets.CLEAN_ARCH_CI }}
       - name: Setup git user
         uses: fregante/setup-git-user@v2
-      # - name: Setup node
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version-file: '.nvmrc'
-      #     cache: 'yarn'
-      # - name: Cache node_modules
-      #   uses: actions/cache@v3
-      #   id: cache-node-modules
-      #   with:
-      #     path: '**/node_modules'
-      #     key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
-      # - name: Install dependencies
-      #   if: steps.cache-node-modules.outputs.cache-hit != 'true'
-      #   run: yarn install --frozen-lockfile
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        id: cache-node-modules
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+      - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile
       - name: Upgrade version
         run: yarn version --$VERSION_TYPE
         env:
           VERSION_TYPE: ${{ inputs.version-type }}
+      - name: Set bucket name
+        run: |
+          echo S3_BUCKET_NAME=$(git branch --show-current)-$(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }')" >> $GITHUB_ENV
       # - name: Build
       #   run: yarn build
-      - name: Push version upgrade
-        run: |
-          git push
-          git push origin --tags
+      # - name: Set AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v2
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: us-east-1
+      # - name: Create S3 bucket
+      #   run: |
+      #     aws s3api create-bucket --bucket ${{ env.S3_BUCKET_NAME }} --region us-east-1
+      # - name: Upload files to S3
+      #   run: |
+      #     aws s3 sync ./build s3://${{ env.S3_BUCKET_NAME }}
+      # - name: Push version upgrade
+      #   run: |
+      #     git push
+      #     git push origin --tags
+      - name: Notify slack
+        run: echo "Deployed version ${{ github.ref }} to S3 bucket ${{ env.S3_BUCKET_NAME }}"
+        # uses: rtCamp/action-slack-notify@v2.1.0
+        # env:
+        #   SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+        #   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        #   SLACK_ICON_URL: ${{ secrets.SLACK_ICON_URL }}
+        #   SLACK_USERNAME: ${{ secrets.SLACK_USERNAME }}
+        #   SLACK_MESSAGE: 'Deployed version ${{ github.ref }} to S3 bucket ${{ secrets.S3_BUCKET_NAME }}'
