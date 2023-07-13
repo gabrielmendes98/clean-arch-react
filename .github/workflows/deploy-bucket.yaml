@@ -105,7 +105,7 @@ jobs:
           VERSION_TYPE: ${{ inputs.version-type }}
       - name: Set bucket name
         run: |
-          echo S3_BUCKET_NAME=$(git branch --show-current)-$(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }')" >> $GITHUB_ENV
+          echo S3_BUCKET_NAME=$(git branch --show-current)-$(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }') >> $GITHUB_ENV
       # - name: Build
       #   run: yarn build
       # - name: Set AWS credentials
