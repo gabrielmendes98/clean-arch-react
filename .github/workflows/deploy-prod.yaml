@@ -1,0 +1,27 @@
+name: deploy-prod
+on:
+  workflow_dispatch:
+    inputs:
+      version-name:
+        description: 'Version name'
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      S3_BUCKET_REGION: us-east-1
+      VERSION_NAME: ${{ inputs.version-name }}
+    steps:
+      - name: Set AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.S3_BUCKET_REGION }}
+        # Configure AWS credentials for interacting with S3
+      - name: Check S3 bucket existence
+        run: |
+          BUCKET_EXISTS=$(aws s3api head-bucket --bucket <bucket_name> 2>&1 || true)
+          echo $BUCKET_EXISTS
