@@ -23,5 +23,5 @@ jobs:
         # Configure AWS credentials for interacting with S3
       - name: Check S3 bucket existence
         run: |
-          BUCKET_EXISTS=$(aws s3api head-bucket --bucket <bucket_name> 2>&1 || true)
+          BUCKET_EXISTS=$(aws s3api head-bucket --bucket $VERSION_NAME 2>&1 || true)
           echo $BUCKET_EXISTS
