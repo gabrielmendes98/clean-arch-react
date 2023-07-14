@@ -98,7 +98,7 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Format branch name
         run: |
-          echo FORMATTED_BRANCH_NAME=${$(git branch --show-current)//\//-} >> $GITHUB_ENV
+          echo FORMATTED_BRANCH_NAME=$(sed "s/\//-/g" <<< $(git branch --show-current)) >> $GITHUB_ENV
       - name: Upgrade prerelease version
         if: ${{ github.ref != 'refs/heads/master' }}
         run: yarn version --pre$VERSION_TYPE --preid $FORMATTED_BRANCH_NAME
