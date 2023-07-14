@@ -107,7 +107,7 @@ jobs:
         run: yarn version --$VERSION_TYPE        
       - name: Set bucket name
         run: | # rename release/xxx to release-xxx and set bucket name as release-xxx0.1.0-release-xxx.0
-          echo S3_BUCKET_NAME=$FORMATTED_BRANCH_NAME-$(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }') >> $GITHUB_ENV
+          echo S3_BUCKET_NAME=$(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }' | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
       - name: Build
         run: yarn build
       - name: Set AWS credentials
