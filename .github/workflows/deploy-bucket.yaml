@@ -11,111 +11,138 @@ on:
           - 'patch'
           - 'minor'
           - 'major'
+
 jobs:
-  # test-coverage:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #     - name: Setup node
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version-file: '.nvmrc'
-  #         cache: 'yarn'
-  #     - name: Cache node_modules
-  #       uses: actions/cache@v3
-  #       id: cache-node-modules
-  #       with:
-  #         path: '**/node_modules'
-  #         key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
-  #     - name: Install dependencies
-  #       if: steps.cache-node-modules.outputs.cache-hit != 'true'
-  #       run: yarn install --frozen-lockfile
-  #     - name: Tests
-  #       run: yarn test:cov
-
-  # lint:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #     - name: Setup node
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version-file: '.nvmrc'
-  #         cache: 'yarn'
-  #     - name: Cache node_modules
-  #       uses: actions/cache@v3
-  #       id: cache-node-modules
-  #       with:
-  #         path: '**/node_modules'
-  #         key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
-  #     - name: Install dependencies
-  #       if: steps.cache-node-modules.outputs.cache-hit != 'true'
-  #       run: yarn install --frozen-lockfile
-  #     - name: Lint
-  #       run: yarn lint
-
-  # sonar-scan:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
-  #     - name: SonarCloud Scan
-  #       uses: SonarSource/sonarcloud-github-action@master
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-  deploy-s3:
+  test-coverage:
     runs-on: ubuntu-latest
-    # needs: [test-coverage, lint, sonar-scan]
-    env:
-      S3_BUCKET_REGION: us-east-1
-      VERSION_TYPE: ${{ inputs.version-type }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.CLEAN_ARCH_CI }}
-      - name: Setup git user
-        uses: fregante/setup-git-user@v2
+
       - name: Setup node
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           cache: 'yarn'
+
       - name: Cache node_modules
         uses: actions/cache@v3
         id: cache-node-modules
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+
       - name: Install dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile
+
+      - name: Tests
+        run: yarn test:cov
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        id: cache-node-modules
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile
+
+      - name: Lint
+        run: yarn lint
+
+  sonar-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  deploy-s3:
+    runs-on: ubuntu-latest
+    needs: [test-coverage, lint, sonar-scan]
+    env:
+      S3_BUCKET_REGION: us-east-1
+      VERSION_TYPE: ${{ inputs.version-type }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.CLEAN_ARCH_CI }}
+
+      - name: Setup git user
+        uses: fregante/setup-git-user@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'yarn'
+
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        id: cache-node-modules
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: yarn install --frozen-lockfile
+
       - name: Format branch name
         run: |
           echo FORMATTED_BRANCH_NAME=$(sed "s/\//-/g" <<< $(git branch --show-current)) >> $GITHUB_ENV
+        # Format the branch name by replacing slashes with dashes
+
       - name: Upgrade prerelease version
         if: ${{ github.ref != 'refs/heads/master' }}
         run: yarn version --pre$VERSION_TYPE --preid $FORMATTED_BRANCH_NAME
+        # Increment the prerelease version based on the version type and branch name
+
       - name: Upgrade release version
         if: ${{ github.ref == 'refs/heads/master' }}
-        run: yarn version --$VERSION_TYPE        
+        run: yarn version --$VERSION_TYPE
+        # Increment the release version based on the version type
+
       - name: Set bucket name
-        run: | # rename release/xxx to release-xxx and set bucket name as release-xxx0.1.0-release-xxx.0
+        run: |
           echo S3_BUCKET_NAME=$(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }' | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
+        # Set the S3 bucket name based on the current version, transformed to lowercase
+
       - name: Build
         run: yarn build
+
       - name: Set AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.S3_BUCKET_REGION }}
+        # Configure AWS credentials for interacting with S3
+
       - name: Create and configure S3 bucket
         run: |
           aws s3api create-bucket --bucket ${{ env.S3_BUCKET_NAME }} --region ${{ env.S3_BUCKET_REGION }}
@@ -135,19 +162,18 @@ jobs:
               ]
             }"
           aws s3 website "s3://${{ env.S3_BUCKET_NAME }}" --index-document index.html --error-document index.html
+        # Create and configure the S3 bucket for hosting the project, with public access, and set the website index and error documents to index.html
+
       - name: Upload files to S3
         run: |
           aws s3 sync ./build s3://${{ env.S3_BUCKET_NAME }}
+        # Upload project build files to the S3 bucket
+
       - name: Push version upgrade
         run: |
           git push
           git push origin --tags
+        # Push the version upgrade commits and tags to the repository
+
       - name: Notify slack
         run: echo "${{ github.actor }} deployed version $(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }') to S3 bucket http://${{ env.S3_BUCKET_NAME }}.s3-website-${{ env.S3_BUCKET_REGION }}.amazonaws.com"
-        # uses: rtCamp/action-slack-notify@v2.1.0
-        # env:
-        #   SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
-        #   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        #   SLACK_ICON_URL: ${{ secrets.SLACK_ICON_URL }}
-        #   SLACK_USERNAME: ${{ secrets.SLACK_USERNAME }}
-        #   SLACK_MESSAGE: 'Deployed version ${{ github.ref }} to S3 bucket ${{ secrets.S3_BUCKET_NAME }}'
