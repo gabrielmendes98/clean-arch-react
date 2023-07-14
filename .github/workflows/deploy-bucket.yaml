@@ -96,11 +96,12 @@ jobs:
       - name: Install dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile
+      - name: Format branch name
+        run: |
+          echo FORMATTED_BRANCH_NAME=\"${$(git branch --show-current)//\//-}\" >> $GITHUB_ENV
       - name: Upgrade prerelease version
         if: ${{ github.ref != 'refs/heads/master' }}
-        run: |
-          echo FORMATTED_BRANCH_NAME="$\{$(git branch --show-current)//\//-\}" >> $GITHUB_ENV
-          yarn version --pre$VERSION_TYPE --preid $FORMATTED_BRANCH_NAME
+        run: yarn version --pre$VERSION_TYPE --preid $FORMATTED_BRANCH_NAME
       - name: Upgrade release version
         if: ${{ github.ref == 'refs/heads/master' }}
         run: yarn version --$VERSION_TYPE        
