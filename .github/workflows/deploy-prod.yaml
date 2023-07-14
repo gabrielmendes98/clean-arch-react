@@ -24,4 +24,4 @@ jobs:
       - name: Check S3 bucket existence
         run: |
           BUCKET_EXISTS=$(aws s3api head-bucket --bucket $VERSION_NAME 2>&1 || true)
-          echo $BUCKET_EXISTS
+          echo bucket exists = $BUCKET_EXISTS
