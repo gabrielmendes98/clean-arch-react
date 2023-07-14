@@ -28,5 +28,6 @@ jobs:
             echo "Bucket $VERSION_NAME not exists"
             exit 1
           fi
-      - name: Pass
-        run: echo "pass"
+      - name: Copy bucket content to master bucket
+        run: |
+          aws s3 sync s3://$VERSION_NAME s3://${{ vars.S3_MASTER_BUCKET_NAME }}
