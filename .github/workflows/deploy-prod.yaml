@@ -23,12 +23,10 @@ jobs:
         # Configure AWS credentials for interacting with S3
       - name: Check S3 bucket existence
         run: |
-          BUCKET_RESULT=$(aws s3api head-bucket --bucket $VERSION_NAME 2>&1 || true)
-          [ -z "$BUCKET_RESULT" ] && echo BUCKET_EXISTS=true >> $GITHUB_ENV   || echo BUCKET_EXISTS=false >> $GITHUB_ENV
-      - name: Fail if bucket not exists
-        if: env.BUCKET_EXISTS == 'false'
-        run: |
-          echo "Bucket $VERSION_NAME not exists"
-          exit 1
+          BUCKET_EXISTS=$(aws s3api head-bucket --bucket $VERSION_NAME 2>&1 || true)
+          if [ ! -z "$BUCKET_EXISTS" ]; then
+            echo "Bucket $VERSION_NAME not exists"
+            exit 1
+          fi
       - name: Pass
         run: echo "pass"
