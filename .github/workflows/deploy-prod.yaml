@@ -13,7 +13,7 @@ jobs:
     env:
       S3_BUCKET_REGION: us-east-1
       VERSION_NAME: ${{ inputs.version-name }}
-      BUCKET_NAME: clean-arch-react-${{ inputs.version-name }}
+      BUCKET_NAME: clean-arch-react-master-${{ inputs.version-name }}
     steps:
       - name: Set AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
