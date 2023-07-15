@@ -9,18 +9,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Get package version
+      - name: Get package version == bucket name
         run: |
-          PACKAGE_VERSION=$(cat package.json \
+          BUCKET_NAME=$(cat package.json \
             | grep version \
             | head -1 \
             | awk -F: '{ print $2 }' \
             | sed 's/[",]//g')
-          echo "PACKAGE_VERSION=$PACKAGE_VERSION" >> $GITHUB_ENV
-
-      - name: Get bucket name
-        run: |
-          BUCKET_NAME=$(sed "s/\//-/g" <<< $(git branch --show-current) | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
           echo "BUCKET_NAME=$BUCKET_NAME" >> $GITHUB_ENV
 
       - name: Check bucket existence
@@ -33,7 +28,7 @@ jobs:
 
       - name: Delete bucket
         run: |
-          aws s3 rm s3://mybucket --recursive
+          aws s3 rm s3://$BUCKET_NAME --recursive
           aws s3 rb s3://$BUCKET_NAME --force
 
       - name: Notify on Slack
