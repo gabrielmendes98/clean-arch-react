@@ -41,7 +41,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          path: ${{ github.event.ref }}
+          ref: ${{ github.event.ref }}
       - name: Clean up
         run: |
           echo "Clean up for branch ${{ github.event.ref }}"
