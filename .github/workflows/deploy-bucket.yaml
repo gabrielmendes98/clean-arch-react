@@ -129,7 +129,12 @@ jobs:
 
       - name: Set bucket name
         run: |
-          echo S3_BUCKET_NAME=$(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }' | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
+          if {{ github.ref == 'refs/heads/master' }}
+          then
+            echo S3_BUCKET_NAME=clean-arch-react-master-$(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }') >> $GITHUB_ENV
+          else
+            echo S3_BUCKET_NAME=$(yarn version --non-interactive | grep "Current version:" | awk '{ print $4 }' | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
+          fi
         # Set the S3 bucket name based on the current version, transformed to lowercase
 
       - name: Build
