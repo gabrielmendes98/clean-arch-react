@@ -13,6 +13,7 @@ jobs:
     env:
       S3_BUCKET_REGION: us-east-1
       VERSION_NAME: ${{ inputs.version-name }}
+      BUCKET_NAME: clean-arch-react-${{ inputs.version-name }}
     steps:
       - name: Set AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -23,14 +24,14 @@ jobs:
         # Configure AWS credentials for interacting with S3
       - name: Check S3 bucket existence
         run: |
-          BUCKET_EXISTS=$(aws s3api head-bucket --bucket $VERSION_NAME 2>&1 || true)
+          BUCKET_EXISTS=$(aws s3api head-bucket --bucket $BUCKET_NAME 2>&1 || true)
           if [ ! -z "$BUCKET_EXISTS" ]; then
-            echo "Bucket $VERSION_NAME not exists"
+            echo "Bucket $BUCKET_NAME not exists"
             exit 1
           fi
       - name: Copy bucket content to master bucket
         run: |
-          aws s3 sync s3://clean-arch-react-master-$VERSION_NAME s3://${{ vars.S3_MASTER_BUCKET_NAME }}
+          aws s3 sync s3://$BUCKET_NAME s3://${{ vars.S3_MASTER_BUCKET_NAME }}
       - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} --paths "/*"
