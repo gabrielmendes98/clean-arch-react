@@ -31,23 +31,13 @@
 
 #       - name: Notify on Slack
 #         run: echo "Deleted $BUCKET_NAME"
-name: Branch Deleted
-on: delete
+name: Delete buckets
+on: workflow_dispatch
 jobs:
   delete:
-    if: github.event.ref_type == 'branch'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.ref }}
-      - name: Clean up
-        run: |
-          echo "Clean up for branch ${{ github.event.ref }}"
-          BUCKET_NAME=$(cat package.json \
-            | grep version \
-            | head -1 \
-            | awk -F: '{ print $2 }' \
-            | sed 's/[", ]//g')
-          echo $BUCKET_NAME
+      - name: delete
+        run: for bucket in $(aws s3 ls | awk '{print $3}' | grep "^[0-9]+\.[0-9]+\.[0-9]+-(release|feature|hotfix)-[a-z]+-[0-9]+\.[0-9]+$"); do  aws s3 rb "s3://${bucket}" --force ; done
+
+
