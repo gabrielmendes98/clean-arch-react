@@ -19,6 +19,7 @@ export const Home = ({ userStorage }: Props) => {
         {user && <span id="welcome-user-name">, {user.name}</span>}
       </p>
       <button onClick={methodDoesNotExist}>Test sentry error</button>
+      <p>test deploy</p>
     </section>
   );
 };
