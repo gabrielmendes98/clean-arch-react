@@ -45,6 +45,6 @@ jobs:
           aws-region: us-east-1
         # Configure AWS credentials for interacting with S3
       - name: delete
-        run: for bucket in $(aws s3 ls | awk '{print $3}' | grep '^[0-9]+\.[0-9]+\.[0-9]+-(release|feature|hotfix)-[a-z]+-[0-9]+\.[0-9]+$'); do  aws s3 rb "s3://${bucket}" --force ; done
+        run: for bucket in $(aws s3 ls | awk '{print $3}' | grep -E -i "^[0-9]+\.[0-9]+\.[0-9]+-(release|feature|hotfix)-[a-z]+-[0-9]+\.[0-9]+$"); do  aws s3 rb "s3://${bucket}" --force ; done
 
 
