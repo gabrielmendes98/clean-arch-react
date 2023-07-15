@@ -1,7 +1,5 @@
 name: delete-bucket
-on:
-  delete:
-
+on: delete
 jobs:
   delete-bucket:
     runs-on: ubuntu-latest
