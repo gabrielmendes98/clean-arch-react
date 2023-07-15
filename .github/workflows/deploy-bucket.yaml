@@ -112,15 +112,12 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: yarn install --frozen-lockfile
 
-      - name: Format branch name
-        run: |
-          echo FORMATTED_BRANCH_NAME=$(sed "s/\//-/g" <<< $(git branch --show-current)) >> $GITHUB_ENV
-        # Format the branch name by replacing slashes with dashes
-
       - name: Upgrade prerelease version
         if: ${{ github.ref != 'refs/heads/master' }}
-        run: yarn version --pre$VERSION_TYPE --preid $FORMATTED_BRANCH_NAME
-        # Increment the prerelease version based on the version type and branch name
+        run: |
+          FORMATTED_BRANCH_NAME=$(sed "s/\//-/g" <<< $(git branch --show-current) | tr '[:upper:]' '[:lower:]')
+          yarn version --pre$VERSION_TYPE --preid $FORMATTED_BRANCH_NAME
+        # Format the branch name by replacing slashes with dashes, set to lower case and increment the prerelease version based on the version type and branch name
 
       - name: Upgrade release version
         if: ${{ github.ref == 'refs/heads/master' }}
