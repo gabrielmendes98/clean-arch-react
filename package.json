@@ -1,6 +1,6 @@
 {
   "name": "clean-arch-react",
-  "version": "0.1.16",
+  "version": "0.1.17-release-KANA-111.0",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
