@@ -38,6 +38,16 @@ jobs:
     if: github.event.ref_type == 'branch'
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: ${{ github.event.ref }}
       - name: Clean up
         run: |
           echo "Clean up for branch ${{ github.event.ref }}"
+          BUCKET_NAME=$(cat package.json \
+            | grep version \
+            | head -1 \
+            | awk -F: '{ print $2 }' \
+            | sed 's/[", ]//g')
+          echo $BUCKET_NAME
