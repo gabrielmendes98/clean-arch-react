@@ -1,5 +1,6 @@
 name: install-deps
-on: workflow_call
+on: 
+  workflow_call:
 jobs:
   install-deps:
     runs-on: ubuntu-22.04
