@@ -9,10 +9,10 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       VERSION_NAME: ${{ inputs.version-name }}
-      BUCKET_NAME: clean-arch-react-master-${{ inputs.version-name }}
+      BUCKET_NAME: ${{ vars.S3_MASTER_BUCKET_PREFIX }}-${{ inputs.version-name }}
     steps:
       - name: Set AWS credentials
         uses: aws-actions/configure-aws-credentials@v2

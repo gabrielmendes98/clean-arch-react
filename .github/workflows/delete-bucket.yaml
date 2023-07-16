@@ -6,7 +6,7 @@ on:
     - cron: '0 2 * * 0'
 jobs:
   delete:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Set AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
