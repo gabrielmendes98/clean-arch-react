@@ -21,20 +21,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'yarn'
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        id: cache-node-modules
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
-      - name: Install dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile
+      - name: Install deps
+        uses: ./.github/actions/install-deps
       - name: Tests
         run: yarn test:cov
 
@@ -43,20 +31,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'yarn'
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        id: cache-node-modules
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
-      - name: Install dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile
+      - name: Install deps
+        uses: ./.github/actions/install-deps
       - name: Check lint
         run: yarn lint
 
