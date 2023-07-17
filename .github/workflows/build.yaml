@@ -5,7 +5,7 @@ on:
       should-upload-artifact:
         description: 'Should upload artifact'
         required: false
-        default: 'false'
+        default: false
         type: boolean
 
 jobs:
