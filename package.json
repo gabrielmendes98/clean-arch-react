@@ -1,6 +1,6 @@
 {
   "name": "clean-arch-react",
-  "version": "0.1.18",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
