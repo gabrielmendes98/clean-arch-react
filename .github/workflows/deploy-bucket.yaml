@@ -14,16 +14,7 @@ on:
 
 jobs:
   test-coverage:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install deps
-        uses: ./.github/actions/install-deps
-
-      - name: Tests
-        run: yarn test:cov
+    uses: ./.github/workflows/test-coverage.yaml
 
   lint:
     runs-on: ubuntu-22.04
