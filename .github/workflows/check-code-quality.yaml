@@ -22,5 +22,6 @@ jobs:
   lint:
     uses: ./.github/workflows/lint.yaml
 
-  # sonar-scan:
-  #   uses: ./github/workflows/sonar-scan.yaml
+  sonar-scan:
+    uses: ./github/workflows/sonar-scan.yaml
+    secrets: inherit
