@@ -20,24 +20,7 @@ jobs:
     uses: ./.github/workflows/test-coverage.yaml
 
   lint:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Install deps
-        uses: ./.github/actions/install-deps
-      - name: Check lint
-        run: yarn lint
+    uses: ./.github/workflows/lint.yaml
 
   sonar-scan:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    uses: ./github/workflows/sonar-scan.yaml
