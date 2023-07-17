@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     uses: ./.github/workflows/build.yaml
+    with:
+      should-upload-artifact: true
     
   test-coverage:
     uses: ./.github/workflows/test-coverage.yaml
