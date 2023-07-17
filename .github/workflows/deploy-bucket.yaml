@@ -17,30 +17,11 @@ jobs:
     uses: ./.github/workflows/test-coverage.yaml
 
   lint:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install deps
-        uses: ./.github/actions/install-deps
-
-      - name: Lint
-        run: yarn lint
+    uses: ./.github/workflows/lint.yaml
 
   sonar-scan:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    uses: ./.github/workflows/sonar-scan.yaml
+    secrets: inherit
 
   deploy-s3:
     runs-on: ubuntu-22.04
