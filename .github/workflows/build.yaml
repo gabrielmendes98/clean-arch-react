@@ -23,7 +23,7 @@ jobs:
           echo ${{ inputs.should-upload-artifact }}
     
       - name: Upload build folder
-        if: ${{ inputs.should-upload-artifact == 'true' }}
+        if: ${{ inputs.should-upload-artifact == true }}
         uses: actions/upload-artifact@v3
         with:
           name: build
