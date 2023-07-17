@@ -18,7 +18,10 @@ jobs:
         uses: ./.github/actions/install-deps
       - name: Build
         id: build
-        run: yarn build
+        run: | 
+          yarn build
+          echo ${{ inputs.should-upload-artifact }}
+    
       - name: Upload build folder
         if: ${{ inputs.should-upload-artifact == 'true' }}
         uses: actions/upload-artifact@v3
