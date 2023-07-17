@@ -1,6 +1,7 @@
 name: sonar-scan
 on: 
   workflow_call:
+    secrets: inherit
     
 jobs:
   run-sonar-scan:
